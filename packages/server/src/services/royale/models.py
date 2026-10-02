@@ -4,7 +4,7 @@
 from datetime import datetime, timezone
 from enum import Enum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class MatchPhase(str, Enum):
@@ -29,6 +29,8 @@ class ParticipantStatus(str, Enum):
 
 
 class Participant(BaseModel):
+    model_config = ConfigDict(use_enum_values=True)
+
     uuid: str
     username: str
     is_bot: bool = False
@@ -43,11 +45,10 @@ class Participant(BaseModel):
     placement: int | None = None
     joined_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
-    class Config:
-        use_enum_values = True
-
 
 class MatchState(BaseModel):
+    model_config = ConfigDict(use_enum_values=True)
+
     match_id: str
     phase: MatchPhase = MatchPhase.LOBBY
     target_players: int = 40
@@ -59,6 +60,3 @@ class MatchState(BaseModel):
     safe_sectors: list[str] = Field(default_factory=list)
     collapsing_sectors: list[str] = Field(default_factory=list)
     eliminated_count: int = 0
-
-    class Config:
-        use_enum_values = True
