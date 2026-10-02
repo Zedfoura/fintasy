@@ -6,8 +6,9 @@ from enum import Enum
 from typing import List, Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
-from helpers.tournament import Tournament
 from pydantic import UUID4, BaseModel
+
+from helpers.tournament import Tournament
 from services.database import Database
 
 db = Database()

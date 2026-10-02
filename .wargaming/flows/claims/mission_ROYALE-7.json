@@ -1,0 +1,10 @@
+{
+  "mission_id": "ROYALE-7",
+  "campaign": "2026-10-01_fintasy-stock-royale",
+  "inventory_hash": "48ca42dc94b5bf7e9dbcb87fa1df26a548a33dd75f899a6d0c15d1a026f63a1c",
+  "flows": [
+    "FLOW-RANKED-PROGRESS"
+  ],
+  "stage": "proposed",
+  "disposition": "active"
+}

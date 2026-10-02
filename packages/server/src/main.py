@@ -2,12 +2,13 @@
 # @description: The main entry point for the server.
 
 import uvicorn
-from config import API_CORS_ORIGINS, API_HOST, API_PORT
 from fastapi import FastAPI, HTTPException, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
+
+from config import API_CORS_ORIGINS, API_HOST, API_PORT
 from routes.api.v1.portfolios import router as portfolios_router
 from routes.api.v1.quotes import router as quotes_router
 from routes.api.v1.sessions import router as sessions_router

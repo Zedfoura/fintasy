@@ -7,6 +7,7 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
 
 import requests
+
 from config import APCA_API_KEY, APCA_API_SECRET
 
 api_host = "https://data.alpaca.markets/v2/stocks/trades"

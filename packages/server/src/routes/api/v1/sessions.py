@@ -4,8 +4,9 @@
 from typing import Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, status
-from helpers.user import User
 from pydantic import UUID4, BaseModel
+
+from helpers.user import User
 from services.database import Database
 
 db = Database()
