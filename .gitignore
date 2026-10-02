@@ -3,6 +3,9 @@
 .npm/
 .pnpm-store
 node_modules/
+.venv/
+__pycache__/
+*.py[cod]
 
 .DS_Store
 *:Zone.Identifier

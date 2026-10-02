@@ -5,8 +5,9 @@ from datetime import datetime
 from typing import List, Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
-from helpers.portfolio import Portfolio
 from pydantic import UUID4, BaseModel
+
+from helpers.portfolio import Portfolio
 from services.database import Database
 
 db = Database()

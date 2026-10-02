@@ -2,8 +2,9 @@
 # @description: Database class for handling database interactions
 
 import psycopg2
-from config import POSTGRESQL_URI
 from psycopg2 import pool
+
+from config import POSTGRESQL_URI
 
 # import all mixins here
 from services.database.mixins.meta import MetaMixin

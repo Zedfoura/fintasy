@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": 2,
+  "project": "fintasy",
+  "generated_at": "2026-10-01T19:08:00Z",
+  "flows": [
+    {
+      "id": "FLOW-ROYALE-GOLDEN",
+      "tier": "golden",
+      "name": "Complete Stock Royale Match Lifecycle",
+      "description": "User queues into Ranked Match -> joins 30-60 player lobby -> selects market sector drop zone -> loots available tickers -> rotates as storm collapses -> wins 30-second trading duel -> survives to final circle -> claims #1 Victory Royale and receives MMR gain",
+      "entry_route": "/dashboard/royale",
+      "terminal_step": "Victory Screen with MMR promotion and match summary",
+      "expected_duration_seconds": 360
+    },
+    {
+      "id": "FLOW-COMBAT-DUEL",
+      "tier": "critical-secondary",
+      "name": "Contested Drop / Sector Trading Duel",
+      "description": "Two players contest the same ticker or sector -> 30-second micro-trading duel countdown locks players in -> high-frequency price action trades executed -> winner takes both profits and retains ticker loot",
+      "entry_route": "/dashboard/royale/match/:id",
+      "terminal_step": "Duel outcome popup: loot stolen, opponent defeated or forced retreat",
+      "expected_duration_seconds": 45
+    },
+    {
+      "id": "FLOW-COMBAT-THIRDPARTY",
+      "tier": "critical-secondary",
+      "name": "Third-Party Battle Escalation",
+      "description": "Player spots an active duel on tactical radar in adjacent sector -> engages 'Third-Party' action -> joins live duel arena as third trader -> competes for the pot and liquidation credit",
+      "entry_route": "/dashboard/royale/match/:id",
+      "terminal_step": "Multi-way duel resolution and kill feed announcement",
+      "expected_duration_seconds": 60
+    },
+    {
+      "id": "FLOW-ZONE-COLLAPSE",
+      "tier": "critical-secondary",
+      "name": "Sector Collapse & Storm Tick Damage",
+      "description": "Outer market sectors trigger closing warning -> sectors turn to Storm/Liquidity Drain zone -> players in storm suffer $/sec tick damage to portfolio pot -> forced rotation to inner safe sector",
+      "entry_route": "/dashboard/royale/match/:id",
+      "terminal_step": "Safe zone reentry or liquidation due to pot exhaustion",
+      "expected_duration_seconds": 30
+    },
+    {
+      "id": "FLOW-RANKED-PROGRESS",
+      "tier": "critical-secondary",
+      "name": "Ranked Season MMR & Golden Trader Tiering",
+      "description": "User views competitive rank dashboard -> tracks MMR progress across Bronze through Golden Trader tiers -> reviews match history, kills/liquidations, and seasonal leaderboard standings",
+      "entry_route": "/dashboard/royale/ranked",
+      "terminal_step": "Ranked leaderboard rendered with user tier badge and division",
+      "expected_duration_seconds": 15
+    },
+    {
+      "id": "FLOW-LOBBY-BOTFILL",
+      "tier": "supporting",
+      "name": "Quick Match Queue with Automated AI Bot Fill",
+      "description": "Player clicks Quick Play -> lobby spawns and fills remaining slots (up to 30-60) with simulated trading bots of varied risk styles -> countdown initiates match launch",
+      "entry_route": "/dashboard/royale/lobby",
+      "terminal_step": "Match transitions from LOBBY to DROP_SELECTION with 30-60 participants",
+      "expected_duration_seconds": 10
+    },
+    {
+      "id": "FLOW-TACTICAL-SPECTATE",
+      "tier": "supporting",
+      "name": "Post-Elimination Spectator Mode & Kill Feed",
+      "description": "Eliminated trader transitions to spectator HUD -> monitors surviving sector battles, active duels, and live kill feed ticker until match ends",
+      "entry_route": "/dashboard/royale/match/:id",
+      "terminal_step": "Spectator view shows match conclusion and return to lobby button",
+      "expected_duration_seconds": 120
+    }
+  ]
+}

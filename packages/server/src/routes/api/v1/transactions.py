@@ -6,6 +6,7 @@ from typing import List, Literal, Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
 from pydantic import UUID4, BaseModel
+
 from services.alpaca import AlpacaService
 from services.database import Database
 
