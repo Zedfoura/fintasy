@@ -140,9 +140,11 @@
 
 ### Epic 5 — Live End-to-End Match Integration & Steam Readiness <!-- wargame-epic: e2e-verification; wargame-epic-priority: 5 -->
 
-- [ ] **ROYALE-11. 60-Player Full Match Simulation & Regression Verification** — Full end-to-end automated test harness running a complete 60-player match from lobby fill -> drop selection -> storm collapse -> multiple concurrent 30s duels & third-parties -> final circle elimination -> winner coronation -> database persistence & MMR calculation, along with full regression verification of legacy Fintasy paper-trading endpoints. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-11. 60-Player Full Match Simulation & Regression Verification** — Full end-to-end automated test harness running a complete 60-player match from lobby fill -> drop selection -> storm collapse -> multiple concurrent 30s duels & third-parties -> final circle elimination -> winner coronation -> database persistence & MMR calculation, along with full regression verification of legacy Fintasy paper-trading endpoints. <!-- wargame-state: outcome; wargame-disposition: active -->
   - Depends on: ROYALE-10@activation
   - Required stage: OUTCOME
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-11_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-11/execution.md`
   - Verifier/consumer: `packages/server/tests/royale/test_e2e_match.py` producing a verifiable match receipt proving complete match lifecycle with 60 participants and zero unhandled exceptions
   - Preserves: 100% test pass on legacy unit tests (basic_test.py, quote_test.py, sessions_test.py, tournaments_test.py, transactions_test.py, user_test.py)
   - User flows: FLOW-ROYALE-GOLDEN
