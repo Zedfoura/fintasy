@@ -37,11 +37,17 @@ class DuelResolution(BaseModel):
     duel_id: str
     winner_id: str | None = None
     loser_id: str | None = None
+    loser_ids: list[str] = Field(default_factory=list)
+    rankings: list[str] = Field(default_factory=list)
     is_draw: bool = False
     net_profits: dict[str, int] = Field(default_factory=dict)
     bounty_transferred_cents: int = 0
+    bounties_by_loser: dict[str, int] = Field(default_factory=dict)
     loot_transferred: list[str] = Field(default_factory=list)
+    loot_by_loser: dict[str, list[str]] = Field(default_factory=dict)
     loser_liquidated: bool = False
+    liquidated_participant_ids: list[str] = Field(default_factory=list)
+    kills_credited: int = 0
 
 
 class DuelState(BaseModel):
@@ -52,6 +58,8 @@ class DuelState(BaseModel):
     sector: str
     participant_ids: list[str]
     time_remaining_sec: float = 30.0
+    max_duration_sec: float = 45.0
+    third_party_count: int = 0
     positions: dict[str, list[DuelPosition]] = Field(default_factory=dict)
     is_resolved: bool = False
     resolution: DuelResolution | None = None
@@ -86,6 +94,32 @@ class DuelEngine:
             positions={participant_a_id: [], participant_b_id: []},
             is_resolved=False,
         )
+
+    @classmethod
+    def add_participant(
+        cls,
+        duel: DuelState,
+        participant_id: str,
+    ) -> None:
+        """
+        Adds a third (or subsequent) participant to an ongoing duel, extending
+        the countdown timer if near expiry to provide fair trading reaction time.
+        """
+        if duel.is_resolved:
+            raise ValueError(f"Duel {duel.duel_id} is already resolved.")
+        if participant_id in duel.participant_ids:
+            raise ValueError(
+                f"Participant {participant_id} is already in duel {duel.duel_id}."
+            )
+
+        duel.participant_ids.append(participant_id)
+        duel.positions.setdefault(participant_id, [])
+        # Extend clock floor to 15s (bounded by max_duration_sec)
+        duel.time_remaining_sec = min(
+            duel.max_duration_sec,
+            max(duel.time_remaining_sec, 15.0),
+        )
+        duel.third_party_count += 1
 
     @classmethod
     def compute_position_pnl(
@@ -263,42 +297,40 @@ class DuelEngine:
             net_profits[p_id] = net_profit
             total_collateral[p_id] = tot_col
 
-        p_a, p_b = duel.participant_ids[0], duel.participant_ids[1]
-        profit_a = net_profits[p_a]
-        profit_b = net_profits[p_b]
-
-        # Winner selection
-        if profit_a > profit_b:
-            winner, loser = p_a, p_b
-            is_draw = False
-        elif profit_b > profit_a:
-            winner, loser = p_b, p_a
-            is_draw = False
+        # Winner & ranking selection across all participants
+        all_zero = all(
+            net_profits[p] == 0 and total_collateral[p] == 0
+            for p in duel.participant_ids
+        )
+        if all_zero:
+            winner = None
+            loser = None
+            loser_ids = []
+            rankings = list(duel.participant_ids)
+            is_draw = True
         else:
-            # Profits tied
-            if total_collateral[p_a] == 0 and total_collateral[p_b] == 0:
-                # Neither traded: draw
-                winner, loser = None, None
-                is_draw = True
-            else:
-                # Break tie by collateral ROI
-                roi_a = profit_a / max(1, total_collateral[p_a])
-                roi_b = profit_b / max(1, total_collateral[p_b])
-                if roi_a > roi_b:
-                    winner, loser = p_a, p_b
-                    is_draw = False
-                elif roi_b > roi_a:
-                    winner, loser = p_b, p_a
-                    is_draw = False
-                else:
-                    # Final tie-breaker: deterministic string hash
-                    winner, loser = (p_a, p_b) if p_a < p_b else (p_b, p_a)
-                    is_draw = False
+            # Deterministic sorting key:
+            # 1. higher net profit (descending)
+            # 2. higher ROI = net_profit / max(1, total_collateral) (descending)
+            # 3. participant_id (ascending deterministic tie-breaker)
+            def rank_key(p: str):
+                profit = net_profits[p]
+                roi = profit / max(1, total_collateral[p])
+                return (-profit, -roi, p)
+
+            ranked = sorted(duel.participant_ids, key=rank_key)
+            winner = ranked[0]
+            loser_ids = ranked[1:]
+            loser = loser_ids[-1] if loser_ids else None
+            rankings = ranked
+            is_draw = False
 
         res = DuelResolution(
             duel_id=duel.duel_id,
             winner_id=winner,
             loser_id=loser,
+            loser_ids=loser_ids,
+            rankings=rankings,
             is_draw=is_draw,
             net_profits=net_profits,
         )

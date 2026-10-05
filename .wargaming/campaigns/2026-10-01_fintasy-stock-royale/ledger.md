@@ -68,9 +68,11 @@
   - Point of no return: none
   - Subagent lane: `lane_combat`
 
-- [ ] **ROYALE-5. Sector Contestation & Third-Party Battle Protocol** — Multi-participant combat escalation allowing a third (or fourth) player entering an occupied active duel sector to "Third-Party" the duel, joining the active trading ticket. Multi-way P&L calculation determines spoils distribution, split bounties, and multi-kill feed credit. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-5. Sector Contestation & Third-Party Battle Protocol** — Multi-participant combat escalation allowing a third (or fourth) player entering an occupied active duel sector to "Third-Party" the duel, joining the active trading ticket. Multi-way P&L calculation determines spoils distribution, split bounties, and multi-kill feed credit. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: ROYALE-4@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-5_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-5/execution.md`
   - Verifier/consumer: `packages/server/tests/royale/test_third_party.py` validating 3-way duel entry, dynamic order book sharing, and 3-way outcome resolution
   - Preserves: Duel state integrity and combat lock-in timeouts
   - User flows: FLOW-COMBAT-THIRDPARTY

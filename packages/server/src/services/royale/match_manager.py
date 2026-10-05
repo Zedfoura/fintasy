@@ -560,6 +560,74 @@ class MatchManager:
         p_b.status = ParticipantStatus.IN_DUEL
         return duel
 
+    def third_party_duel(
+        self,
+        match_id: str,
+        duel_id: str,
+        participant_id: str,
+    ) -> DuelState:
+        """
+        Escalates an ongoing duel by introducing a third (or subsequent) participant
+        located in the same contested sector.
+        """
+        match = self._matches.get(match_id)
+        if not match:
+            raise ValueError(f"Match {match_id} does not exist.")
+
+        if match.phase not in (MatchPhase.ACTIVE_ROUNDS, MatchPhase.FINAL_CIRCLE):
+            raise ValueError(f"Cannot third-party a duel during {match.phase} phase.")
+
+        duel = self._duels.get(duel_id)
+        if not duel:
+            raise ValueError(f"Duel {duel_id} does not exist.")
+
+        if duel.is_resolved:
+            raise ValueError(f"Duel {duel_id} is already resolved.")
+
+        participant = match.participants.get(participant_id)
+        if not participant:
+            raise ValueError(f"Participant {participant_id} not found.")
+
+        if participant.status != ParticipantStatus.ALIVE:
+            raise ValueError(
+                f"Participant {participant_id} must be ALIVE to third-party a duel (current status: {participant.status})."
+            )
+
+        if participant.active_sector != duel.sector:
+            raise ValueError(
+                f"Participant {participant_id} is in sector '{participant.active_sector}', but duel is in sector '{duel.sector}'."
+            )
+
+        if participant_id in self._participant_duel:
+            raise ValueError(
+                f"Participant {participant_id} is already engaged in a duel."
+            )
+
+        if participant_id in duel.participant_ids:
+            raise ValueError(f"Participant {participant_id} is already in this duel.")
+
+        DuelEngine.add_participant(duel, participant_id)
+        self._participant_duel[participant_id] = duel.duel_id
+        participant.status = ParticipantStatus.IN_DUEL
+        return duel
+
+    def get_active_duel_in_sector(
+        self,
+        match_id: str,
+        sector: str,
+    ) -> DuelState | None:
+        """
+        Returns active unresolved duel in a sector, if any exists.
+        """
+        for duel in self._duels.values():
+            if (
+                duel.match_id == match_id
+                and duel.sector == sector
+                and not duel.is_resolved
+            ):
+                return duel
+        return None
+
     def place_duel_order(
         self,
         duel_id: str,
@@ -722,52 +790,66 @@ class MatchManager:
 
             p.equity_cents = p.capital_cents
 
-        if resolution.winner_id and resolution.loser_id:
+        if resolution.winner_id and resolution.loser_ids:
             winner = match.participants.get(resolution.winner_id)
-            loser = match.participants.get(resolution.loser_id)
+            if winner:
+                total_bounty = 0
+                all_stolen_loot: list[str] = []
+                kills_credited = len(resolution.loser_ids)
 
-            if winner and loser:
-                # 25% cash bounty from loser
-                bounty = max(0, int(loser.capital_cents * 0.25))
-                loser.capital_cents = max(0, loser.capital_cents - bounty)
-                loser.equity_cents = loser.capital_cents
-                winner.capital_cents += bounty
-                winner.equity_cents += bounty
-                resolution.bounty_transferred_cents = bounty
+                # Winner profit from trading
+                winner.net_profit_cents += resolution.net_profits.get(winner.uuid, 0)
 
-                # Transfer ticker loot cards
-                stolen_loot = list(loser.held_tickers)
-                winner.held_tickers.extend(stolen_loot)
-                loser.held_tickers.clear()
-                resolution.loot_transferred = stolen_loot
+                for loser_id in resolution.loser_ids:
+                    loser = match.participants.get(loser_id)
+                    if not loser:
+                        continue
 
-                # Kills & profits
-                winner.kills += 1
-                winner.net_profit_cents += (
-                    resolution.net_profits.get(winner.uuid, 0) + bounty
-                )
-                loser.net_profit_cents += (
-                    resolution.net_profits.get(loser.uuid, 0) - bounty
-                )
+                    # 25% cash bounty from loser
+                    bounty = max(0, int(loser.capital_cents * 0.25))
+                    loser.capital_cents = max(0, loser.capital_cents - bounty)
+                    loser.equity_cents = loser.capital_cents
+                    total_bounty += bounty
+                    resolution.bounties_by_loser[loser_id] = bounty
 
-                # Loser bankruptcy check
-                if loser.equity_cents <= 0:
-                    loser.status = ParticipantStatus.BUSTED
-                    match.eliminated_count += 1
-                    alive_count = sum(
-                        1
-                        for p in match.participants.values()
-                        if p.status
-                        in (ParticipantStatus.ALIVE, ParticipantStatus.IN_DUEL)
+                    # Transfer ticker loot cards
+                    stolen_loot = list(loser.held_tickers)
+                    all_stolen_loot.extend(stolen_loot)
+                    winner.held_tickers.extend(stolen_loot)
+                    loser.held_tickers.clear()
+                    resolution.loot_by_loser[loser_id] = stolen_loot
+
+                    loser.net_profit_cents += (
+                        resolution.net_profits.get(loser.uuid, 0) - bounty
                     )
-                    loser.placement = alive_count + 1
-                    resolution.loser_liquidated = True
-                else:
-                    loser.status = ParticipantStatus.ALIVE
 
+                    # Loser bankruptcy check
+                    if loser.equity_cents <= 0:
+                        loser.status = ParticipantStatus.BUSTED
+                        match.eliminated_count += 1
+                        alive_count = sum(
+                            1
+                            for p in match.participants.values()
+                            if p.status
+                            in (ParticipantStatus.ALIVE, ParticipantStatus.IN_DUEL)
+                        )
+                        loser.placement = alive_count + 1
+                        resolution.liquidated_participant_ids.append(loser_id)
+                        resolution.loser_liquidated = True
+                    else:
+                        loser.status = ParticipantStatus.ALIVE
+
+                # Credit total bounties, loot, and kills to winner
+                winner.capital_cents += total_bounty
+                winner.equity_cents += total_bounty
+                winner.net_profit_cents += total_bounty
+                winner.kills += kills_credited
                 winner.status = ParticipantStatus.ALIVE
+                resolution.bounty_transferred_cents = total_bounty
+                resolution.loot_transferred = all_stolen_loot
+                resolution.kills_credited = kills_credited
         else:
-            # Draw: return both to ALIVE
+            # Draw: return all to ALIVE
             for p_id in duel.participant_ids:
                 p = match.participants.get(p_id)
                 if p and p.status == ParticipantStatus.IN_DUEL:
