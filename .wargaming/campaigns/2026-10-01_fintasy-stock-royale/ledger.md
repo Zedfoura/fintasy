@@ -105,9 +105,11 @@
 
 ### Epic 4 — Tactical Command Center & Football Manager (FM) UI <!-- wargame-epic: tactical-ui; wargame-epic-priority: 4 -->
 
-- [ ] **ROYALE-8. Market Sector Radar & Treemap Map with Storm Visualizer** — Vue component MarketRadarMap.vue rendering an interactive HTML5 Canvas sector treemap (Outer to Inner sectors) with safe zone boundary, storm collapse countdown animation, player sector pins, and contested battle indicators, styled in a crisp Football Manager tactical theme. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-8. Market Sector Radar & Treemap Map with Storm Visualizer** — Vue component MarketRadarMap.vue rendering an interactive HTML5 Canvas sector treemap (Outer to Inner sectors) with safe zone boundary, storm collapse countdown animation, player sector pins, and contested battle indicators, styled in a crisp Football Manager tactical theme. <!-- wargame-state: activation; wargame-disposition: active -->
   - Depends on: ROYALE-2@canonical
   - Required stage: ACTIVATION
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-8_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-8/execution.md`
   - Verifier/consumer: `packages/client/tests/MarketRadarMap.test.ts` and dev server DOM assertion validating sector rendering, player location pins, and storm ring styling
   - Preserves: Existing dashboard layout and navigation sidebar
   - User flows: FLOW-ZONE-COLLAPSE
