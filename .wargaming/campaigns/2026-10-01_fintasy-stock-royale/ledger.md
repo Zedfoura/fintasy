@@ -33,18 +33,22 @@
   - Point of no return: none
   - Subagent lane: `lane_engine`
 
-- [ ] **ROYALE-2. Market Sector Graph Topology & Storm Collapse Engine** — Adjacency graph representing market sectors (Outer: Utilities, Materials, Industrials, Real Estate; Mid: Healthcare, Financials, Energy, Consumer; Inner: Big Tech, AI Semiconductors, High-Beta). Zone collapse scheduler progressively closes outer sectors over 5 rounds and applies capital tick damage ($/sec deducted from each player's $15k pot) to any player remaining in the storm. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-2. Market Sector Graph Topology & Storm Collapse Engine** — Adjacency graph representing market sectors (Outer: Utilities, Materials, Industrials, Real Estate; Mid: Healthcare, Financials, Energy, Consumer; Inner: Big Tech, AI Semiconductors, High-Beta). Zone collapse scheduler progressively closes outer sectors over 5 rounds and applies capital tick damage ($/sec deducted from each player's $15k pot) to any player remaining in the storm. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: ROYALE-0@canonical, ROYALE-1@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-2_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-2/execution.md`
   - Verifier/consumer: `packages/server/tests/royale/test_zone_collapse.py` verifying sector adjacency traversal, safe zone shrinkage, and exact storm tick damage deductions over time
   - Preserves: In-memory match loop timing and stability
   - User flows: FLOW-ZONE-COLLAPSE
   - Point of no return: none
   - Subagent lane: `lane_engine`
 
-- [ ] **ROYALE-3. High-Frequency Market Tick Generator & Sector Volatility Regimes** — Deterministic seeded 10 Hz price tick simulation using Geometric Brownian Motion with sector correlations, sudden volatility bursts (e.g. Fed announcement, earnings breakout), and loot ticker distribution per sector (e.g. uncontested drop instantly awards sector ticker loot). <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-3. High-Frequency Market Tick Generator & Sector Volatility Regimes** — Deterministic seeded 10 Hz price tick simulation using Geometric Brownian Motion with sector correlations, sudden volatility bursts (e.g. Fed announcement, earnings breakout), and loot ticker distribution per sector (e.g. uncontested drop instantly awards sector ticker loot). <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: ROYALE-2@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-3_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-3/execution.md`
   - Verifier/consumer: `packages/server/tests/royale/test_market_ticks.py` validating 10 Hz tick stream generation, seed reproducibility, volatility regimes, and uncontested ticker loot allocation
   - Preserves: Real Alpaca API service remains available for non-royale portfolio trading without rate-limit interference
   - User flows: FLOW-ROYALE-GOLDEN
@@ -53,9 +57,11 @@
 
 ### Epic 2 — Trading Duel Arena & Third-Party Battle Protocol <!-- wargame-epic: trading-duels; wargame-epic-priority: 2 -->
 
-- [ ] **ROYALE-4. 30-Second Micro-Trading Duel & Liquidation Mechanism** — Dueling engine executing 30s-60s head-to-head trading battles when 2 players contest a drop or encounter in a sector. Micro-orders (Long/Short, leverage 1x-5x, market execution) run against the active tick stream. At duel timer expiry, the player with higher net profit / % ROI wins: collects profits, steals opponent's ticker loot, and takes a cash bounty. If a player's equity reaches $0, they are eliminated (BUSTED). <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-4. 30-Second Micro-Trading Duel & Liquidation Mechanism** — Dueling engine executing 30s-60s head-to-head trading battles when 2 players contest a drop or encounter in a sector. Micro-orders (Long/Short, leverage 1x-5x, market execution) run against the active tick stream. At duel timer expiry, the player with higher net profit / % ROI wins: collects profits, steals opponent's ticker loot, and takes a cash bounty. If a player's equity reaches $0, they are eliminated (BUSTED). <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: ROYALE-0@canonical, ROYALE-3@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-4_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-4/execution.md`
   - Verifier/consumer: `packages/server/tests/royale/test_duels.py` simulating 2-player 30s duel, order execution, winner profit allocation, ticker loot transfer, and bankruptcy liquidation
   - Preserves: Fast in-memory state transactions without locking or race conditions
   - User flows: FLOW-COMBAT-DUEL
