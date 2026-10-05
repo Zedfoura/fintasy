@@ -13,6 +13,13 @@ from services.royale.duel_engine import (
     PositionSide,
 )
 from services.royale.market_sim import MarketSimEngine, MarketTick
+from services.royale.mmr_engine import (
+    MatchRankResult,
+    MMREngine,
+    RankDivision,
+    RankTier,
+    UserRank,
+)
 from services.royale.models import (
     BotArchetype,
     MatchPhase,
@@ -81,6 +88,7 @@ class MatchManager:
     _market_sims: ClassVar[dict[str, MarketSimEngine]] = {}
     _duels: ClassVar[dict[str, DuelState]] = {}
     _participant_duel: ClassVar[dict[str, str]] = {}
+    _user_ranks: ClassVar[dict[str, UserRank]] = {}
     _topology: ClassVar[SectorTopology] = SectorTopology()
 
     def __new__(cls):
@@ -91,17 +99,19 @@ class MatchManager:
             cls._market_sims = {}
             cls._duels = {}
             cls._participant_duel = {}
+            cls._user_ranks = {}
             cls._topology = SectorTopology()
         return cls._instance
 
     @classmethod
     def reset(cls):
-        """Clears all in-memory matches, engines, market sims, and duels (used for tests and cleanup)."""
+        """Clears all in-memory matches, engines, market sims, duels, and user ranks (used for tests and cleanup)."""
         cls._matches = {}
         cls._engines = {}
         cls._market_sims = {}
         cls._duels = {}
         cls._participant_duel = {}
+        cls._user_ranks = {}
 
     @property
     def topology(self) -> SectorTopology:
@@ -881,3 +891,33 @@ class MatchManager:
         if not match:
             raise ValueError(f"Match {match_id} does not exist.")
         return match.model_dump()
+
+    def get_or_create_user_rank(self, user_id: str) -> UserRank:
+        """
+        Retrieves active UserRank progression or initializes new Bronze III profile.
+        """
+        if user_id not in self._user_ranks:
+            self._user_ranks[user_id] = UserRank(user_id=user_id)
+        return self._user_ranks[user_id]
+
+    def settle_match_ranks(self, match_id: str) -> dict[str, MatchRankResult]:
+        """
+        Evaluates competitive MMR & RP progression for all participants in a match.
+        """
+        match = self._matches.get(match_id)
+        if not match:
+            raise ValueError(f"Match {match_id} does not exist.")
+
+        results: dict[str, MatchRankResult] = {}
+        for p in match.participants.values():
+            rank = self.get_or_create_user_rank(p.uuid)
+            placement = p.placement or match.target_players
+            res = MMREngine.evaluate_match_result(
+                rank=rank,
+                placement=placement,
+                kills=p.kills,
+                net_profit_cents=p.net_profit_cents,
+            )
+            results[p.uuid] = res
+
+        return results

@@ -81,9 +81,11 @@
 
 ### Epic 3 — Competitive Ranked System & Rocket League MMR Progression <!-- wargame-epic: ranked-progression; wargame-epic-priority: 3 -->
 
-- [ ] **ROYALE-6. Rocket League Tiered MMR & Rating System Engine** — Competitive rating engine implementing Rocket League style progression (Bronze I-III through Golden Trader apex tier) with Apex Legends RP mechanics (entry costs 15-100 RP, placement + liquidation multiplier matrix). Dynamic post-match MMR adjustment calculating placement score (1st-40th/60th), duel liquidations, net profit generated, and opponent average MMR. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-6. Rocket League Tiered MMR & Rating System Engine** — Competitive rating engine implementing Rocket League style progression (Bronze I-III through Golden Trader apex tier) with Apex Legends RP mechanics (entry costs 15-100 RP, placement + liquidation multiplier matrix). Dynamic post-match MMR adjustment calculating placement score (1st-40th/60th), duel liquidations, net profit generated, and opponent average MMR. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: ROYALE-0@canonical, ROYALE-4@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-6_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-6/execution.md`
   - Verifier/consumer: `packages/server/tests/royale/test_mmr.py` verifying ranking tier thresholds, division promotions/demotions, placement weightings, and Golden Trader cutoff
   - Preserves: Standard user coins and profile attributes
   - User flows: FLOW-RANKED-PROGRESS

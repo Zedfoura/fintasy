@@ -10,6 +10,13 @@ from .duel_engine import (
 )
 from .market_sim import TICKER_REGISTRY, MarketSimEngine, MarketTick, TickerDef
 from .match_manager import MatchManager
+from .mmr_engine import (
+    MatchRankResult,
+    MMREngine,
+    RankDivision,
+    RankTier,
+    UserRank,
+)
 from .models import (
     BotArchetype,
     MatchPhase,
@@ -26,15 +33,19 @@ __all__ = [
     "DuelPosition",
     "DuelResolution",
     "DuelState",
+    "MMREngine",
     "MarketSector",
     "MarketSimEngine",
     "MarketTick",
     "MatchManager",
     "MatchPhase",
+    "MatchRankResult",
     "MatchState",
     "Participant",
     "ParticipantStatus",
     "PositionSide",
+    "RankDivision",
+    "RankTier",
     "RoundConfig",
     "RoundSchedule",
     "SectorTier",
@@ -42,4 +53,5 @@ __all__ = [
     "StormEngine",
     "TICKER_REGISTRY",
     "TickerDef",
+    "UserRank",
 ]
