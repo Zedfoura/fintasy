@@ -151,9 +151,11 @@
   - Point of no return: none
   - Subagent lane: `lane_engine`
 
-- [ ] **ROYALE-12. Tauri Desktop Wrapper & Steamworks SDK Scaffolding** — Scaffolding of Tauri 2.0 configuration (src-tauri/) enabling one-command packaging of the web application into native Windows and Linux (Steam Deck) desktop executables with steamworks-rs bridge stubs for Steam Achievements and Rich Presence. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-12. Tauri Desktop Wrapper & Steamworks SDK Scaffolding** — Scaffolding of Tauri 2.0 configuration (src-tauri/) enabling one-command packaging of the web application into native Windows and Linux (Steam Deck) desktop executables with steamworks-rs bridge stubs for Steam Achievements and Rich Presence. <!-- wargame-state: activation; wargame-disposition: active -->
   - Depends on: ROYALE-11@outcome
   - Required stage: ACTIVATION
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-12_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-12/execution.md`
   - Verifier/consumer: Desktop compilation and smoke check verifying web bundle rendering within native OS webview container
   - Preserves: Web browser deployment continues to function independently
   - User flows: not applicable (platform packaging)

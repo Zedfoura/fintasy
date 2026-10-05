@@ -4,16 +4,16 @@
   "workspace_root": "/Users/tinatseichingaya/fintasy",
   "active_campaign": "2026-10-01_fintasy-stock-royale",
   "active_mission": "ROYALE-12",
-  "mode": "PLAN",
+  "mode": "AUDIT",
   "ledger_path": ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md",
-  "ledger_hash": "bc2b1216f582244a06ba4395e8c4cb30bbba7f28e4563a5ca30217aa51f401f6",
+  "ledger_hash": "73fd430c66767f9aa9e3a73cf9af672a7fe6dcd34ad0bdd4cfbbc2ee408077f2",
   "campaign_decision": {
     "decision": "create_new",
     "campaign": "2026-10-01_fintasy-stock-royale",
     "reason": "New Battle-Royale trading simulator initiative transforming legacy Fintasy paper-trading app into a competitive stock-market battle royale.",
     "identity_binding": "match",
     "evidence": [
-      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:bc2b1216f582244a06ba4395e8c4cb30bbba7f28e4563a5ca30217aa51f401f6",
+      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:73fd430c66767f9aa9e3a73cf9af672a7fe6dcd34ad0bdd4cfbbc2ee408077f2",
       "user_request:/wargame-run",
       "corpus:Zedfoura/fintasy"
     ],
@@ -37,6 +37,6 @@
       "credential_mutation"
     ]
   },
-  "last_verified_transition": "ROYALE-11@outcome",
-  "next_transition": "ROYALE-12@activation"
+  "last_verified_transition": "ROYALE-12@activation",
+  "next_transition": null
 }
