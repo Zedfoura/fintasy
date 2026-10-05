@@ -264,3 +264,143 @@ export interface DuelOrderPayload {
   leverage: DuelLeverage
   quantity: number
 }
+
+// --- REAL-TIME WEBSOCKET & MATCH FLOW TYPES (ROYALE-10) ---
+
+export type RoyaleEventType =
+  | 'MATCH_STATE'
+  | 'LIQUIDATION'
+  | 'STORM_TICK'
+  | 'SECTOR_CLOSURE'
+  | 'DUEL_START'
+  | 'MATCH_OVER'
+  | 'ERROR'
+
+export interface RoyaleWebSocketMessage<T = unknown> {
+  type: RoyaleEventType
+  payload: T
+  timestamp: number
+}
+
+export type LiquidationReason = 'STORM' | 'MARGIN_CALL' | 'DUEL_LOSS' | 'TIMEOUT'
+
+export interface LiquidationEventPayload {
+  victimUuid: string
+  victimUsername: string
+  killerUuid?: string
+  killerUsername?: string
+  reason: LiquidationReason
+  bountyCents: number
+  sector: string
+  placement: number
+}
+
+export interface StormTickEventPayload {
+  roundNumber: number
+  damageRateCentsPerSec: number
+  damagedPlayerUuids: string[]
+  affectedSectors: string[]
+}
+
+export interface SectorClosureEventPayload {
+  roundNumber: number
+  collapsedSector: string
+  remainingSafeSectors: string[]
+}
+
+export interface DuelStartEventPayload {
+  duelId: string
+  sector: string
+  participantUuids: string[]
+  usernames: string[]
+  bountyPotCents: number
+}
+
+export type RankTier =
+  | 'BRONZE'
+  | 'SILVER'
+  | 'GOLD'
+  | 'PLATINUM'
+  | 'DIAMOND'
+  | 'CHAMPION'
+  | 'GRAND_CHAMPION'
+  | 'SUPERSONIC_LEGEND'
+
+export type RankDivision = 'I' | 'II' | 'III'
+
+export interface MatchRankResult {
+  oldRankTier: RankTier
+  oldDivision: RankDivision
+  oldRp: number
+  newRankTier: RankTier
+  newDivision: RankDivision
+  newRp: number
+  rpDelta: number
+  placement: number
+  placementBonusRp: number
+  kills: number
+  killBonusRp: number
+  netProfitCents: number
+  profitBonusRp: number
+  isPromotion: boolean
+  isDemotion: boolean
+}
+
+export interface MatchParticipantSummary {
+  uuid: string
+  username: string
+  placement: number
+  kills: number
+  netProfitCents: number
+}
+
+export interface MatchOverEventPayload {
+  matchId: string
+  winnerUuid: string
+  winnerUsername: string
+  finalPlacements: MatchParticipantSummary[]
+  userResult?: MatchRankResult
+}
+
+export interface KillFeedItem {
+  id: string
+  type: RoyaleEventType
+  title: string
+  description: string
+  timestamp: number
+  severity: 'info' | 'warning' | 'danger' | 'gold'
+  metadata?: Record<string, unknown>
+}
+
+export interface SpectatorTarget {
+  uuid: string
+  username: string
+  sector: string
+  equityCents: number
+  kills: number
+  status: string
+}
+
+export interface MatchParticipantState {
+  uuid: string
+  username: string
+  equityCents: number
+  capitalCents: number
+  activeSector: string
+  status: 'ALIVE' | 'IN_DUEL' | 'BUSTED' | 'VICTORIOUS'
+  kills: number
+  placement?: number
+  netProfitCents: number
+}
+
+export interface LiveMatchState {
+  matchId: string
+  phase: 'LOBBY' | 'DROP_SELECTION' | 'ACTIVE_ROUNDS' | 'FINAL_CIRCLE' | 'MATCH_OVER'
+  roundNumber: number
+  roundTimeRemainingSec: number
+  safeSectors: string[]
+  collapsingSectors: string[]
+  participants: Record<string, MatchParticipantState>
+  eliminatedCount: number
+  totalPlayers: number
+}

@@ -127,9 +127,11 @@
   - Point of no return: none
   - Subagent lane: `lane_tactical_ui`
 
-- [ ] **ROYALE-10. Real-Time WebSocket Client, Kill Feed Ticker & Post-Match Victory HUD** — Client composable useRoyaleMatch.ts connecting to the server WebSocket feed, feeding real-time events into KillFeed.vue (liquidations, storm tick warnings, sector closures), spectator view for fallen traders, and MatchVictoryModal.vue celebrating #1 Victory Royale with Rocket League rank badge animation and MMR gains. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-10. Real-Time WebSocket Client, Kill Feed Ticker & Post-Match Victory HUD** — Client composable useRoyaleMatch.ts connecting to the server WebSocket feed, feeding real-time events into KillFeed.vue (liquidations, storm tick warnings, sector closures), spectator view for fallen traders, and MatchVictoryModal.vue celebrating #1 Victory Royale with Rocket League rank badge animation and MMR gains. <!-- wargame-state: activation; wargame-disposition: active -->
   - Depends on: ROYALE-7@canonical, ROYALE-9@activation
   - Required stage: ACTIVATION
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-10_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-10/execution.md`
   - Verifier/consumer: `packages/client/tests/RoyaleMatchFlow.test.ts` verifying WebSocket event handling, kill feed event rendering, and victory screen display
   - Preserves: Client state store and notification system
   - User flows: FLOW-ROYALE-GOLDEN, FLOW-TACTICAL-SPECTATE
