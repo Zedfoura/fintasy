@@ -234,3 +234,33 @@ export function isSectorAdjacent(fromSector: MarketSector | string, toSector: Ma
 export function getSectorsByTier(tier: SectorTier): SectorDefinition[] {
   return Object.values(SECTOR_DEFINITIONS).filter(s => s.tier === tier)
 }
+
+// --- TRADING DUEL ARENA TYPES (ROYALE-9) ---
+
+export type DuelSide = 'LONG' | 'SHORT'
+export type DuelLeverage = 1 | 2 | 5
+export type DuelPhase = 'COUNTDOWN' | 'ACTIVE' | 'SETTLING' | 'CONCLUDED'
+
+export interface DuelPosition {
+  side: DuelSide
+  leverage: DuelLeverage
+  quantity: number
+  entryPriceCents: number
+}
+
+export interface DuelParticipant {
+  userUuid: string
+  username: string
+  isLocalUser: boolean
+  equityCents: number
+  position: DuelPosition | null
+  netProfitCents: number
+  roiPercent: number
+  isBusted: boolean
+}
+
+export interface DuelOrderPayload {
+  side: DuelSide
+  leverage: DuelLeverage
+  quantity: number
+}

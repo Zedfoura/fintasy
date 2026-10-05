@@ -116,9 +116,11 @@
   - Point of no return: none
   - Subagent lane: `lane_tactical_ui`
 
-- [ ] **ROYALE-9. Live Trading Duel Arena HUD & Split-Screen Combat Terminal** — Dedicated Vue component TradingDuelArena.vue providing a split-screen micro-trading interface during 30s duels: real-time HTML5 Canvas Lightweight Charts, 30s countdown bar, Long/Short quick execution buttons, 1x-5x leverage selector, opponent P&L progress bar, and "Third-Party Join" alert banner. <!-- wargame-state: proposed; wargame-disposition: active -->
-  - Depends on: ROYALE-5@canonical, ROYALE-8@canonical
+- [ ] **ROYALE-9. Live Trading Duel Arena HUD & Split-Screen Combat Terminal** — Dedicated Vue component TradingDuelArena.vue providing a split-screen micro-trading interface during 30s duels: real-time HTML5 Canvas Lightweight Charts, 30s countdown bar, Long/Short quick execution buttons, 1x-5x leverage selector, opponent P&L progress bar, and "Third-Party Join" alert banner. <!-- wargame-state: activation; wargame-disposition: active -->
+  - Depends on: ROYALE-5@canonical, ROYALE-8@activation
   - Required stage: ACTIVATION
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-9_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-9/execution.md`
   - Verifier/consumer: `packages/client/tests/TradingDuelArena.test.ts` and live DOM assertions verifying order placement, P&L delta display, and timer countdown
   - Preserves: Responsive design and UnoCSS color system
   - User flows: FLOW-COMBAT-DUEL, FLOW-COMBAT-THIRDPARTY
