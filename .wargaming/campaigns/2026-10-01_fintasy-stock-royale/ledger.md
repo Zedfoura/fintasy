@@ -92,9 +92,11 @@
   - Point of no return: none
   - Subagent lane: `lane_ranked`
 
-- [ ] **ROYALE-7. PostgreSQL Database Migrations & Match Persistence Layer** — Database migration adding tables (ranked_seasons, user_ranks, matches, match_participants, match_duels), CRUD mixins in services/database/mixins/royale.py, and API endpoints for seasonal leaderboards, user rank profile, and match history. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **ROYALE-7. PostgreSQL Database Migrations & Match Persistence Layer** — Database migration adding tables (ranked_seasons, user_ranks, matches, match_participants, match_duels), CRUD mixins in services/database/mixins/royale.py, and API endpoints for seasonal leaderboards, user rank profile, and match history. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: ROYALE-6@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_ROYALE-7_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_ROYALE-7/execution.md`
   - Verifier/consumer: `packages/server/tests/royale/test_db_royale.py` verifying table creation, match saving, leaderboard queries, and user rank updates
   - Preserves: Existing tables (users, portfolios, transactions, tournaments, sessions) unmodified
   - User flows: FLOW-RANKED-PROGRESS
