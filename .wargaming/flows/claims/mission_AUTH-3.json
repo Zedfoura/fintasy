@@ -1,0 +1,10 @@
+{
+  "mission_id": "AUTH-3",
+  "campaign": "2026-10-01_fintasy-stock-royale",
+  "inventory_hash": "6814e54d32fe6c2a3fd1ea0a3826e1cfb725088379b26831913e6f7d10ba08b9",
+  "flows": [
+    "FLOW-AUTH-LOGIN"
+  ],
+  "stage": "proposed",
+  "disposition": "active"
+}

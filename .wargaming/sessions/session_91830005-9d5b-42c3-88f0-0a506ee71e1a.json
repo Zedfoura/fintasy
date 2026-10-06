@@ -3,35 +3,33 @@
   "client": "antigravity",
   "workspace_root": "/Users/tinatseichingaya/fintasy",
   "active_campaign": "2026-10-01_fintasy-stock-royale",
-  "active_mission": "CLEAN-4",
-  "mode": "EXECUTE",
+  "active_mission": "AUTH-1",
+  "mode": "PLAN",
   "ledger_path": ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md",
-  "ledger_hash": "c86c5291f6bdc6d608c5bb6325b4a17a9f54fd2dc8ad9b6c05364aa103ba11a6",
+  "ledger_hash": "83f637a4c821083032484c12be43ddfd363d30170b9a1c37f67ff4f73c6dfd9d",
   "campaign_decision": {
     "decision": "select_existing",
     "campaign": "2026-10-01_fintasy-stock-royale",
-    "reason": "Repository cleanup and comprehensive documentation directly continue the Stock Royale platform rollout and address legacy debt from the initial school project.",
+    "reason": "Authentication and login experience revamp directly extends the Fintasy Stock Royale client/server platform.",
     "identity_binding": "match",
     "evidence": [
-      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:c86c5291f6bdc6d608c5bb6325b4a17a9f54fd2dc8ad9b6c05364aa103ba11a6",
-      "user_request:proceed"
+      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:83f637a4c821083032484c12be43ddfd363d30170b9a1c37f67ff4f73c6dfd9d",
+      "user_request:/wargame-goal Revamp the login process."
     ],
     "rejected_candidates": [
       {
-        "campaign": "2026-10-05_repo-cleanup-and-documentation",
-        "reason": "Work is a direct delta/continuation on the active Stock Royale campaign files, dependencies, and documentation."
+        "campaign": "2026-10-05_auth-login-revamp",
+        "reason": "Login flow directly authenticates into Fintasy Stock Royale and paper trading dashboards in this monorepo."
       }
     ]
   },
   "authority_grant": {
-    "grant_id": "grant-2026-10-05-cleanup-and-docs",
-    "authorizing_message": "proceed",
+    "grant_id": "grant-2026-10-05-auth-login-revamp",
+    "authorizing_message": "/wargame-goal Revamp the login process.",
     "campaign": "2026-10-01_fintasy-stock-royale",
     "allowed_actions": [
       "inspect",
-      "implement",
-      "test",
-      "verify",
+      "plan",
       "write_wargame_artifacts"
     ],
     "tier_b_boundaries": [
@@ -42,5 +40,5 @@
     ]
   },
   "last_verified_transition": "CLEAN-4@canonical",
-  "next_transition": "EPIC-6-COMPLETE"
+  "next_transition": "AUTH-1@canonical"
 }

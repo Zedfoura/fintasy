@@ -208,3 +208,42 @@
   - Point of no return: none
   - Subagent lane: `lane_docs`
 
+### Epic 7 — Authentication & Login Flow Overhaul <!-- wargame-epic: auth-login-revamp; wargame-epic-priority: 7 -->
+
+- [ ] **AUTH-1. Resilient Backend Session Engine & Local Guest Authentication** — Implement fallback in-memory/guest session provisioning on the FastAPI backend when PostgreSQL is uninitialized or in offline development mode, alongside an authenticated `/api/v1/sessions/guest` endpoint and robust error handling for password/user lookup without 500 crashes. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: CLEAN-4@canonical
+  - Required stage: CANONICAL
+  - Verifier/consumer: `packages/server/tests/test_sessions.py` asserting guest session creation, credentials verification, and offline fallback
+  - Preserves: Existing password hashing and `/api/v1/sessions` contract
+  - User flows: FLOW-AUTH-LOGIN
+  - Point of no return: none
+  - Subagent lane: `lane_backend_auth`
+
+- [ ] **AUTH-2. Client Authentication Store, Guest Session & Route Guards** — Upgrade `useAPI` and Pinia auth state (`state.user`) to support persistent token hydration, reactive authentication state, instant guest login (`fintasy.loginAsGuest()`), automatic token clearance on 401/403, and global router guards redirecting unauthenticated users to `/login` with target path retention. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: AUTH-1@canonical
+  - Required stage: CANONICAL
+  - Verifier/consumer: `packages/client/tests/AuthStore.test.ts` asserting token storage, guest login, and route guard redirects
+  - Preserves: Existing `useAPI` method contracts and Pinia state layout
+  - User flows: FLOW-AUTH-LOGIN
+  - Point of no return: none
+  - Subagent lane: `lane_client_auth`
+
+- [ ] **AUTH-3. Tactical Fintech/Cyberpunk Login UI & Form UX Overhaul** — Completely redesign `packages/client/src/pages/login.vue` using Naive UI components (`<NCard>`, `<NTabs>`, `<NForm>`, `<NInput>`, `<NButton>`) with a high-fidelity cyberpunk/fintech aesthetic matching Stock Royale: tabbed Sign In / Register / Guest Demo modes, real-time input validation, password reveal toggles, caps-lock indicators, and loading spin states. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: AUTH-2@canonical
+  - Required stage: ACTIVATION
+  - Verifier/consumer: `packages/client/tests/LoginView.test.ts` asserting tab switching, input validation, and component rendering, plus `pnpm --filter client build`
+  - Preserves: UnoCSS theming and dark mode styles
+  - User flows: FLOW-AUTH-LOGIN
+  - Point of no return: none
+  - Subagent lane: `lane_tactical_ui`
+
+- [ ] **AUTH-4. End-to-End Authentication & Onboarding Verification** — Verify full end-to-end user onboarding across normal credential authentication, guest quick-play, session logout, and route protection with zero lint errors and 100% test pass rate across the monorepo. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: AUTH-3@activation
+  - Required stage: OUTCOME
+  - Verifier/consumer: Monorepo test suite `pnpm test` and programmatic blast radius check verifying zero cross-package regressions
+  - Preserves: All existing paper trading and Stock Royale game loops
+  - User flows: FLOW-AUTH-LOGIN
+  - Point of no return: none
+  - Subagent lane: `lane_qa_auth`
+
+

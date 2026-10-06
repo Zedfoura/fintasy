@@ -66,6 +66,15 @@
       "entry_route": "/dashboard/royale/match/:id",
       "terminal_step": "Spectator view shows match conclusion and return to lobby button",
       "expected_duration_seconds": 120
+    },
+    {
+      "id": "FLOW-AUTH-LOGIN",
+      "tier": "critical-secondary",
+      "name": "Authentication, Registration & Quick Guest Entry",
+      "description": "User navigates to /login -> authenticates via credentials or instant guest session -> session token is stored and validated -> redirected to dashboard or previous destination with active wallet",
+      "entry_route": "/login",
+      "terminal_step": "Redirect to /dashboard with active authenticated user session",
+      "expected_duration_seconds": 5
     }
   ]
 }
