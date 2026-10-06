@@ -3,25 +3,29 @@
   "client": "antigravity",
   "workspace_root": "/Users/tinatseichingaya/fintasy",
   "active_campaign": "2026-10-01_fintasy-stock-royale",
-  "active_mission": "ROYALE-12",
-  "mode": "AUDIT",
+  "active_mission": "CLEAN-2",
+  "mode": "PLAN",
   "ledger_path": ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md",
-  "ledger_hash": "73fd430c66767f9aa9e3a73cf9af672a7fe6dcd34ad0bdd4cfbbc2ee408077f2",
+  "ledger_hash": "5abb34fb4bfcf4630216abe112239a914fa9d2a5e19572104b3c493fd80baa6c",
   "campaign_decision": {
-    "decision": "create_new",
+    "decision": "select_existing",
     "campaign": "2026-10-01_fintasy-stock-royale",
-    "reason": "New Battle-Royale trading simulator initiative transforming legacy Fintasy paper-trading app into a competitive stock-market battle royale.",
+    "reason": "Repository cleanup and comprehensive documentation directly continue the Stock Royale platform rollout and address legacy debt from the initial school project.",
     "identity_binding": "match",
     "evidence": [
-      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:73fd430c66767f9aa9e3a73cf9af672a7fe6dcd34ad0bdd4cfbbc2ee408077f2",
-      "user_request:/wargame-run",
-      "corpus:Zedfoura/fintasy"
+      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:5abb34fb4bfcf4630216abe112239a914fa9d2a5e19572104b3c493fd80baa6c",
+      "user_request:proceed"
     ],
-    "rejected_candidates": []
+    "rejected_candidates": [
+      {
+        "campaign": "2026-10-05_repo-cleanup-and-documentation",
+        "reason": "Work is a direct delta/continuation on the active Stock Royale campaign files, dependencies, and documentation."
+      }
+    ]
   },
   "authority_grant": {
-    "grant_id": "grant-2026-10-01-execute-royale-9",
-    "authorizing_message": "/wargame-run",
+    "grant_id": "grant-2026-10-05-cleanup-and-docs",
+    "authorizing_message": "proceed",
     "campaign": "2026-10-01_fintasy-stock-royale",
     "allowed_actions": [
       "inspect",
@@ -37,6 +41,6 @@
       "credential_mutation"
     ]
   },
-  "last_verified_transition": "ROYALE-12@activation",
-  "next_transition": null
+  "last_verified_transition": "CLEAN-1@canonical",
+  "next_transition": "CLEAN-2@plan"
 }

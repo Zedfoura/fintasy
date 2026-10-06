@@ -10,6 +10,7 @@
     - Micro-trading duel mechanics (30s battles, profit scoring, loot stealing, liquidation) and third-party battle joining.
     - Rocket League ranked tier system (Bronze to Golden Trader) with PostgreSQL persistence.
     - Football Manager (FM) tactical command center UI with radar heatmap, duel HUD, kill feed, and spectator mode.
+    - Codebase cleanup, dead mock code elimination, in-app platform navigation, and comprehensive documentation overhaul.
 - **Authority:** Planning artifacts only; execution requires explicit user authorization.
 - **Disposition:** active
 - **Run Mode:** `PostgreSQL + In-Memory Fast Match State Machine + WebSocket Event Stream`

@@ -161,3 +161,44 @@
   - User flows: not applicable (platform packaging)
   - Point of no return: none
   - Subagent lane: `lane_engine`
+
+### Epic 6 — Codebase Cleanup, Platform Navigation & Comprehensive Documentation <!-- wargame-epic: codebase-cleanup-docs; wargame-epic-priority: 6 -->
+
+- [ ] **CLEAN-1. Dead Code Elimination & Test Suite Hygiene** — Safely remove orphan server mocks (`src/helpers/quote.py`, `sessions.py`, `transactions.py`), obsolete non-executed legacy tests (`tests/legacy/`), and boilerplate placeholder READMEs across client/server component, module, store, layout, and service directories (including `components/README.md` that was contaminating Vite component registry), and update `pytest.ini`. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: ROYALE-12@activation
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_CLEAN-1_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_CLEAN-1/execution.md`
+  - Verifier/consumer: `pnpm test` (all 110 tests pass, zero missing import errors), `pnpm run lint` (zero formatting/lint errors), and file deletion presence checks
+  - Preserves: Active validation helpers (`User`, `Portfolio`, `Tournament`), all passing test suites, and legacy paper-trading REST endpoints
+  - User flows: not applicable (repository refactoring)
+  - Point of no return: File deletions (tracked in Git)
+  - Subagent lane: `lane_cleanup`
+
+- [ ] **CLEAN-2. Stock Royale Client Route & Navigation Integration** — Mount the Stock Royale battle-royale mode into the client web app by implementing a dedicated page `packages/client/src/pages/dashboard/royale.vue` connecting `MarketRadarMap.vue`, `TradingDuelArena.vue`, `KillFeed.vue`, `MatchVictoryModal.vue`, and `useRoyaleMatch.ts` with matchmaking and lobby controls. Add a first-class navigation link and icon to `SideBar.vue`. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: CLEAN-1@canonical
+  - Required stage: ACTIVATION
+  - Verifier/consumer: Client integration test suite asserting route mounting, component rendering, and navigation click
+  - Preserves: Existing dashboard routes (`/dashboard`, `/dashboard/trade`, `/dashboard/tournaments`, `/dashboard/settings`)
+  - User flows: FLOW-LOBBY-BOTFILL, FLOW-ZONE-COLLAPSE, FLOW-COMBAT-DUEL, FLOW-ROYALE-GOLDEN
+  - Point of no return: none
+  - Subagent lane: `lane_tactical_ui`
+
+- [ ] **CLEAN-3. Comprehensive In-App Game Manual & Interactive Help Overhaul** — Transform the placeholder template files in `packages/client/src/pages/dashboard/help/` (`index.md` and `faq.md`) into an authoritative, beautifully formatted Stock Royale Game Manual and Trading Guide explaining 12-sector topology, storm damage schedules, 30s duel leverage mechanics, Rocket League rank tiers, and FAQ. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: CLEAN-2@activation
+  - Required stage: CANONICAL
+  - Verifier/consumer: Client build pass (`pnpm --filter client build`) and unit test asserting rendered help sections and FAQ answers
+  - Preserves: Dashboard layout (`dashboard-md`) and markdown rendering
+  - User flows: not applicable (documentation)
+  - Point of no return: none
+  - Subagent lane: `lane_tactical_ui`
+
+- [ ] **CLEAN-4. Root README & Technical Architecture Documentation Overhaul** — Completely rewrite root `README.md` and `docs/index.md` to reflect the complete Stock Royale platform: high-level architecture diagram, quick-start guide (`pnpm install`, `pnpm dev`, `pnpm test`), Tauri 2.0 / Steam Deck packaging commands (`pnpm desktop:dev`, `pnpm desktop:build`), environment variable guide (`.env.example`), interactive Swagger/OpenAPI documentation reference, and contribution guidelines. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: CLEAN-1@canonical, CLEAN-3@canonical
+  - Required stage: CANONICAL
+  - Verifier/consumer: Markdown link and command consistency checks, programmatic blast radius check, and zero lint warnings
+  - Preserves: Repository license and canonical package manifests
+  - User flows: not applicable (documentation)
+  - Point of no return: none
+  - Subagent lane: `lane_docs`
+
