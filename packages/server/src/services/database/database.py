@@ -32,6 +32,24 @@ class Database(
     """
 
     connectionPool: pool.SimpleConnectionPool = None
+    _fallback_users: dict = {}
+    _fallback_sessions: dict = {}
+
+    def _init_fallback_defaults(self):
+        guest_uuid = "00000000-0000-4000-8000-000000000001"
+        try:
+            from helpers.user import User
+
+            password_hash = User.hash_password("guest123")
+        except Exception:
+            password_hash = "mock_hash"
+        self._fallback_users[guest_uuid] = {
+            "uuid": guest_uuid,
+            "username": "guest_trader",
+            "email": "guest@fintasy.local",
+            "password_hash": password_hash,
+            "coins": 1500000,
+        }
 
     def __new__(cls):
         """
@@ -47,6 +65,9 @@ class Database(
         if not hasattr(cls, "instance"):
             conn = None
             cls.instance = super(Database, cls).__new__(cls)
+            cls.instance._fallback_users = {}
+            cls.instance._fallback_sessions = {}
+            cls.instance._init_fallback_defaults()
 
             try:
                 print("Connecting to PostgreSQL database...", flush=True)

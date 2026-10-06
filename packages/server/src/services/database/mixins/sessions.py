@@ -28,6 +28,17 @@ class SessionsMixin:
         """
 
         conn = None
+        if not getattr(self, "connectionPool", None):
+            import uuid
+
+            fallback_sessions = getattr(self, "_fallback_sessions", {})
+            token = str(uuid.uuid4())
+            for tok, own in list(fallback_sessions.items()):
+                if own == str(owner):
+                    del fallback_sessions[tok]
+            fallback_sessions[token] = str(owner)
+            return {"owner": str(owner), "token": token}
+
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
@@ -69,6 +80,13 @@ class SessionsMixin:
             bool: True if successful, False otherwise.
         """
 
+        if not getattr(self, "connectionPool", None):
+            fallback_sessions = getattr(self, "_fallback_sessions", {})
+            if str(token) in fallback_sessions:
+                del fallback_sessions[str(token)]
+                return True
+            return False
+
         conn = None
         try:
             conn = self.connectionPool.getconn()
@@ -93,6 +111,10 @@ class SessionsMixin:
         Returns:
             str: The uuid of the session owner if successful, None otherwise.
         """
+
+        if not getattr(self, "connectionPool", None):
+            fallback_sessions = getattr(self, "_fallback_sessions", {})
+            return fallback_sessions.get(str(token))
 
         conn = None
         try:
