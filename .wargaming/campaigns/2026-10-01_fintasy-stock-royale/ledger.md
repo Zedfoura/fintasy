@@ -175,9 +175,11 @@
   - Point of no return: File deletions (tracked in Git)
   - Subagent lane: `lane_cleanup`
 
-- [ ] **CLEAN-2. Stock Royale Client Route & Navigation Integration** — Mount the Stock Royale battle-royale mode into the client web app by implementing a dedicated page `packages/client/src/pages/dashboard/royale.vue` connecting `MarketRadarMap.vue`, `TradingDuelArena.vue`, `KillFeed.vue`, `MatchVictoryModal.vue`, and `useRoyaleMatch.ts` with matchmaking and lobby controls. Add a first-class navigation link and icon to `SideBar.vue`. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **CLEAN-2. Stock Royale Client Route & Navigation Integration** — Mount the Stock Royale battle-royale mode into the client web app by implementing a dedicated page `packages/client/src/pages/dashboard/royale.vue` connecting `MarketRadarMap.vue`, `TradingDuelArena.vue`, `KillFeed.vue`, `MatchVictoryModal.vue`, and `useRoyaleMatch.ts` with matchmaking and lobby controls. Add a first-class navigation link and icon to `SideBar.vue`. <!-- wargame-state: activation; wargame-disposition: active -->
   - Depends on: CLEAN-1@canonical
   - Required stage: ACTIVATION
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_CLEAN-2_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_CLEAN-2/execution.md`
   - Verifier/consumer: Client integration test suite asserting route mounting, component rendering, and navigation click
   - Preserves: Existing dashboard routes (`/dashboard`, `/dashboard/trade`, `/dashboard/tournaments`, `/dashboard/settings`)
   - User flows: FLOW-LOBBY-BOTFILL, FLOW-ZONE-COLLAPSE, FLOW-COMBAT-DUEL, FLOW-ROYALE-GOLDEN

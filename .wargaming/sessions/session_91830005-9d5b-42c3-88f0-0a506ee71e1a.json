@@ -3,17 +3,17 @@
   "client": "antigravity",
   "workspace_root": "/Users/tinatseichingaya/fintasy",
   "active_campaign": "2026-10-01_fintasy-stock-royale",
-  "active_mission": "CLEAN-2",
+  "active_mission": "CLEAN-3",
   "mode": "PLAN",
   "ledger_path": ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md",
-  "ledger_hash": "5abb34fb4bfcf4630216abe112239a914fa9d2a5e19572104b3c493fd80baa6c",
+  "ledger_hash": "f2f5caefc5e66e0de3d78ad0df85622d0d5192e841f409a808060115d7169c2d",
   "campaign_decision": {
     "decision": "select_existing",
     "campaign": "2026-10-01_fintasy-stock-royale",
     "reason": "Repository cleanup and comprehensive documentation directly continue the Stock Royale platform rollout and address legacy debt from the initial school project.",
     "identity_binding": "match",
     "evidence": [
-      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:5abb34fb4bfcf4630216abe112239a914fa9d2a5e19572104b3c493fd80baa6c",
+      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:f2f5caefc5e66e0de3d78ad0df85622d0d5192e841f409a808060115d7169c2d",
       "user_request:proceed"
     ],
     "rejected_candidates": [
@@ -41,6 +41,6 @@
       "credential_mutation"
     ]
   },
-  "last_verified_transition": "CLEAN-1@canonical",
-  "next_transition": "CLEAN-2@plan"
+  "last_verified_transition": "CLEAN-2@activation",
+  "next_transition": "CLEAN-3@plan"
 }
