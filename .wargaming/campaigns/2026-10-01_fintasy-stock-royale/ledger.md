@@ -186,9 +186,11 @@
   - Point of no return: none
   - Subagent lane: `lane_tactical_ui`
 
-- [ ] **CLEAN-3. Comprehensive In-App Game Manual & Interactive Help Overhaul** — Transform the placeholder template files in `packages/client/src/pages/dashboard/help/` (`index.md` and `faq.md`) into an authoritative, beautifully formatted Stock Royale Game Manual and Trading Guide explaining 12-sector topology, storm damage schedules, 30s duel leverage mechanics, Rocket League rank tiers, and FAQ. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **CLEAN-3. Comprehensive In-App Game Manual & Interactive Help Overhaul** — Transform the placeholder template files in `packages/client/src/pages/dashboard/help/` (`index.md` and `faq.md`) into an authoritative, beautifully formatted Stock Royale Game Manual and Trading Guide explaining 12-sector topology, storm damage schedules, 30s duel leverage mechanics, Rocket League rank tiers, and FAQ. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: CLEAN-2@activation
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_CLEAN-3_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_CLEAN-3/execution.md`
   - Verifier/consumer: Client build pass (`pnpm --filter client build`) and unit test asserting rendered help sections and FAQ answers
   - Preserves: Dashboard layout (`dashboard-md`) and markdown rendering
   - User flows: not applicable (documentation)
