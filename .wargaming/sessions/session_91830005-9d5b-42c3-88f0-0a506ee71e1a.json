@@ -3,17 +3,17 @@
   "client": "antigravity",
   "workspace_root": "/Users/tinatseichingaya/fintasy",
   "active_campaign": "2026-10-01_fintasy-stock-royale",
-  "active_mission": "AUTH-4",
+  "active_mission": "LANDING-1",
   "mode": "EXECUTE",
   "ledger_path": ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md",
-  "ledger_hash": "0fc5ba6e62c3fe33ef65115cd241de584d26ccfafff2f275b4738ad3077bbfa9",
+  "ledger_hash": "c326ba23100ebdbf256550e6a7c16bb3c0eec818fa02377846d4905b7ddb4bd6",
   "campaign_decision": {
     "decision": "select_existing",
     "campaign": "2026-10-01_fintasy-stock-royale",
     "reason": "Authentication and login experience revamp directly extends the Fintasy Stock Royale client/server platform.",
     "identity_binding": "match",
     "evidence": [
-      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:0fc5ba6e62c3fe33ef65115cd241de584d26ccfafff2f275b4738ad3077bbfa9",
+      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:c326ba23100ebdbf256550e6a7c16bb3c0eec818fa02377846d4905b7ddb4bd6",
       "user_request:/wargame-run"
     ],
     "rejected_candidates": [
@@ -41,6 +41,6 @@
       "credential_mutation"
     ]
   },
-  "last_verified_transition": "AUTH-3@activation",
-  "next_transition": "AUTH-4@outcome"
+  "last_verified_transition": "AUTH-4@outcome",
+  "next_transition": "LANDING-1@canonical"
 }

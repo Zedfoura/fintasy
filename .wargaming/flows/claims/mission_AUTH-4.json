@@ -5,6 +5,6 @@
   "flows": [
     "FLOW-AUTH-LOGIN"
   ],
-  "stage": "proposed",
+  "stage": "outcome",
   "disposition": "active"
 }

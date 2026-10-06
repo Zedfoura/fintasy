@@ -243,9 +243,11 @@
   - Point of no return: none
   - Subagent lane: `lane_tactical_ui`
 
-- [ ] **AUTH-4. End-to-End Authentication & Onboarding Verification** — Verify full end-to-end user onboarding across normal credential authentication, guest quick-play, session logout, and route protection with zero lint errors and 100% test pass rate across the monorepo. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **AUTH-4. End-to-End Authentication & Onboarding Verification** — Verify full end-to-end user onboarding across normal credential authentication, guest quick-play, session logout, and route protection with zero lint errors and 100% test pass rate across the monorepo. <!-- wargame-state: outcome; wargame-disposition: active -->
   - Depends on: AUTH-3@activation
   - Required stage: OUTCOME
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_AUTH-4_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_AUTH-4/execution.md`
   - Verifier/consumer: Monorepo test suite `pnpm test` and programmatic blast radius check verifying zero cross-package regressions
   - Preserves: All existing paper trading and Stock Royale game loops
   - User flows: FLOW-AUTH-LOGIN
