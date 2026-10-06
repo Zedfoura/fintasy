@@ -3,25 +3,20 @@
   "client": "antigravity",
   "workspace_root": "/Users/tinatseichingaya/fintasy",
   "active_campaign": "2026-10-01_fintasy-stock-royale",
-  "active_mission": "LANDING-1",
+  "active_mission": "LANDING-5",
   "mode": "EXECUTE",
   "ledger_path": ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md",
-  "ledger_hash": "c326ba23100ebdbf256550e6a7c16bb3c0eec818fa02377846d4905b7ddb4bd6",
+  "ledger_hash": "1e81f2e59ba819496b3f58b6b622be409c7c6c125984f5df48c6e90468ba1cba",
   "campaign_decision": {
     "decision": "select_existing",
     "campaign": "2026-10-01_fintasy-stock-royale",
-    "reason": "Authentication and login experience revamp directly extends the Fintasy Stock Royale client/server platform.",
+    "reason": "Landing page revamp directly builds the marketing conversion funnel for the Fintasy Stock Royale platform.",
     "identity_binding": "match",
     "evidence": [
-      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:c326ba23100ebdbf256550e6a7c16bb3c0eec818fa02377846d4905b7ddb4bd6",
+      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:1e81f2e59ba819496b3f58b6b622be409c7c6c125984f5df48c6e90468ba1cba",
       "user_request:/wargame-run"
     ],
-    "rejected_candidates": [
-      {
-        "campaign": "2026-10-05_auth-login-revamp",
-        "reason": "Login flow directly authenticates into Fintasy Stock Royale and paper trading dashboards in this monorepo."
-      }
-    ]
+    "rejected_candidates": []
   },
   "authority_grant": {
     "grant_id": "grant-2026-10-05-auth-login-revamp",
@@ -41,6 +36,6 @@
       "credential_mutation"
     ]
   },
-  "last_verified_transition": "AUTH-4@outcome",
-  "next_transition": "LANDING-1@canonical"
+  "last_verified_transition": "LANDING-5@outcome",
+  "next_transition": "none"
 }

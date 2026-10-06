@@ -5,6 +5,6 @@
   "flows": [
     "FLOW-LANDING-CONVERSION"
   ],
-  "stage": "activation",
+  "stage": "canonical",
   "disposition": "active"
 }

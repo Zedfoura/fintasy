@@ -17,6 +17,10 @@ import {
   Dashboard as DashboardIcon,
   Login as LoginIcon,
 } from '@vicons/carbon'
+import LandingGameplayPillars from '~/components/landing/LandingGameplayPillars.vue'
+import LandingDuelSimulator from '~/components/landing/LandingDuelSimulator.vue'
+import LandingSocialProof from '~/components/landing/LandingSocialProof.vue'
+import LandingFooter from '~/components/landing/LandingFooter.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -238,6 +242,18 @@ const tickerStream = ref([
         </div>
       </div>
     </div>
+
+    <!-- The 4 Pillars of Stock Royale Section -->
+    <LandingGameplayPillars />
+
+    <!-- Interactive 30-Second Duel Mini-Simulator Widget -->
+    <LandingDuelSimulator />
+
+    <!-- Social Proof Stats, Golden Trader Apex Leaderboard Preview & FAQ -->
+    <LandingSocialProof />
+
+    <!-- Platform Footer -->
+    <LandingFooter />
 
     <!-- Commit Hash Watermark -->
     <span class="pointer-events-none absolute bottom-1 left-2 text-xs text-gray-500 font-mono opacity-20">

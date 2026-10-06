@@ -22,6 +22,16 @@ pages:
     content-subtitle: >-
       Drop into real-time S&P 500 sectors, loot volatile tickers, fight 30-second trading duels,
       escape the Federal Reserve liquidity drain storm, and claim the #1 Victory Royale.
+    pillars-tag: THE 4 PILLARS OF STOCK ROYALE
+    pillars-title: Tactical High-Frequency Combat Mechanics
+    pillars-subtitle: Experience an entirely new genre of competitive market simulation engineered for 60 simultaneous traders.
+    duel-tag: TEST YOUR REFLEXES
+    duel-title: 30s LIVE DUEL DEMO
+    duel-subtitle: Experience the adrenaline of Stock Royale micro-trading before entering the 60-player arena.
+    social-tag: PROVEN MARKET INFRASTRUCTURE
+    social-title: Battle-Tested High Frequency Performance
+    social-subtitle: Real-time telemetry, competitive matchmaking ladders, and sub-100ms market state synchronization.
+    faq-title: Frequently Asked Questions
   login:
     title: Login/Register
     register: Register

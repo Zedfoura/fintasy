@@ -256,7 +256,7 @@
 
 ### Epic 8 — Marketing Landing Page Revamp & Visual Conversion Funnel <!-- wargame-epic: marketing-landing-revamp; wargame-epic-priority: 8 -->
 
-- [ ] **LANDING-1. Hero Arena, Value Proposition & Dual Conversion CTAs** — High-impact Stock Royale hero section on `/` displaying bold battle-royale headline ("The 60-Player Stock Market Battle Royale"), live status chips ("Season 1: Liquidity Drain Active", "60 Traders Per Match", "100ms Tick Engine"), animated financial ticker tape, and dual high-visibility conversion CTAs ("Deploy to Stock Royale" -> `/dashboard/royale`, "Sign In / Register" -> `/login`), plus updated `HomeNav.vue` header with a prominent "Play Royale" action button. <!-- wargame-state: activation; wargame-disposition: active -->
+- [ ] **LANDING-1. Hero Arena, Value Proposition & Dual Conversion CTAs** — High-impact Stock Royale hero section on `/` displaying bold battle-royale headline ("The 60-Player Stock Market Battle Royale"), live status chips ("Season 1: Liquidity Drain Active", "60 Traders Per Match", "100ms Tick Engine"), animated financial ticker tape, and dual high-visibility conversion CTAs ("Deploy to Stock Royale" -> `/dashboard/royale`, "Sign In / Register" -> `/login`), plus updated `HomeNav.vue` header with a prominent "Play Royale" action button. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: CLEAN-4@canonical
   - Required stage: CANONICAL
   - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-1_battleplan.md`
@@ -268,9 +268,11 @@
   - Subagent lane: `lane_landing_ui`
   - Contract charter: Git base `e3e92a606bfdea046e878e11beb9df476887a5e1`, exclude `packages/server/`, worktree `wt/landing_hero`, subsystem `packages/client/src/pages/index.vue` + `packages/client/src/components/navigation/HomeNav.vue` + `packages/client/tests/LandingHero.test.ts`
 
-- [ ] **LANDING-2. 4-Pillar Gameplay Loop Showcase & Tactical Sector Teaser** — Responsive UnoCSS component `LandingGameplayPillars.vue` showcasing the 4 core pillars of Stock Royale with dark-mode glassmorphic cards: (1) 30-60 Player Lobbies & Bot Fill, (2) Dynamic S&P 500 Sector Map & Liquidity Storm, (3) 30-Second Micro-Trading Duels & Loot Stealing, (4) Rocket League Ranked MMR Progression, including interactive pillar tab exploration. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **LANDING-2. 4-Pillar Gameplay Loop Showcase & Tactical Sector Teaser** — Responsive UnoCSS component `LandingGameplayPillars.vue` showcasing the 4 core pillars of Stock Royale with dark-mode glassmorphic cards: (1) 30-60 Player Lobbies & Bot Fill, (2) Dynamic S&P 500 Sector Map & Liquidity Storm, (3) 30-Second Micro-Trading Duels & Loot Stealing, (4) Rocket League Ranked MMR Progression, including interactive pillar tab exploration. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: LANDING-1@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-2_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-2/execution.md`
   - Verifier/consumer: `packages/client/tests/LandingPillars.test.ts` asserting 4 pillar cards, interactive tab switching, descriptive text, and icon rendering
   - Preserves: UnoCSS design tokens and responsive grid layout across mobile/desktop
   - User flows: FLOW-LANDING-CONVERSION
@@ -278,9 +280,11 @@
   - Subagent lane: `lane_landing_ui`
   - Contract charter: Git base `e3e92a606bfdea046e878e11beb9df476887a5e1`, exclude `packages/server/`, worktree `wt/landing_pillars`, subsystem `packages/client/src/components/landing/LandingGameplayPillars.vue` + `packages/client/tests/LandingPillars.test.ts`
 
-- [ ] **LANDING-3. Interactive Client-Side 30-Second Duel Mini-Simulator Widget** — Embedded interactive micro-simulator widget `LandingDuelSimulator.vue` directly on the landing page allowing visitors to test the core 30-second duel mechanic without authentication: 10 Hz simulated price tick sparkline, interactive Long/Short buttons, 1x-5x leverage selector, real-time P&L delta counter, and 15-second demo timer triggering an instant victory popup with CTA to `/dashboard/royale`. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **LANDING-3. Interactive Client-Side 30-Second Duel Mini-Simulator Widget** — Embedded interactive micro-simulator widget `LandingDuelSimulator.vue` directly on the landing page allowing visitors to test the core 30-second duel mechanic without authentication: 10 Hz simulated price tick sparkline, interactive Long/Short buttons, 1x-5x leverage selector, real-time P&L delta counter, and 15-second demo timer triggering an instant victory popup with CTA to `/dashboard/royale`. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: LANDING-2@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-3_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-3/execution.md`
   - Verifier/consumer: `packages/client/tests/LandingDuelSimulator.test.ts` asserting interactive button clicks, simulated price updates, P&L delta calculations, timer countdown, and victory CTA popup
   - Preserves: Deterministic tick generation logic consistent with `MarketTickEngine` specifications
   - User flows: FLOW-LANDING-CONVERSION, FLOW-COMBAT-DUEL
@@ -288,9 +292,11 @@
   - Subagent lane: `lane_simulator_ui`
   - Contract charter: Git base `e3e92a606bfdea046e878e11beb9df476887a5e1`, exclude `packages/server/`, worktree `wt/landing_simulator`, subsystem `packages/client/src/components/landing/LandingDuelSimulator.vue` + `packages/client/tests/LandingDuelSimulator.test.ts`
 
-- [ ] **LANDING-4. Social Proof Stats, Golden Trader Apex Leaderboard Preview & FAQ** — Conversion-reinforcing sections: live platform stats counter (60 max traders, $15,000 starting pot, 100ms engine), Golden Trader Apex Leaderboard preview table showing top 5 simulated/live seasonal rank leaders with MMR and liquidations, interactive FAQ accordion, and modern platform footer with Steam Deck / Desktop readiness badges and navigation links. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **LANDING-4. Social Proof Stats, Golden Trader Apex Leaderboard Preview & FAQ** — Conversion-reinforcing sections: live platform stats counter (60 max traders, $15,000 starting pot, 100ms engine), Golden Trader Apex Leaderboard preview table showing top 5 simulated/live seasonal rank leaders with MMR and liquidations, interactive FAQ accordion, and modern platform footer with Steam Deck / Desktop readiness badges and navigation links. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: LANDING-2@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-4_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-4/execution.md`
   - Verifier/consumer: `packages/client/tests/LandingSocialProof.test.ts` validating stats counter, leaderboard preview table items, FAQ expand/collapse behavior, and footer router links
   - Preserves: Existing dashboard help links and external URL security attributes (`rel="noopener noreferrer"`)
   - User flows: FLOW-LANDING-CONVERSION, FLOW-RANKED-PROGRESS
@@ -298,9 +304,11 @@
   - Subagent lane: `lane_social_proof`
   - Contract charter: Git base `e3e92a606bfdea046e878e11beb9df476887a5e1`, exclude `packages/server/`, worktree `wt/landing_social_proof`, subsystem `packages/client/src/components/landing/LandingSocialProof.vue` + `packages/client/src/components/landing/LandingFooter.vue` + `packages/client/tests/LandingSocialProof.test.ts`
 
-- [ ] **LANDING-5. Full Landing Page Assembly, i18n Localization & Vitest/Vite Verification** — Cohesive assembly of all landing modules into `packages/client/src/pages/index.vue`, localized copy in `packages/client/locales/en.yml` (with fallback protection), smooth scroll navigation, mobile responsiveness, full Vitest suite execution, and Vite production bundle build (`pnpm --filter client build`) exiting 0 with zero TypeScript errors. Blast radius analysis confirms strictly `["client"]`. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **LANDING-5. Full Landing Page Assembly, i18n Localization & Vitest/Vite Verification** — Cohesive assembly of all landing modules into `packages/client/src/pages/index.vue`, localized copy in `packages/client/locales/en.yml` (with fallback protection), smooth scroll navigation, mobile responsiveness, full Vitest suite execution, and Vite production bundle build (`pnpm --filter client build`) exiting 0 with zero TypeScript errors. Blast radius analysis confirms strictly `["client"]`. <!-- wargame-state: outcome; wargame-disposition: active -->
   - Depends on: LANDING-1@canonical, LANDING-3@canonical, LANDING-4@canonical
   - Required stage: OUTCOME
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-5_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-5/execution.md`
   - Verifier/consumer: `pnpm --filter client test` (all test suites pass 100%), `pnpm --filter client build` (exits 0, dist artifacts generated), and `npx ts-node wargame-metaharness/src/scripts/get-blast-radius.ts` returning strictly `["client"]`
   - Preserves: 100% backward compatibility of all existing routes, navigation bars, and passing test suites
   - User flows: FLOW-LANDING-CONVERSION

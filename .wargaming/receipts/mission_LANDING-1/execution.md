@@ -2,7 +2,7 @@
 
 **Mission:** `LANDING-1`  
 **Required Evidence Stage:** `CANONICAL`  
-**Actual Proven Stage:** `ACTIVATION`  
+**Actual Proven Stage:** `CANONICAL`  
 **Governing Authority:** `DATA-MODEL-AUTHORITY.md`  
 **Assigned Lane:** `lane_landing_ui`  
 **Flow Claim:** `FLOW-LANDING-CONVERSION`  

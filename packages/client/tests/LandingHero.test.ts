@@ -66,6 +66,7 @@ describe('marketing Landing Page Hero & Conversion (LANDING-1)', () => {
         stubs: {
           NIcon: { template: '<i class="n-icon"><slot /></i>' },
           NButton: { template: '<button class="n-button" @click="$emit(\'click\')"><slot name="icon" /><slot /></button>' },
+          RouterLink: true,
         },
       },
     })
@@ -80,6 +81,7 @@ describe('marketing Landing Page Hero & Conversion (LANDING-1)', () => {
         stubs: {
           NIcon: { template: '<i class="n-icon"><slot /></i>' },
           NButton: { template: '<button class="n-button"><slot name="icon" /><slot /></button>' },
+          RouterLink: true,
         },
       },
     })
@@ -103,6 +105,7 @@ describe('marketing Landing Page Hero & Conversion (LANDING-1)', () => {
             props: ['type', 'secondary', 'text'],
             template: '<button :class="[\'n-button\', $attrs.class]" @click="$emit(\'click\')"><slot name="icon" /><slot /></button>',
           },
+          RouterLink: true,
         },
       },
     })
@@ -133,6 +136,7 @@ describe('marketing Landing Page Hero & Conversion (LANDING-1)', () => {
           },
           LanguageSwitch: { template: '<div class="lang-switch-stub" />' },
           ThemeSwitch: { template: '<div class="theme-switch-stub" />' },
+          RouterLink: true,
         },
       },
     })
@@ -151,6 +155,7 @@ describe('marketing Landing Page Hero & Conversion (LANDING-1)', () => {
         stubs: {
           NIcon: { template: '<i class="n-icon"><slot /></i>' },
           NButton: { template: '<button class="n-button"><slot name="icon" /><slot /></button>' },
+          RouterLink: true,
         },
       },
     })
