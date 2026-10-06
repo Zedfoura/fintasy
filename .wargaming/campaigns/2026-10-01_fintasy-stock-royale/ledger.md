@@ -232,9 +232,11 @@
   - Point of no return: none
   - Subagent lane: `lane_client_auth`
 
-- [ ] **AUTH-3. Tactical Fintech/Cyberpunk Login UI & Form UX Overhaul** — Completely redesign `packages/client/src/pages/login.vue` using Naive UI components (`<NCard>`, `<NTabs>`, `<NForm>`, `<NInput>`, `<NButton>`) with a high-fidelity cyberpunk/fintech aesthetic matching Stock Royale: tabbed Sign In / Register / Guest Demo modes, real-time input validation, password reveal toggles, caps-lock indicators, and loading spin states. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **AUTH-3. Tactical Fintech/Cyberpunk Login UI & Form UX Overhaul** — Completely redesign `packages/client/src/pages/login.vue` using Naive UI components (`<NCard>`, `<NTabs>`, `<NForm>`, `<NInput>`, `<NButton>`) with a high-fidelity cyberpunk/fintech aesthetic matching Stock Royale: tabbed Sign In / Register / Guest Demo modes, real-time input validation, password reveal toggles, caps-lock indicators, and loading spin states. <!-- wargame-state: activation; wargame-disposition: active -->
   - Depends on: AUTH-2@canonical
   - Required stage: ACTIVATION
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_AUTH-3_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_AUTH-3/execution.md`
   - Verifier/consumer: `packages/client/tests/LoginView.test.ts` asserting tab switching, input validation, and component rendering, plus `pnpm --filter client build`
   - Preserves: UnoCSS theming and dark mode styles
   - User flows: FLOW-AUTH-LOGIN

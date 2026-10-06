@@ -49,6 +49,14 @@ pages:
       Letters, numbers, and underscores only.
     password-requirements: Must be at least 6 characters.
     unknown-error: An unknown error occurred. Please try again later.
+    terminal-access: TERMINAL ACCESS
+    operator-login: Operator Sign In
+    enlist-trader: Enlist Trader
+    quick-play: Quick Play Demo
+    quick-play-title: Instant Guest Trader Session
+    quick-play-desc: Deploy directly into Stock Royale and paper trading with a $15,000 demo pot. No registration required.
+    caps-lock-warning: Caps Lock is active
+    deploy-guest: Deploy as Guest Trader
   dashboard:
     title: Dashboard
     portfolio-value: Portfolio Value
