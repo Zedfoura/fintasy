@@ -5,6 +5,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const router = useRouter()
+const route = useRoute()
 const state = useStateStore()
 const fintasy = useAPI()
 
@@ -23,8 +24,10 @@ useHead({
 
 // make sure uuid is set before redirecting
 watch(() => [fintasy.authenticated.value, waitForLogin.value], () => {
-  if (fintasy.authenticated.value && !waitForLogin.value)
-    router.push('/dashboard')
+  if (fintasy.authenticated.value && !waitForLogin.value) {
+    const destination = (route.query.redirect as string) || '/dashboard'
+    router.push(destination)
+  }
 }, { immediate: true })
 
 async function handleSubmit() {

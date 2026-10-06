@@ -24,7 +24,7 @@ export function useAPI(options?: { base?: string }) {
   const API_BASE = options?.base ?? defaults.base
 
   enum API_QUERY {
-    POST_SESSION, DELETE_SESSION,
+    POST_SESSION, POST_SESSION_GUEST, DELETE_SESSION,
     POST_USER, GET_USER, PATCH_USER, DELETE_USER,
     POST_PORTFOLIO, GET_PORTFOLIOS, GET_PORTFOLIO, PATCH_PORTFOLIO, DELETE_PORTFOLIO,
     POST_TRANSACTION, GET_TRANSACTIONS, GET_TRANSACTION,
@@ -37,6 +37,22 @@ export function useAPI(options?: { base?: string }) {
      * Whether the user is authenticated
      */
     authenticated,
+    /**
+     * Reactive session token ref
+     */
+    sessionToken,
+    /**
+     * Clear active session token
+     */
+    clearToken: () => {
+      sessionToken.value = ''
+    },
+    /**
+     * Manually set active session token
+     */
+    setToken: (token: string) => {
+      sessionToken.value = token
+    },
     /**
      * Login to the API and store the session token
      * @param data
@@ -54,15 +70,26 @@ export function useAPI(options?: { base?: string }) {
       return handleErrors<API_QUERY.POST_SESSION>(response)
     },
     /**
+     * Login as guest and store the session token
+     */
+    loginAsGuest: async (): Promise<API_RESPONSE[API_QUERY.POST_SESSION_GUEST]> => {
+      const response = await useFetch(`${API_BASE}/sessions/guest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }, {
+        afterFetch: setToken,
+      }).json<API_RESPONSE[API_QUERY.POST_SESSION_GUEST]>()
+      return handleErrors<API_QUERY.POST_SESSION_GUEST>(response)
+    },
+    /**
      * Logout of the API and remove the session token
      */
     logout: async (): Promise<API_RESPONSE[API_QUERY.DELETE_SESSION]> => {
+      const currentToken = sessionToken.value
+      sessionToken.value = ''
       const response = await useFetch(`${API_BASE}/sessions`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${sessionToken.value}` },
-      }, {
-        beforeFetch: requireToken,
-        afterFetch: clearToken,
+        headers: { Authorization: `Bearer ${currentToken}` },
       }).json<API_RESPONSE[API_QUERY.DELETE_SESSION]>()
       return handleErrors<API_QUERY.DELETE_SESSION>(response)
     },
@@ -416,11 +443,6 @@ export function useAPI(options?: { base?: string }) {
     return ctx
   }
 
-  function clearToken(ctx: AfterFetchContext) {
-    sessionToken.value = ''
-    return ctx
-  }
-
   function requireToken(ctx: BeforeFetchContext) {
     if (authenticated.value)
       return ctx
@@ -430,8 +452,9 @@ export function useAPI(options?: { base?: string }) {
 
   function handleAuthErrors(ctx: { data: any, response: Response | null, error: any }) {
     // 401: Unauthorized, token is invalid, expired, or missing
+    // 403: Forbidden, permission denied or token revoked
     // 405: Method Not Allowed, user uuid is probably missing
-    if (ctx.response?.status === 401 || ctx.response?.status === 405)
+    if (ctx.response?.status === 401 || ctx.response?.status === 403 || ctx.response?.status === 405)
       sessionToken.value = ''
     return ctx
   }
@@ -439,6 +462,8 @@ export function useAPI(options?: { base?: string }) {
   function handleErrors<T extends keyof API_RESPONSE>(response: UseFetchReturn<API_RESPONSE[T]>): API_RESPONSE[T] {
     if (response.statusCode.value === null)
       return { code: null, message: 'Request Timed Out' }
+    if (response.statusCode.value === 401 || response.statusCode.value === 403)
+      sessionToken.value = ''
     return response.data.value ?? { code: response.statusCode.value, message: response.error.value } as API_RESPONSE[T]
   }
 
@@ -474,6 +499,7 @@ export function useAPI(options?: { base?: string }) {
 
   interface API_RESPONSE {
     [API_QUERY.POST_SESSION]: ExpandRecursively<SuccessfulResponse<Session> | UnsuccessfulResponse>
+    [API_QUERY.POST_SESSION_GUEST]: ExpandRecursively<SuccessfulResponse<Session> | UnsuccessfulResponse>
     [API_QUERY.DELETE_SESSION]: ExpandRecursively<BaseResponse>
     [API_QUERY.POST_USER]: ExpandRecursively<SuccessfulResponse<User> | UnsuccessfulResponse>
     [API_QUERY.GET_USER]: ExpandRecursively<SuccessfulResponse<User> | UnsuccessfulResponse>

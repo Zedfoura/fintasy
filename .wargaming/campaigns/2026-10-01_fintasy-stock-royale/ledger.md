@@ -221,9 +221,11 @@
   - Point of no return: none
   - Subagent lane: `lane_backend_auth`
 
-- [ ] **AUTH-2. Client Authentication Store, Guest Session & Route Guards** — Upgrade `useAPI` and Pinia auth state (`state.user`) to support persistent token hydration, reactive authentication state, instant guest login (`fintasy.loginAsGuest()`), automatic token clearance on 401/403, and global router guards redirecting unauthenticated users to `/login` with target path retention. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **AUTH-2. Client Authentication Store, Guest Session & Route Guards** — Upgrade `useAPI` and Pinia auth state (`state.user`) to support persistent token hydration, reactive authentication state, instant guest login (`fintasy.loginAsGuest()`), automatic token clearance on 401/403, and global router guards redirecting unauthenticated users to `/login` with target path retention. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: AUTH-1@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_AUTH-2_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_AUTH-2/execution.md`
   - Verifier/consumer: `packages/client/tests/AuthStore.test.ts` asserting token storage, guest login, and route guard redirects
   - Preserves: Existing `useAPI` method contracts and Pinia state layout
   - User flows: FLOW-AUTH-LOGIN
