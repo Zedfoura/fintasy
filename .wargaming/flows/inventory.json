@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": 2,
   "project": "fintasy",
-  "generated_at": "2026-10-01T19:08:00Z",
+  "generated_at": "2026-10-05T23:25:00Z",
   "flows": [
     {
       "id": "FLOW-ROYALE-GOLDEN",
@@ -75,6 +75,15 @@
       "entry_route": "/login",
       "terminal_step": "Redirect to /dashboard with active authenticated user session",
       "expected_duration_seconds": 5
+    },
+    {
+      "id": "FLOW-LANDING-CONVERSION",
+      "tier": "critical-secondary",
+      "name": "Marketing Landing Page Discovery & Conversion Funnel",
+      "description": "Visitor navigates to / -> views Stock Royale hero with live status badges -> explores 4 gameplay pillars -> interacts with live 30s duel demo widget -> reviews Golden Trader leaderboard preview & FAQ -> clicks CTA ('Deploy to Stock Royale' or 'Sign In / Register') -> transitions to /dashboard/royale or /login",
+      "entry_route": "/",
+      "terminal_step": "Conversion trigger to /dashboard/royale or /login",
+      "expected_duration_seconds": 30
     }
   ]
 }

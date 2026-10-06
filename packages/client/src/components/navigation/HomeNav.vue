@@ -10,13 +10,17 @@ import {
 import {
   Dashboard as DashboardIcon,
 } from '@vicons/carbon'
+import {
+  Crosshair as RoyaleIcon,
+} from '@vicons/tabler'
 
 const { t } = useI18n()
+const router = useRouter()
 </script>
 
 <template>
   <header z-40 text-lg>
-    <nav flex flex-row items-center gap-5 p-2>
+    <nav flex flex-row items-center gap-3 p-2 sm:gap-5>
       <!-- logo -->
       <router-link
         to="/"
@@ -24,7 +28,7 @@ const { t } = useI18n()
         flex select-none gap-3 outline-none
       >
         <img src="/pwa-512x512.png" alt="Fintasy Logo" mr-2 h-8 md:h-12>
-        <div my-auto md:text-3xl>
+        <div my-auto font-bold md:text-3xl>
           Fintasy
         </div>
       </router-link>
@@ -35,7 +39,7 @@ const { t } = useI18n()
       <!-- home link -->
       <n-tooltip>
         <template #trigger>
-          <n-button text @click="$router.push('/')">
+          <n-button text @click="router.push('/')">
             <span lt-md:hidden md:text-lg>
               {{ t('misc.home') }}
             </span>
@@ -50,7 +54,7 @@ const { t } = useI18n()
       <!-- dashboard link -->
       <n-tooltip>
         <template #trigger>
-          <n-button text @click="$router.push('/dashboard')">
+          <n-button text @click="router.push('/dashboard')">
             <span lt-md:hidden md:text-lg>
               {{ t('pages.dashboard.title') }}
             </span>
@@ -61,6 +65,23 @@ const { t } = useI18n()
         </template>
         {{ t('pages.dashboard.title') }}
       </n-tooltip>
+
+      <!-- play royale CTA button -->
+      <n-button
+        type="primary"
+        round
+        size="medium"
+        class="play-royale-nav-btn font-bold tracking-wide shadow-md transition-all"
+        @click="router.push('/dashboard/royale')"
+      >
+        <template #icon>
+          <n-icon>
+            <RoyaleIcon />
+          </n-icon>
+        </template>
+        <span lt-sm:hidden>Play Royale</span>
+        <span sm:hidden>Royale</span>
+      </n-button>
 
       <LanguageSwitch />
       <ThemeSwitch />

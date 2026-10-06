@@ -5,11 +5,23 @@ example:
   hello-world: Hello World!
 pages:
   main:
-    title: Main
-    content-title: Take Your Stocks To The Next Level
+    title: Stock Royale • 60-Player Trading Simulator
+    hero-headline: The 60-Player Stock Market Battle Royale
+    hero-subtitle: >-
+      Drop into real-time S&P 500 sectors, loot volatile tickers, fight 30-second trading duels,
+      escape the Federal Reserve liquidity drain storm, and claim the #1 Victory Royale.
+    badge-season: 'Season 1: Liquidity Drain Active'
+    badge-traders: 30-60 Traders Per Match
+    badge-engine: 100ms Fast Match Engine
+    badge-starting-pot: '$15,000 Starting Pot'
+    cta-deploy: Deploy to Stock Royale
+    cta-login: Sign In / Register
+    cta-dashboard: Standard Paper Trading
+    ticker-tagline: Real-Time High Frequency Market Ticks & S&P 500 Sectors
+    content-title: The 60-Player Stock Market Battle Royale
     content-subtitle: >-
-      Fintasy is a stock market simulator that allows you to trade stocks with fake money.
-      Compete against your friends and see who can make the most money!
+      Drop into real-time S&P 500 sectors, loot volatile tickers, fight 30-second trading duels,
+      escape the Federal Reserve liquidity drain storm, and claim the #1 Victory Royale.
   login:
     title: Login/Register
     register: Register
