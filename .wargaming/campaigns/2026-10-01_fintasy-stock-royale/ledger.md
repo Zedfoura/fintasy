@@ -197,9 +197,11 @@
   - Point of no return: none
   - Subagent lane: `lane_tactical_ui`
 
-- [ ] **CLEAN-4. Root README & Technical Architecture Documentation Overhaul** — Completely rewrite root `README.md` and `docs/index.md` to reflect the complete Stock Royale platform: high-level architecture diagram, quick-start guide (`pnpm install`, `pnpm dev`, `pnpm test`), Tauri 2.0 / Steam Deck packaging commands (`pnpm desktop:dev`, `pnpm desktop:build`), environment variable guide (`.env.example`), interactive Swagger/OpenAPI documentation reference, and contribution guidelines. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **CLEAN-4. Root README & Technical Architecture Documentation Overhaul** — Completely rewrite root `README.md` and `docs/index.md` to reflect the complete Stock Royale platform: high-level architecture diagram, quick-start guide (`pnpm install`, `pnpm dev`, `pnpm test`), Tauri 2.0 / Steam Deck packaging commands (`pnpm desktop:dev`, `pnpm desktop:build`), environment variable guide (`.env.example`), interactive Swagger/OpenAPI documentation reference, and contribution guidelines. <!-- wargame-state: canonical; wargame-disposition: active -->
   - Depends on: CLEAN-1@canonical, CLEAN-3@canonical
   - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_CLEAN-4_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_CLEAN-4/execution.md`
   - Verifier/consumer: Markdown link and command consistency checks, programmatic blast radius check, and zero lint warnings
   - Preserves: Repository license and canonical package manifests
   - User flows: not applicable (documentation)

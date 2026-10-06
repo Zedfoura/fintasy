@@ -6,14 +6,14 @@
   "active_mission": "CLEAN-4",
   "mode": "EXECUTE",
   "ledger_path": ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md",
-  "ledger_hash": "3372803f273a9308c7b05deb50ef652c3dc146bc6049122a1f0bc0be69f74851",
+  "ledger_hash": "c86c5291f6bdc6d608c5bb6325b4a17a9f54fd2dc8ad9b6c05364aa103ba11a6",
   "campaign_decision": {
     "decision": "select_existing",
     "campaign": "2026-10-01_fintasy-stock-royale",
     "reason": "Repository cleanup and comprehensive documentation directly continue the Stock Royale platform rollout and address legacy debt from the initial school project.",
     "identity_binding": "match",
     "evidence": [
-      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:3372803f273a9308c7b05deb50ef652c3dc146bc6049122a1f0bc0be69f74851",
+      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md:c86c5291f6bdc6d608c5bb6325b4a17a9f54fd2dc8ad9b6c05364aa103ba11a6",
       "user_request:proceed"
     ],
     "rejected_candidates": [
@@ -41,6 +41,6 @@
       "credential_mutation"
     ]
   },
-  "last_verified_transition": "CLEAN-3@canonical",
-  "next_transition": "CLEAN-4@canonical"
+  "last_verified_transition": "CLEAN-4@canonical",
+  "next_transition": "EPIC-6-COMPLETE"
 }
