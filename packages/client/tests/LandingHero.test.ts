@@ -167,4 +167,24 @@ describe('marketing Landing Page Hero & Conversion (LANDING-1)', () => {
     expect(text).toContain('High-Stakes Combat Terminal')
     expect(text).toContain('12 S&P Sectors. 30-Second Duels. 1 Winner.')
   })
+
+  it('assay F: dual-theme styling tokens applied to headline, subtitle, and status chips', () => {
+    const wrapper = mount(LandingPage, {
+      global: {
+        stubs: {
+          NIcon: { template: '<i class="n-icon"><slot /></i>' },
+          NButton: { template: '<button class="n-button"><slot name="icon" /><slot /></button>' },
+          RouterLink: true,
+        },
+      },
+    })
+
+    const headlineSpan = wrapper.find('.landing-hero-headline span')
+    expect(headlineSpan.classes()).toContain('from-emerald-700')
+    expect(headlineSpan.classes()).toContain('dark:from-emerald-400')
+
+    const subtitle = wrapper.find('.landing-hero-subtitle')
+    expect(subtitle.classes()).toContain('text-slate-600')
+    expect(subtitle.classes()).toContain('dark:text-gray-300')
+  })
 })

@@ -110,15 +110,15 @@ function selectTab(id: string) {
       <!-- Section Header -->
       <div class="mb-12 text-center">
         <div class="mb-3 inline-flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-[#00e676]" />
-          <span class="text-xs text-[#00e676] tracking-widest font-mono uppercase">
+          <span class="h-2 w-2 rounded-full bg-emerald-500 dark:bg-[#00e676]" />
+          <span class="text-xs text-emerald-700 font-bold tracking-widest font-mono uppercase dark:text-[#00e676]">
             TACTICAL BLUEPRINT // CORE GAMEPLAY
           </span>
         </div>
-        <h2 class="text-3xl text-white font-black tracking-tight font-mono md:text-5xl">
+        <h2 class="text-3xl text-slate-900 font-black tracking-tight font-mono md:text-5xl dark:text-white">
           THE 4 PILLARS OF STOCK ROYALE
         </h2>
-        <p class="mx-auto mt-4 max-w-2xl text-base text-gray-400">
+        <p class="mx-auto mt-4 max-w-2xl text-base text-slate-600 dark:text-gray-400">
           Master the mechanics of high-frequency competitive trading. Four integrated systems built for relentless, fast-paced financial combat.
         </p>
 
@@ -152,7 +152,7 @@ function selectTab(id: string) {
         <NCard
           v-for="pillar in filteredPillars"
           :key="pillar.id"
-          class="pillar-card border border-[#1f2438] bg-[#0c0d14]/90 transition-all duration-300 hover:border-[#00e676]/60 hover:shadow-[0_0_30px_rgba(0,230,118,0.15)]"
+          class="pillar-card border border-slate-200 rounded-xl bg-white/95 shadow-md transition-all duration-300 dark:border-[#1f2438] dark:bg-[#0c0d14]/90 dark:shadow-none hover:shadow-xl dark:hover:shadow-[0_0_30px_rgba(0,230,118,0.15)]"
           :data-pillar-id="pillar.id"
           size="medium"
         >
@@ -167,16 +167,16 @@ function selectTab(id: string) {
           </div>
 
           <!-- Pillar Title & Subtitle -->
-          <h3 class="text-lg text-white font-bold tracking-wide font-mono">
+          <h3 class="text-lg text-slate-900 font-bold tracking-wide font-mono dark:text-white">
             {{ pillar.title }}
           </h3>
-          <p class="mb-4 text-xs text-gray-400 font-mono uppercase">
+          <p class="mb-4 text-xs text-slate-500 font-mono uppercase dark:text-gray-400">
             {{ pillar.subtitle }}
           </p>
 
           <!-- Key Metric Banner -->
-          <div class="mb-4 border border-[#1f2438] rounded bg-[#121526]/80 p-2.5">
-            <div class="text-[10px] text-gray-400 tracking-wider font-mono uppercase">
+          <div class="shadow-xs mb-4 border border-slate-200 rounded-lg bg-slate-50 p-2.5 dark:border-[#1f2438] dark:bg-[#121526]/80">
+            <div class="text-[10px] text-slate-500 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
               {{ pillar.metricLabel }}
             </div>
             <div class="text-base font-bold font-mono" :style="{ color: pillar.accentColor }">
@@ -185,12 +185,12 @@ function selectTab(id: string) {
           </div>
 
           <!-- Description -->
-          <p class="mb-4 text-xs text-gray-300 leading-relaxed">
+          <p class="mb-4 text-xs text-slate-600 leading-relaxed dark:text-gray-300">
             {{ pillar.description }}
           </p>
 
           <!-- Mechanics Bullet List -->
-          <ul class="border-t border-[#1f2438] pt-4 text-xs text-gray-400 space-y-2">
+          <ul class="border-t border-slate-200 pt-4 text-xs text-slate-600 space-y-2 dark:border-[#1f2438] dark:text-gray-400">
             <li
               v-for="(point, idx) in pillar.points"
               :key="idx"

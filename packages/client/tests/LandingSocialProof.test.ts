@@ -24,7 +24,7 @@ describe('marketing Landing Page Social Proof, Leaderboard & FAQ (LANDING-4)', (
         stubs: {
           NCard: defineComponent({
             name: 'NCard',
-            template: '<div class="n-card-stub"><slot /></div>',
+            template: '<div class="n-card-stub" :class="$attrs.class"><slot /></div>',
           }),
           NTag: defineComponent({
             name: 'NTag',
@@ -135,5 +135,28 @@ describe('marketing Landing Page Social Proof, Leaderboard & FAQ (LANDING-4)', (
     expect(hrefs).toContain('/dashboard/royale')
     expect(hrefs).toContain('/dashboard')
     expect(hrefs).toContain('/login')
+  })
+
+  it('assay F: dual-theme styling tokens applied to stats cards, leaderboard, and footer', () => {
+    const proofWrapper = mountSocialProof()
+    const statCard = proofWrapper.find('.social-stat-card')
+    expect(statCard.exists()).toBe(true)
+    expect(statCard.classes()).toContain('border-slate-200')
+    expect(statCard.classes()).toContain('dark:border-[#1f2438]')
+    expect(statCard.classes()).toContain('bg-white/90')
+    expect(statCard.classes()).toContain('dark:bg-[#0c0d14]/80')
+
+    const leaderboardCard = proofWrapper.find('.leaderboard-card')
+    expect(leaderboardCard.exists()).toBe(true)
+    expect(leaderboardCard.classes()).toContain('border-slate-200')
+    expect(leaderboardCard.classes()).toContain('dark:border-[#1f2438]')
+
+    const footerWrapper = mountFooter()
+    const footer = footerWrapper.find('.landing-footer')
+    expect(footer.exists()).toBe(true)
+    expect(footer.classes()).toContain('border-slate-200')
+    expect(footer.classes()).toContain('dark:border-[#1f2438]')
+    expect(footer.classes()).toContain('bg-slate-100/90')
+    expect(footer.classes()).toContain('dark:bg-[#07080d]')
   })
 })

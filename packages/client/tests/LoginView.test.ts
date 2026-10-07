@@ -40,7 +40,7 @@ vi.mock('@vueuse/head', () => ({
 vi.mock('naive-ui', () => ({
   NCard: defineComponent({
     name: 'NCard',
-    template: '<div class="n-card-stub"><slot /></div>',
+    template: '<div class="n-card-stub" :class="$attrs.class"><slot /></div>',
   }),
   NTag: defineComponent({
     name: 'NTag',
@@ -191,5 +191,22 @@ describe('tactical Fintech/Cyberpunk Login UI & Form UX (AUTH-3)', () => {
     await deployBtn.trigger('click')
 
     expect(guestSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('assay F: dual-theme fintech styling tokens applied to card and typography', () => {
+    const wrapper = mount(LoginView)
+    const card = wrapper.find('.n-card-stub')
+    expect(card.exists()).toBe(true)
+
+    // Card should feature adaptive light and dark classes
+    expect(card.classes()).toContain('border-slate-200')
+    expect(card.classes()).toContain('dark:border-[#1f2438]')
+    expect(card.classes()).toContain('bg-white/95')
+    expect(card.classes()).toContain('dark:bg-[#0c0d14]/95')
+
+    // Title should have dual-mode typography classes
+    const title = wrapper.find('h1')
+    expect(title.classes()).toContain('text-slate-900')
+    expect(title.classes()).toContain('dark:text-white')
   })
 })

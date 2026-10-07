@@ -12,23 +12,23 @@ import {
 </script>
 
 <template>
-  <footer class="landing-footer w-full border-t border-[#1f2438] bg-[#07080d] px-4 py-12 text-gray-400">
+  <footer class="landing-footer w-full border-t border-slate-200 bg-slate-100/90 px-4 py-12 text-slate-600 dark:border-[#1f2438] dark:bg-[#07080d] dark:text-gray-400">
     <div class="mx-auto max-w-7xl">
       <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
         <!-- Brand & Description -->
         <div class="text-center space-y-3 md:text-left">
           <div class="flex items-center justify-center gap-2 md:justify-start">
-            <div class="h-8 w-8 flex items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400">
+            <div class="h-8 w-8 flex items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
               <RoyaleIcon class="h-5 w-5" />
             </div>
-            <span class="text-xl text-white font-black tracking-wider font-mono">
+            <span class="text-xl text-slate-900 font-black tracking-wider font-mono dark:text-white">
               FINTASY
             </span>
-            <span class="text-xs text-emerald-400 tracking-widest font-mono uppercase">
+            <span class="text-xs text-emerald-700 font-bold tracking-widest font-mono uppercase dark:text-emerald-400">
               ROYALE
             </span>
           </div>
-          <p class="max-w-md text-xs text-gray-500 leading-relaxed font-mono">
+          <p class="max-w-md text-xs text-slate-500 leading-relaxed font-mono dark:text-gray-500">
             High-frequency 60-player competitive stock market battle royale.
             Built on authoritative in-memory state engine and sub-100ms tick streams.
           </p>
@@ -50,22 +50,22 @@ import {
         </div>
 
         <!-- Quick Navigation Links -->
-        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-gray-400 font-mono">
+        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-600 font-mono dark:text-gray-400">
           <RouterLink
             to="/dashboard/royale"
-            class="transition-colors hover:text-[#00e676]"
+            class="transition-colors hover:text-emerald-600 dark:hover:text-[#00e676]"
           >
             Play Royale
           </RouterLink>
           <RouterLink
             to="/dashboard"
-            class="transition-colors hover:text-white"
+            class="transition-colors hover:text-slate-900 dark:hover:text-white"
           >
             Paper Trading
           </RouterLink>
           <RouterLink
             to="/login"
-            class="transition-colors hover:text-white"
+            class="transition-colors hover:text-slate-900 dark:hover:text-white"
           >
             Sign In / Register
           </RouterLink>
@@ -73,7 +73,7 @@ import {
             href="https://github.com/Zedfoura/fintasy"
             target="_blank"
             rel="noopener noreferrer"
-            class="transition-colors hover:text-white"
+            class="transition-colors hover:text-slate-900 dark:hover:text-white"
           >
             GitHub
           </a>
@@ -81,13 +81,13 @@ import {
       </div>
 
       <!-- Copyright & System Status -->
-      <div class="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[#1f2438]/50 pt-6 text-[11px] text-gray-600 font-mono sm:flex-row">
+      <div class="mt-8 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 text-[11px] text-slate-500 font-mono sm:flex-row dark:border-[#1f2438]/50 dark:text-gray-600">
         <div>
           © 2026 Fintasy Inc. All rights reserved. 100% Risk-Free Simulated Capital.
         </div>
         <div class="flex items-center gap-2">
-          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-[#00e676]" />
-          <span class="text-gray-400">STATE ENGINE // 100% OPERATIONAL</span>
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500 dark:bg-[#00e676]" />
+          <span class="text-slate-600 dark:text-gray-400">STATE ENGINE // 100% OPERATIONAL</span>
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ describe('marketing Landing Page Duel Mini-Simulator (LANDING-3)', () => {
         stubs: {
           NCard: defineComponent({
             name: 'NCard',
-            template: '<div class="n-card-stub"><slot /></div>',
+            template: '<div class="n-card-stub" :class="$attrs.class"><slot /></div>',
           }),
           NTag: defineComponent({
             name: 'NTag',
@@ -178,5 +178,20 @@ describe('marketing Landing Page Duel Mini-Simulator (LANDING-3)', () => {
     expect(wrapper.vm.isFinished).toBe(false)
     expect(wrapper.vm.activePosition).toBeNull()
     expect(wrapper.find('.victory-banner').exists()).toBe(false)
+  })
+
+  it('assay F: dual-theme styling tokens applied to card and header typography', () => {
+    const wrapper = mountSimulator()
+    const card = wrapper.find('.duel-arena-card')
+    expect(card.exists()).toBe(true)
+
+    expect(card.classes()).toContain('border-slate-200')
+    expect(card.classes()).toContain('dark:border-[#1f2438]')
+    expect(card.classes()).toContain('bg-white/95')
+    expect(card.classes()).toContain('dark:bg-[#0c0d14]/95')
+
+    const sectionTitle = wrapper.find('h2')
+    expect(sectionTitle.classes()).toContain('text-slate-900')
+    expect(sectionTitle.classes()).toContain('dark:text-white')
   })
 })

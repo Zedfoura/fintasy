@@ -1,0 +1,11 @@
+{
+  "mission_id": "THEME-5",
+  "campaign": "2026-10-01_fintasy-stock-royale",
+  "inventory_hash": "d58ae3969b732e8cae9e2dcd674c69643c3d1710a52162400fbea9ae15dc027b",
+  "flows": [
+    "FLOW-THEME-NAVBAR",
+    "FLOW-LANDING-CONVERSION"
+  ],
+  "stage": "canonical",
+  "disposition": "active"
+}

@@ -47,38 +47,38 @@ const tickerStream = ref([
   <div class="landing-page-root relative flex flex-col items-center justify-start overflow-hidden px-4 py-8 md:py-16">
     <!-- Background glowing ambient lights -->
     <div
-      class="pointer-events-none absolute left-1/2 h-96 w-96 rounded-full opacity-20 blur-3xl -top-40 -translate-x-1/2"
-      style="background: radial-gradient(circle, rgba(16, 185, 129, 0.8) 0%, rgba(5, 150, 105, 0.2) 70%, transparent 100%);"
+      class="pointer-events-none absolute left-1/2 h-96 w-96 rounded-full opacity-15 blur-3xl -top-40 -translate-x-1/2 dark:opacity-20"
+      style="background: radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, rgba(5, 150, 105, 0.15) 70%, transparent 100%);"
     />
 
     <!-- Hero Content Container -->
     <div class="relative z-10 mx-auto max-w-5xl flex flex-col items-center text-center">
       <!-- Live Status Chips Row -->
       <div class="mb-6 flex flex-wrap items-center justify-center gap-2.5">
-        <div class="flex items-center gap-1.5 border border-emerald-500/30 rounded-full bg-emerald-500/10 px-3.5 py-1 text-xs text-emerald-400 font-semibold backdrop-blur-sm">
+        <div class="shadow-xs flex items-center gap-1.5 border border-emerald-300 rounded-full bg-emerald-100/90 px-3.5 py-1 text-xs text-emerald-800 font-semibold backdrop-blur-sm dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-400">
           <span class="relative h-2 w-2 flex">
-            <span class="absolute h-full w-full inline-flex animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span class="relative h-2 w-2 inline-flex rounded-full bg-emerald-500" />
+            <span class="absolute h-full w-full inline-flex animate-ping rounded-full bg-emerald-500 opacity-75" />
+            <span class="relative h-2 w-2 inline-flex rounded-full bg-emerald-600 dark:bg-emerald-500" />
           </span>
           <span>{{ t('pages.main.badge-season') }}</span>
         </div>
 
-        <div class="flex items-center gap-1.5 border border-gray-700/50 rounded-full bg-gray-800/40 px-3 py-1 text-xs text-gray-300 font-medium backdrop-blur-sm">
-          <n-icon size="14" class="text-amber-400">
+        <div class="shadow-xs flex items-center gap-1.5 border border-slate-200 rounded-full bg-white/80 px-3 py-1 text-xs text-slate-700 font-medium backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/40 dark:text-gray-300">
+          <n-icon size="14" class="text-amber-600 dark:text-amber-400">
             <UsersIcon />
           </n-icon>
           <span>{{ t('pages.main.badge-traders') }}</span>
         </div>
 
-        <div class="flex items-center gap-1.5 border border-gray-700/50 rounded-full bg-gray-800/40 px-3 py-1 text-xs text-gray-300 font-medium backdrop-blur-sm">
-          <n-icon size="14" class="text-cyan-400">
+        <div class="shadow-xs flex items-center gap-1.5 border border-slate-200 rounded-full bg-white/80 px-3 py-1 text-xs text-slate-700 font-medium backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/40 dark:text-gray-300">
+          <n-icon size="14" class="text-cyan-600 dark:text-cyan-400">
             <ZapIcon />
           </n-icon>
           <span>{{ t('pages.main.badge-engine') }}</span>
         </div>
 
-        <div class="flex items-center gap-1.5 border border-gray-700/50 rounded-full bg-gray-800/40 px-3 py-1 text-xs text-gray-300 font-medium backdrop-blur-sm">
-          <n-icon size="14" class="text-emerald-400">
+        <div class="shadow-xs flex items-center gap-1.5 border border-slate-200 rounded-full bg-white/80 px-3 py-1 text-xs text-slate-700 font-medium backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/40 dark:text-gray-300">
+          <n-icon size="14" class="text-emerald-600 dark:text-emerald-400">
             <TrendingUpIcon />
           </n-icon>
           <span>{{ t('pages.main.badge-starting-pot') }}</span>
@@ -87,13 +87,13 @@ const tickerStream = ref([
 
       <!-- Main Headline -->
       <h1 class="landing-hero-headline mb-4 max-w-4xl text-4xl font-extrabold tracking-tight lg:text-7xl md:text-6xl sm:text-5xl">
-        <span class="from-emerald-400 via-teal-300 to-cyan-400 bg-gradient-to-r bg-clip-text text-transparent">
+        <span class="from-emerald-700 via-teal-700 to-cyan-800 bg-gradient-to-r bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400">
           {{ t('pages.main.hero-headline') }}
         </span>
       </h1>
 
       <!-- Subtitle Description -->
-      <p class="landing-hero-subtitle mx-auto mb-8 max-w-2xl text-base text-gray-300 leading-relaxed md:text-xl sm:text-lg">
+      <p class="landing-hero-subtitle mx-auto mb-8 max-w-2xl text-base text-slate-600 leading-relaxed md:text-xl sm:text-lg dark:text-gray-300">
         {{ t('pages.main.hero-subtitle') }}
       </p>
 
@@ -104,7 +104,7 @@ const tickerStream = ref([
           type="primary"
           size="large"
           round
-          class="deploy-cta-btn w-full px-8 py-6 text-base font-bold shadow-emerald-500/25 shadow-lg transition-all sm:w-auto hover:scale-105 hover:shadow-emerald-500/40"
+          class="deploy-cta-btn w-full px-8 py-6 text-base font-bold shadow-emerald-600/25 shadow-lg transition-all sm:w-auto hover:scale-105 dark:shadow-emerald-500/25"
           @click="router.push('/dashboard/royale')"
         >
           <template #icon>
@@ -117,10 +117,10 @@ const tickerStream = ref([
 
         <!-- Secondary Action: Login / Register -->
         <n-button
-
           size="large"
-          round secondary
-          class="login-cta-btn w-full border-gray-700 px-6 py-6 text-base font-semibold transition-all sm:w-auto hover:scale-105 hover:border-emerald-500"
+          round
+          secondary
+          class="shadow-xs login-cta-btn w-full border-slate-300 bg-white/90 px-6 py-6 text-base text-slate-800 font-semibold transition-all sm:w-auto hover:scale-105 dark:border-gray-700 hover:border-emerald-500 dark:bg-transparent dark:text-white"
           @click="router.push('/login')"
         >
           <template #icon>
@@ -135,7 +135,7 @@ const tickerStream = ref([
         <n-button
           text
           size="large"
-          class="text-gray-400 transition-colors hover:text-emerald-400"
+          class="text-slate-600 font-medium transition-colors dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400"
           @click="router.push('/dashboard')"
         >
           <template #icon>
@@ -148,18 +148,18 @@ const tickerStream = ref([
       </div>
 
       <!-- Live Simulated Ticker Tape -->
-      <div class="mb-14 max-w-4xl w-full overflow-hidden border border-gray-800 rounded-xl bg-gray-900/60 p-2.5 shadow-inner backdrop-blur-md">
+      <div class="mb-14 max-w-4xl w-full overflow-hidden border border-slate-200 rounded-xl bg-white/90 p-2.5 shadow-sm backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/60 dark:shadow-inner">
         <div class="no-scrollbar flex items-center justify-center gap-6 overflow-x-auto px-2 text-xs sm:justify-between">
           <div
             v-for="ticker in tickerStream"
             :key="ticker.symbol"
             class="flex items-center gap-2 whitespace-nowrap"
           >
-            <span class="text-gray-200 font-bold">{{ ticker.symbol }}</span>
-            <span class="text-gray-400">{{ ticker.price }}</span>
+            <span class="text-slate-900 font-bold font-mono dark:text-gray-200">{{ ticker.symbol }}</span>
+            <span class="text-slate-600 font-mono dark:text-gray-400">{{ ticker.price }}</span>
             <span
-              :class="ticker.isUp ? 'text-emerald-400 bg-emerald-500/10' : 'text-rose-400 bg-rose-500/10'"
-              class="rounded px-1.5 py-0.5 font-semibold"
+              :class="ticker.isUp ? 'text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/10' : 'text-rose-700 dark:text-rose-400 bg-rose-100 dark:bg-rose-500/10'"
+              class="rounded px-1.5 py-0.5 font-semibold font-mono"
             >
               {{ ticker.change }}
             </span>
@@ -168,32 +168,32 @@ const tickerStream = ref([
       </div>
 
       <!-- Tactical Arena Preview Teaser Glass Card -->
-      <div class="relative max-w-4xl w-full overflow-hidden border border-gray-700/60 rounded-2xl from-gray-900/90 to-gray-950/90 bg-gradient-to-b p-6 shadow-2xl backdrop-blur-xl md:p-8">
+      <div class="relative max-w-4xl w-full overflow-hidden border border-slate-200 rounded-2xl bg-white/95 p-6 shadow-xl backdrop-blur-xl dark:border-gray-700/60 dark:from-gray-900/90 dark:to-gray-950/90 dark:bg-gradient-to-b md:p-8 dark:shadow-2xl">
         <div class="flex flex-col items-center justify-between gap-6 text-left md:flex-row">
           <!-- Left: Tactical Preview Info -->
           <div class="flex-1 space-y-4">
-            <div class="flex items-center gap-2 text-xs text-emerald-400 font-bold tracking-wider uppercase">
+            <div class="flex items-center gap-2 text-xs text-emerald-600 font-bold tracking-wider uppercase dark:text-emerald-400">
               <n-icon size="16">
                 <FlameIcon />
               </n-icon>
               <span>High-Stakes Combat Terminal</span>
             </div>
-            <h2 class="text-2xl text-gray-100 font-bold sm:text-3xl">
+            <h2 class="text-2xl text-slate-900 font-bold sm:text-3xl dark:text-gray-100">
               12 S&P Sectors. 30-Second Duels. 1 Winner.
             </h2>
-            <p class="text-sm text-gray-400 leading-relaxed">
+            <p class="text-sm text-slate-600 leading-relaxed dark:text-gray-400">
               Every round drops you with $15,000 in equity. Scout Big Tech, Financials, or Healthcare sectors.
               Engage contested players in high-speed micro-trading battles with 1x to 5x leverage before the Federal Reserve liquidity storm forces you inward.
             </p>
             <div class="flex flex-wrap items-center gap-3 pt-2">
-              <div class="flex items-center gap-1.5 rounded-lg bg-gray-800/80 px-3 py-1.5 text-xs text-gray-300">
-                <n-icon size="14" class="text-amber-400">
+              <div class="flex items-center gap-1.5 border border-slate-200/80 rounded-lg bg-slate-100 px-3 py-1.5 text-xs text-slate-700 font-medium dark:border-transparent dark:bg-gray-800/80 dark:text-gray-300">
+                <n-icon size="14" class="text-amber-600 dark:text-amber-400">
                   <TrophyIcon />
                 </n-icon>
                 <span>Rocket League MMR Ladder</span>
               </div>
-              <div class="flex items-center gap-1.5 rounded-lg bg-gray-800/80 px-3 py-1.5 text-xs text-gray-300">
-                <n-icon size="14" class="text-emerald-400">
+              <div class="flex items-center gap-1.5 border border-slate-200/80 rounded-lg bg-slate-100 px-3 py-1.5 text-xs text-slate-700 font-medium dark:border-transparent dark:bg-gray-800/80 dark:text-gray-300">
+                <n-icon size="14" class="text-emerald-600 dark:text-emerald-400">
                   <ShieldIcon />
                 </n-icon>
                 <span>100% Risk-Free Simulated Capital</span>
@@ -202,29 +202,29 @@ const tickerStream = ref([
           </div>
 
           <!-- Right: Visual Duel Simulation Mock Teaser Card -->
-          <div class="w-full border border-emerald-500/20 rounded-xl bg-gray-900/90 p-4 shadow-lg md:w-80">
-            <div class="mb-3 flex items-center justify-between border-b border-gray-800 pb-2 text-xs">
-              <span class="text-gray-300 font-bold">MATCH #9421 • FINAL CIRCLE</span>
-              <span class="animate-pulse rounded bg-rose-500/20 px-1.5 py-0.5 text-rose-400 font-bold font-mono">STORM 0:28</span>
+          <div class="w-full border border-emerald-500/30 rounded-xl bg-slate-50/90 p-4 shadow-md md:w-80 dark:border-emerald-500/20 dark:bg-gray-900/90">
+            <div class="mb-3 flex items-center justify-between border-b border-slate-200 pb-2 text-xs dark:border-gray-800">
+              <span class="text-slate-800 font-bold dark:text-gray-300">MATCH #9421 • FINAL CIRCLE</span>
+              <span class="animate-pulse rounded bg-rose-100 px-1.5 py-0.5 text-rose-700 font-bold font-mono dark:bg-rose-500/20 dark:text-rose-400">STORM 0:28</span>
             </div>
             <div class="space-y-2.5">
               <div class="flex items-center justify-between text-xs">
-                <span class="text-gray-400">Sector:</span>
-                <span class="text-emerald-400 font-semibold">AI Semiconductors (Hot Zone)</span>
+                <span class="text-slate-500 dark:text-gray-400">Sector:</span>
+                <span class="text-emerald-600 font-semibold dark:text-emerald-400">AI Semiconductors (Hot Zone)</span>
               </div>
               <div class="flex items-center justify-between text-xs">
-                <span class="text-gray-400">Your Equity:</span>
-                <span class="text-emerald-400 font-bold font-mono">$19,420.50 (+29.4%)</span>
+                <span class="text-slate-500 dark:text-gray-400">Your Equity:</span>
+                <span class="text-emerald-600 font-bold font-mono dark:text-emerald-400">$19,420.50 (+29.4%)</span>
               </div>
               <div class="flex items-center justify-between text-xs">
-                <span class="text-gray-400">Traders Remaining:</span>
-                <span class="text-amber-400 font-bold font-mono">4 / 60</span>
+                <span class="text-slate-500 dark:text-gray-400">Traders Remaining:</span>
+                <span class="text-amber-600 font-bold font-mono dark:text-amber-400">4 / 60</span>
               </div>
-              <div class="mt-3 border border-gray-800 rounded-lg bg-gray-950 p-2.5 text-center">
-                <div class="mb-1 text-[11px] text-gray-400">
+              <div class="shadow-xs mt-3 border border-slate-200 rounded-lg bg-white p-2.5 text-center dark:border-gray-800 dark:bg-gray-950">
+                <div class="mb-1 text-[11px] text-slate-500 dark:text-gray-400">
                   Active Duel vs ApexBot_7
                 </div>
-                <div class="text-sm text-emerald-400 font-bold font-mono">
+                <div class="text-sm text-emerald-600 font-bold font-mono dark:text-emerald-400">
                   +$1,450.00 P&L • 5x LONG
                 </div>
               </div>
@@ -256,7 +256,7 @@ const tickerStream = ref([
     <LandingFooter />
 
     <!-- Commit Hash Watermark -->
-    <span class="pointer-events-none absolute bottom-1 left-2 text-xs text-gray-500 font-mono opacity-20">
+    <span class="pointer-events-none absolute bottom-1 left-2 text-xs text-slate-400 font-mono opacity-30 dark:text-gray-500">
       {{ commitHash }}
     </span>
   </div>

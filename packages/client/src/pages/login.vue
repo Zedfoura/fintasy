@@ -178,24 +178,30 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
 </script>
 
 <template>
-  <div class="min-h-[85vh] flex flex-col items-center justify-center px-4 py-8">
-    <!-- Cyberpunk Terminal Outer Card -->
+  <div class="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden px-4 py-8">
+    <!-- Ambient background glows -->
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] rounded-full bg-emerald-500/5 blur-[120px] -translate-x-1/2 -translate-y-1/2 dark:bg-[#00e676]/10" />
+      <div class="pointer-events-none absolute right-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-cyan-500/5 blur-[100px] dark:bg-[#00e5ff]/5" />
+    </div>
+
+    <!-- Cyberpunk / Fintech Terminal Outer Card -->
     <NCard
-      class="max-w-[480px] w-full border border-[#1f2438] bg-[#0c0d14]/95 shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+      class="login-card relative z-10 max-w-[480px] w-full border border-slate-200 rounded-2xl bg-white/95 shadow-xl backdrop-blur-xl transition-colors duration-200 dark:border-[#1f2438] dark:bg-[#0c0d14]/95 dark:shadow-[0_0_50px_rgba(0,0,0,0.8)]"
       size="large"
     >
       <!-- Header HUD -->
       <div class="mb-6 flex flex-col items-center text-center">
         <div class="mb-2 flex items-center gap-2">
-          <span class="h-2 w-2 animate-ping rounded-full bg-[#00e676]" />
+          <span class="h-2 w-2 animate-ping rounded-full bg-emerald-500 dark:bg-[#00e676]" />
           <NTag size="small" type="success" :bordered="false" class="tracking-widest font-mono uppercase">
             LIVE TICK ENGINE
           </NTag>
         </div>
-        <h1 class="text-2xl text-white font-black tracking-wider font-mono">
+        <h1 class="text-2xl text-slate-900 font-black tracking-wider font-mono dark:text-white">
           STOCK ROYALE
         </h1>
-        <p class="text-xs text-[#00e5ff] tracking-widest font-mono uppercase">
+        <p class="text-xs text-emerald-600 font-semibold tracking-widest font-mono uppercase dark:text-[#00e5ff]">
           {{ t('pages.login.terminal-access') }}
         </p>
       </div>
@@ -239,7 +245,7 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
       <!-- 1. SIGN IN FORM -->
       <div v-if="activeTab === 'login'" class="space-y-4">
         <div>
-          <label class="mb-1 block text-xs text-gray-400 tracking-wider font-mono uppercase">
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
             {{ t('pages.login.username') }}
           </label>
           <NInput
@@ -254,7 +260,7 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
         </div>
 
         <div>
-          <label class="mb-1 block text-xs text-gray-400 tracking-wider font-mono uppercase">
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
             {{ t('pages.login.password') }}
           </label>
           <NInput
@@ -273,7 +279,7 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
 
         <div class="flex items-center justify-between py-1">
           <NCheckbox v-model:checked="rememberMe">
-            <span class="text-xs text-gray-400 font-mono">
+            <span class="text-xs text-slate-600 font-mono dark:text-gray-400">
               {{ t('pages.login.remember-me') }}
             </span>
           </NCheckbox>
@@ -284,7 +290,7 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
           size="large"
           block
           :loading="isLoading"
-          class="h-12 text-sm font-bold tracking-wider font-mono uppercase"
+          class="h-12 text-sm font-bold tracking-wider font-mono uppercase shadow-sm"
           @click="handleLogin"
         >
           {{ t('pages.login.sign-in') }}
@@ -294,7 +300,7 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
       <!-- 2. REGISTER FORM -->
       <div v-else-if="activeTab === 'register'" class="space-y-4">
         <div>
-          <label class="mb-1 block text-xs text-gray-400 tracking-wider font-mono uppercase">
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
             {{ t('pages.login.email') }}
           </label>
           <NInput
@@ -307,7 +313,7 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
         </div>
 
         <div>
-          <label class="mb-1 block text-xs text-gray-400 tracking-wider font-mono uppercase">
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
             {{ t('pages.login.username') }}
           </label>
           <NInput
@@ -319,13 +325,13 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
             autocomplete="username"
             class="font-mono"
           />
-          <p class="mt-1 text-[11px] text-gray-400 font-mono">
+          <p class="mt-1 text-[11px] text-slate-500 font-mono dark:text-gray-400">
             {{ t('pages.login.username-requirements') }}
           </p>
         </div>
 
         <div>
-          <label class="mb-1 block text-xs text-gray-400 tracking-wider font-mono uppercase">
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
             {{ t('pages.login.password') }}
           </label>
           <NInput
@@ -341,13 +347,13 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
             @keyup="checkCapsLock"
             @blur="clearCapsLock"
           />
-          <p class="mt-1 text-[11px] text-gray-400 font-mono">
+          <p class="mt-1 text-[11px] text-slate-500 font-mono dark:text-gray-400">
             {{ t('pages.login.password-requirements') }}
           </p>
         </div>
 
         <div>
-          <label class="mb-1 block text-xs text-gray-400 tracking-wider font-mono uppercase">
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
             {{ t('pages.login.confirm') }}
           </label>
           <NInput
@@ -370,7 +376,7 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
           size="large"
           block
           :loading="isLoading"
-          class="h-12 text-sm font-bold tracking-wider font-mono uppercase"
+          class="h-12 text-sm font-bold tracking-wider font-mono uppercase shadow-sm"
           @click="handleRegister"
         >
           {{ t('pages.login.create-account') }}
@@ -379,11 +385,11 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
 
       <!-- 3. GUEST QUICK-PLAY DEMO -->
       <div v-else-if="activeTab === 'guest'" class="space-y-4">
-        <div class="border border-[#00e676]/30 rounded-lg bg-[#00e676]/5 p-4 text-center">
-          <div class="mb-1 text-sm text-white font-bold tracking-wide font-mono">
+        <div class="border border-emerald-500/30 rounded-lg bg-emerald-50/50 p-4 text-center dark:border-[#00e676]/30 dark:bg-[#00e676]/5">
+          <div class="mb-1 text-sm text-slate-900 font-bold tracking-wide font-mono dark:text-white">
             {{ t('pages.login.quick-play-title') }}
           </div>
-          <div class="mb-3 text-xs text-gray-400 font-mono">
+          <div class="mb-3 text-xs text-slate-600 font-mono dark:text-gray-400">
             {{ t('pages.login.quick-play-desc') }}
           </div>
           <NTag type="success" size="large" class="font-bold tracking-widest font-mono">
@@ -396,7 +402,7 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
           size="large"
           block
           :loading="isLoading"
-          class="h-12 text-sm font-bold tracking-wider font-mono uppercase"
+          class="h-12 text-sm font-bold tracking-wider font-mono uppercase shadow-sm"
           @click="handleGuestLogin"
         >
           ⚡ {{ t('pages.login.deploy-guest') }}
@@ -408,13 +414,44 @@ function onTabChange(tab: 'login' | 'register' | 'guest') {
 
 <style scoped>
 :deep(.n-tabs-rail) {
+  background-color: #f1f5f9 !important;
+  padding: 3px !important;
+  border-radius: 8px !important;
+}
+:global(.dark) :deep(.n-tabs-rail) {
   background-color: #121526 !important;
 }
+
 :deep(.n-tabs-tab) {
   font-family: monospace;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  color: #475569 !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+:global(.dark) :deep(.n-tabs-tab) {
+  color: #94a3b8 !important;
+}
+
+:deep(.n-tabs-tab.n-tabs-tab--active) {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+:global(.dark) :deep(.n-tabs-tab.n-tabs-tab--active) {
+  color: #00e676 !important;
+}
+
+:deep(.n-tabs-capsule) {
+  background-color: #ffffff !important;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+}
+:global(.dark) :deep(.n-tabs-capsule) {
+  background-color: #1c2236 !important;
+  box-shadow: 0 0 12px rgba(0, 230, 118, 0.2) !important;
 }
 </style>
 

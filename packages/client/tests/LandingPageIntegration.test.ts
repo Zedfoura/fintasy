@@ -156,7 +156,7 @@ describe('marketing Landing Page Full Assembly & Verification (LANDING-5)', () =
     const lev5Btn = wrapper.find('[data-leverage="5"]')
     if (lev5Btn.exists()) {
       await lev5Btn.trigger('click')
-      expect(lev5Btn.classes()).toContain('border-[#00e676]')
+      expect(lev5Btn.classes()).toContain('dark:border-[#00e676]')
     }
 
     // 3. Test FAQ accordion toggle

@@ -73,10 +73,10 @@ const formattedPnl = computed<string>(() => {
 
 const pnlColorClass = computed<string>(() => {
   if (unrealizedPnl.value > 0.001)
-    return 'text-[#00e676]'
+    return 'text-emerald-700 dark:text-[#00e676]'
   if (unrealizedPnl.value < -0.001)
-    return 'text-[#ff1744]'
-  return 'text-gray-400'
+    return 'text-rose-700 dark:text-[#ff1744]'
+  return 'text-slate-500 dark:text-gray-400'
 })
 
 // SVG sparkline path calculation
@@ -210,15 +210,15 @@ defineExpose({
       <!-- Section Header -->
       <div class="mb-10 text-center">
         <div class="mb-3 inline-flex items-center gap-2">
-          <span class="h-2 w-2 animate-ping rounded-full bg-[#ff1744]" />
-          <span class="text-xs text-[#ff1744] tracking-widest font-mono uppercase">
+          <span class="h-2 w-2 animate-ping rounded-full bg-rose-500 dark:bg-[#ff1744]" />
+          <span class="text-xs text-rose-700 font-bold tracking-widest font-mono uppercase dark:text-[#ff1744]">
             TEST YOUR REFLEXES // 30s LIVE DUEL DEMO
           </span>
         </div>
-        <h2 class="text-3xl text-white font-black tracking-tight font-mono md:text-5xl">
+        <h2 class="text-3xl text-slate-900 font-black tracking-tight font-mono md:text-5xl dark:text-white">
           HIGH-FREQUENCY COMBAT SIMULATOR
         </h2>
-        <p class="mx-auto mt-4 max-w-xl text-sm text-gray-400">
+        <p class="mx-auto mt-4 max-w-xl text-sm text-slate-600 dark:text-gray-400">
           Experience the adrenaline of Stock Royale micro-trading before entering the 60-player arena.
           Lock leverage, pick Long or Short, and capitalize on live ticker swings.
         </p>
@@ -226,24 +226,24 @@ defineExpose({
 
       <!-- Duel Arena Interactive Card -->
       <NCard
-        class="border border-[#1f2438] bg-[#0c0d14]/95 shadow-2xl backdrop-blur-xl"
+        class="duel-arena-card border border-slate-200 rounded-2xl bg-white/95 shadow-xl backdrop-blur-xl dark:border-[#1f2438] dark:bg-[#0c0d14]/95 dark:shadow-2xl"
         size="large"
       >
         <!-- Opponent Banner & Timer HUD -->
-        <div class="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-[#1f2438] pb-4">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4 dark:border-[#1f2438]">
           <!-- Opponent Profile -->
           <div class="flex items-center gap-3">
-            <div class="h-10 w-10 flex items-center justify-center border border-[#ff1744]/40 rounded-lg bg-[#ff1744]/10 text-[#ff1744]">
+            <div class="h-10 w-10 flex items-center justify-center border border-rose-500/40 rounded-lg bg-rose-50 text-rose-600 dark:border-[#ff1744]/40 dark:bg-[#ff1744]/10 dark:text-[#ff1744]">
               <FlameIcon class="h-5 w-5" />
             </div>
             <div>
               <div class="flex items-center gap-2">
-                <span class="text-sm text-white font-bold font-mono">ApexBot_7</span>
+                <span class="text-sm text-slate-900 font-bold font-mono dark:text-white">ApexBot_7</span>
                 <NTag size="small" type="error" :bordered="false" class="text-[10px] font-mono uppercase">
                   DIAMOND III
                 </NTag>
               </div>
-              <div class="text-[11px] text-gray-400 font-mono">
+              <div class="text-[11px] text-slate-500 font-mono dark:text-gray-400">
                 Opponent • Contesting AI Semiconductors
               </div>
             </div>
@@ -252,18 +252,18 @@ defineExpose({
           <!-- Countdown Timer -->
           <div class="flex items-center gap-3">
             <div class="text-right">
-              <div class="text-[10px] text-gray-400 tracking-wider font-mono uppercase">
+              <div class="text-[10px] text-slate-500 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
                 ROUND TIMER
               </div>
-              <div class="text-lg text-[#ff9100] font-black font-mono">
+              <div class="text-lg text-amber-600 font-black font-mono dark:text-[#ff9100]">
                 0:{{ secondsRemaining < 10 ? `0${secondsRemaining}` : secondsRemaining }}
               </div>
             </div>
-            <div class="h-8 w-[1px] bg-[#1f2438]" />
+            <div class="h-8 w-[1px] bg-slate-200 dark:bg-[#1f2438]" />
             <!-- Ticker Badge -->
-            <div class="border border-[#1f2438] rounded bg-[#121526] px-3 py-1.5">
-              <span class="text-xs text-emerald-400 font-bold font-mono">NVDA</span>
-              <span class="ml-2 text-xs text-gray-300 font-mono">${{ currentPrice.toFixed(2) }}</span>
+            <div class="shadow-xs border border-slate-200 rounded-lg bg-slate-50 px-3 py-1.5 dark:border-[#1f2438] dark:bg-[#121526]">
+              <span class="text-xs text-emerald-700 font-bold font-mono dark:text-emerald-400">NVDA</span>
+              <span class="ml-2 text-xs text-slate-700 font-mono dark:text-gray-300">${{ currentPrice.toFixed(2) }}</span>
             </div>
           </div>
         </div>
@@ -271,13 +271,13 @@ defineExpose({
         <!-- Price Chart & PnL HUD Grid -->
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <!-- Sparkline Chart (2 Cols) -->
-          <div class="relative flex flex-col justify-between border border-[#1f2438] rounded-xl bg-[#08090f] p-4 lg:col-span-2">
-            <div class="mb-2 flex items-center justify-between text-xs text-gray-400 font-mono">
+          <div class="relative flex flex-col justify-between border border-slate-200 rounded-xl bg-slate-50/90 p-4 shadow-sm lg:col-span-2 dark:border-[#1f2438] dark:bg-[#08090f]">
+            <div class="mb-2 flex items-center justify-between text-xs text-slate-600 font-mono dark:text-gray-400">
               <span class="flex items-center gap-1.5">
-                <span class="h-2 w-2 rounded-full bg-[#00e5ff]" />
+                <span class="h-2 w-2 rounded-full bg-cyan-500 dark:bg-[#00e5ff]" />
                 LIVE 10Hz TICK STREAM
               </span>
-              <span class="text-gray-300 font-bold">${{ currentPrice.toFixed(2) }}</span>
+              <span class="text-slate-900 font-bold font-mono dark:text-gray-300">${{ currentPrice.toFixed(2) }}</span>
             </div>
 
             <!-- SVG Sparkline -->
@@ -291,7 +291,8 @@ defineExpose({
                 </defs>
                 <polyline
                   fill="none"
-                  stroke="#00e5ff"
+                  stroke="#0284c7"
+                  class="stroke-cyan-600 dark:stroke-[#00e5ff]"
                   stroke-width="2.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -300,16 +301,16 @@ defineExpose({
               </svg>
             </div>
 
-            <div class="mt-2 flex items-center justify-between text-[10px] text-gray-500 font-mono">
+            <div class="mt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono dark:text-gray-500">
               <span>T-15s</span>
               <span>NOW</span>
             </div>
           </div>
 
           <!-- Position & P&L Status Panel -->
-          <div class="flex flex-col justify-between border border-[#1f2438] rounded-xl bg-[#121526]/80 p-4">
+          <div class="flex flex-col justify-between border border-slate-200 rounded-xl bg-slate-50/90 p-4 shadow-sm dark:border-[#1f2438] dark:bg-[#121526]/80">
             <div>
-              <div class="text-[10px] text-gray-400 tracking-wider font-mono uppercase">
+              <div class="text-[10px] text-slate-500 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
                 UNREALIZED P&L
               </div>
               <div
@@ -321,20 +322,20 @@ defineExpose({
               </div>
             </div>
 
-            <div class="my-4 border-y border-[#1f2438] py-3 text-xs font-mono space-y-2">
+            <div class="my-4 border-y border-slate-200 py-3 text-xs font-mono space-y-2 dark:border-[#1f2438]">
               <div class="flex justify-between">
-                <span class="text-gray-400">Position:</span>
-                <span class="text-white font-bold">
+                <span class="text-slate-500 dark:text-gray-400">Position:</span>
+                <span class="text-slate-900 font-bold dark:text-white">
                   {{ activePosition ? `${activePosition.side} (${activePosition.leverage}x)` : 'STANDBY' }}
                 </span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-400">Capital At Risk:</span>
-                <span class="text-gray-300">${{ activePosition ? (activePosition.size).toFixed(2) : '1,000.00' }}</span>
+                <span class="text-slate-500 dark:text-gray-400">Capital At Risk:</span>
+                <span class="text-slate-700 font-mono dark:text-gray-300">${{ activePosition ? (activePosition.size).toFixed(2) : '1,000.00' }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-400">Entry Price:</span>
-                <span class="text-gray-300">
+                <span class="text-slate-500 dark:text-gray-400">Entry Price:</span>
+                <span class="text-slate-700 font-mono dark:text-gray-300">
                   {{ activePosition ? `$${activePosition.entryPrice.toFixed(2)}` : '—' }}
                 </span>
               </div>
@@ -342,7 +343,7 @@ defineExpose({
 
             <!-- Leverage Selector -->
             <div>
-              <div class="mb-2 text-[10px] text-gray-400 tracking-wider font-mono uppercase">
+              <div class="mb-2 text-[10px] text-slate-500 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
                 LEVERAGE MULTIPLIER
               </div>
               <div class="grid grid-cols-4 gap-1.5">
@@ -350,10 +351,10 @@ defineExpose({
                   v-for="lev in [1, 2, 3, 5]"
                   :key="lev"
                   type="button"
-                  class="border rounded py-1 text-xs font-bold font-mono transition-all"
+                  class="border rounded-lg py-1 text-xs font-bold font-mono transition-all"
                   :class="selectedLeverage === lev
-                    ? 'border-[#00e676] bg-[#00e676]/20 text-[#00e676]'
-                    : 'border-[#1f2438] bg-[#0c0d14] text-gray-400 hover:border-gray-600'"
+                    ? 'border-emerald-600 bg-emerald-50 text-emerald-800 dark:border-[#00e676] dark:bg-[#00e676]/20 dark:text-[#00e676]'
+                    : 'border-slate-200 bg-white text-slate-600 dark:border-[#1f2438] dark:bg-[#0c0d14] dark:text-gray-400 hover:border-slate-400 dark:hover:border-gray-600'"
                   :data-leverage="lev"
                   @click="setLeverage(lev)"
                 >
@@ -370,7 +371,7 @@ defineExpose({
             type="primary"
             size="large"
             block
-            class="duel-action-btn flex-1 py-6 text-sm font-black font-mono shadow-lg"
+            class="duel-action-btn flex-1 py-6 text-sm font-black font-mono shadow-md"
             data-action="long"
             :disabled="isFinished"
             @click="enterPosition('LONG')"
@@ -385,7 +386,7 @@ defineExpose({
             type="error"
             size="large"
             block
-            class="duel-action-btn flex-1 py-6 text-sm font-black font-mono shadow-lg"
+            class="duel-action-btn flex-1 py-6 text-sm font-black font-mono shadow-md"
             data-action="short"
             :disabled="isFinished"
             @click="enterPosition('SHORT')"
@@ -400,17 +401,17 @@ defineExpose({
         <!-- Victory Banner / Outcome Modal -->
         <div
           v-if="isFinished"
-          class="victory-banner mt-6 animate-fade-in border border-[#00e676]/50 rounded-xl from-[#00e676]/15 via-[#00e5ff]/10 to-[#00e676]/15 bg-gradient-to-r p-6 text-center shadow-[0_0_40px_rgba(0,230,118,0.2)]"
+          class="victory-banner mt-6 animate-fade-in border border-emerald-500/40 rounded-xl from-emerald-50 via-teal-50 to-emerald-50 bg-gradient-to-r p-6 text-center shadow-lg dark:from-[#00e676]/15 dark:via-[#00e5ff]/10 dark:to-[#00e676]/15 dark:shadow-[0_0_40px_rgba(0,230,118,0.2)]"
         >
-          <div class="mb-2 inline-flex items-center gap-2 text-[#00e676]">
+          <div class="mb-2 inline-flex items-center gap-2 text-emerald-700 dark:text-[#00e676]">
             <TrophyIcon class="h-6 w-6" />
             <span class="text-lg font-black tracking-wider font-mono uppercase">
               VICTORY! LOOT SECURED
             </span>
           </div>
 
-          <p class="mb-4 text-xs text-gray-300 font-mono">
-            Opponent <span class="text-white font-bold">ApexBot_7</span> eliminated!
+          <p class="mb-4 text-xs text-slate-700 font-mono dark:text-gray-300">
+            Opponent <span class="text-slate-900 font-bold dark:text-white">ApexBot_7</span> eliminated!
             Final Delta: <span class="font-bold" :class="pnlColorClass">{{ formattedPnl }}</span>
           </p>
 
@@ -419,7 +420,7 @@ defineExpose({
               type="primary"
               size="medium"
               round
-              class="deploy-arena-btn font-bold font-mono shadow-emerald-500/30 shadow-lg hover:scale-105"
+              class="deploy-arena-btn font-bold font-mono shadow-emerald-600/30 shadow-lg hover:scale-105 dark:shadow-emerald-500/30"
               @click="deployToArena"
             >
               <template #icon>
@@ -432,7 +433,7 @@ defineExpose({
               size="medium"
               round
               secondary
-              class="restart-duel-btn text-xs text-gray-300 font-mono"
+              class="restart-duel-btn text-xs text-slate-700 font-mono dark:text-gray-300"
               @click="restartDuel"
             >
               <template #icon>

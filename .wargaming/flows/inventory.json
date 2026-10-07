@@ -84,6 +84,15 @@
       "entry_route": "/",
       "terminal_step": "Conversion trigger to /dashboard/royale or /login",
       "expected_duration_seconds": 30
+    },
+    {
+      "id": "FLOW-THEME-NAVBAR",
+      "tier": "supporting",
+      "name": "Adaptive Dual-Theme Switching & Sticky Navigation Bar",
+      "description": "User clicks ThemeSwitch in sticky glassmorphic navbar -> toggles between light and dark modes -> all surfaces (navbar, hero, login card, gameplay pillars, duel simulator, leaderboard, FAQ, footer) smoothly transition color tokens with WCAG AAA contrast maintained",
+      "entry_route": "/",
+      "terminal_step": "Full DOM surface re-renders with active theme tokens and zero legibility regression",
+      "expected_duration_seconds": 2
     }
   ]
 }

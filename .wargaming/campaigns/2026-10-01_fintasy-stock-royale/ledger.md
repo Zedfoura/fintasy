@@ -315,3 +315,77 @@
   - Point of no return: none
   - Subagent lane: `lane_integration`
   - Contract charter: Git base `e3e92a606bfdea046e878e11beb9df476887a5e1`, exclude `packages/server/`, worktree `wt/landing_assembly`, subsystem complete landing surface + build verification
+
+### Epic 9 — Light Mode Systemic Theming, Cyberpunk Navbar & Visual Polish Overhaul <!-- wargame-epic: light-mode-navbar-revamp; wargame-epic-priority: 9 -->
+
+- [x] **THEME-1. Sticky Glassmorphic Navbar & Brand Identity Revamp** — Overhaul `packages/client/src/components/navigation/HomeNav.vue` into a sticky, backdrop-blurred frosted glass header (`backdrop-blur-xl bg-white/85 dark:bg-[#0c0d14]/85 border-b border-slate-200/80 dark:border-[#1f2438]`), sleek logo typography with glowing crosshair icon, interactive pill navigation links with hover micro-interactions, high-contrast dual-theme "Play Royale" CTA button (solid deep emerald in light mode, glowing neon in dark mode), and streamlined theme/locale switches. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: LANDING-5@outcome
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_THEME-1_battleplan.md`
+  - Verifier/consumer: `packages/client/tests/LandingHero.test.ts` and `packages/client/tests/NavBarTheme.test.ts` asserting sticky header classes, contrast ratios, and CTA button rendering across light and dark modes
+  - Preserves: Existing route paths (`/`, `/dashboard`, `/dashboard/royale`) and i18n language toggle functionality
+  - User flows: FLOW-THEME-NAVBAR, FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_navbar_ui`
+  - Contract charter: Git base `d3fe405`, exclude `packages/server/`, worktree `wt/navbar_theme`, subsystem `packages/client/src/components/navigation/HomeNav.vue` + `packages/client/tests/NavBarTheme.test.ts`
+
+- [x] **THEME-2. Dual-Theme Authentication Portal & High-Contrast Tab Overhaul** — Completely resolve the detached floating black card on white background in `packages/client/src/pages/login.vue` by introducing adaptive dual-theme container styling (subtle ambient grid / radial depth), dual-mode card tokens (`bg-white dark:bg-[#0c0d14] border-slate-200 dark:border-[#1f2438] shadow-2xl`), high-contrast readable segment tabs in both modes (`text-slate-700 font-bold dark:text-gray-300`), and crisp form inputs with distinct focus rings. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: THEME-1@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_THEME-2_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_THEME-2/execution.md`
+  - Verifier/consumer: `packages/client/tests/LoginView.test.ts` asserting light and dark mode classes, active/inactive tab contrast, and guest quick-play functionality
+  - Preserves: `useAPI` authentication contracts, guest demo login, caps-lock warnings, and redirect query handling
+  - User flows: FLOW-THEME-NAVBAR, FLOW-AUTH-LOGIN
+  - Point of no return: none
+  - Subagent lane: `lane_auth_ui`
+  - Contract charter: Git base `d3fe405`, exclude `packages/server/`, worktree `wt/login_theme`, subsystem `packages/client/src/pages/login.vue` + `packages/client/tests/LoginView.test.ts`
+
+- [x] **THEME-3. Landing Hero, Status Chips & Ticker Tape Dual-Theme Overhaul** — Upgrade `packages/client/src/pages/index.vue` hero section for pristine light-mode legibility and contrast: replace washed-out neon text and lime smudges with adaptive gradient typography (`from-emerald-700 via-teal-600 to-cyan-700 dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400`), WCAG AAA subtitle (`text-slate-600 dark:text-gray-300`), crisp dual-mode status chips (`bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-400`), high-contrast dual CTAs, and adaptive ticker tape & tactical preview card backgrounds. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: THEME-1@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_THEME-3_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_THEME-3/execution.md`
+  - Verifier/consumer: `packages/client/tests/LandingHero.test.ts` asserting adaptive theme classes, status chip contrast, and CTA navigation
+  - Preserves: $15,000 starting pot invariant (`INV-1`), 60-player lobby copy, and ticker stream data
+  - User flows: FLOW-THEME-NAVBAR, FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_hero_theme`
+  - Contract charter: Git base `d3fe405`, exclude `packages/server/`, worktree `wt/hero_theme`, subsystem `packages/client/src/pages/index.vue` + `packages/client/tests/LandingHero.test.ts`
+
+- [x] **THEME-4. 4-Pillar Showcase & Duel Simulator Dual-Theme Polish** — Refactor `LandingGameplayPillars.vue` and `LandingDuelSimulator.vue` from hardcoded dark-only colors to responsive dual-mode fintech aesthetics: pillar cards with `bg-white/95 dark:bg-[#0c0d14]/90 border-slate-200 dark:border-[#1f2438] shadow-lg`, high-contrast filter tabs, dual-theme duel simulator arena card, adaptive sparkline chart container (`bg-slate-100 dark:bg-[#08090f]`), and crisp leverage controls. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: THEME-3@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_THEME-4_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_THEME-4/execution.md`
+  - Verifier/consumer: `packages/client/tests/LandingPillars.test.ts` and `packages/client/tests/LandingDuelSimulator.test.ts` verifying rendering, tab toggling, leverage controls, and P&L calculation in both light and dark modes
+  - Preserves: 10 Hz price sparkline mathematics, leverage multiplier logic, and victory CTA popup
+  - User flows: FLOW-THEME-NAVBAR, FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_pillars_theme`
+  - Contract charter: Git base `d3fe405`, exclude `packages/server/`, worktree `wt/pillars_theme`, subsystem `packages/client/src/components/landing/LandingGameplayPillars.vue` + `packages/client/src/components/landing/LandingDuelSimulator.vue`
+
+- [x] **THEME-5. Social Proof, Leaderboard, FAQ & Footer Dual-Theme Polish** — Upgrade `LandingSocialProof.vue` and `LandingFooter.vue` with dual-mode surfaces: stats cards with `bg-white/90 dark:bg-[#0c0d14]/80 border-slate-200 dark:border-[#1f2438]`, Apex Leaderboard table with crisp alternating light-mode rows and dark slate headers, FAQ accordion with clean white question cards and high-contrast typography, and adaptive platform footer (`bg-slate-100 dark:bg-[#07080d] border-t border-slate-200 dark:border-[#1f2438]`). <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: THEME-4@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_THEME-5_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_THEME-5/execution.md`
+  - Verifier/consumer: `packages/client/tests/LandingSocialProof.test.ts` verifying stats counters, leaderboard rows, FAQ expansion, and footer links
+  - Preserves: Top 5 leaderboard entries, Steam Deck ready badge, and external repository links
+  - User flows: FLOW-THEME-NAVBAR, FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_footer_theme`
+  - Contract charter: Git base `d3fe405`, exclude `packages/server/`, worktree `wt/footer_theme`, subsystem `packages/client/src/components/landing/LandingSocialProof.vue` + `packages/client/src/components/landing/LandingFooter.vue`
+
+- [x] **THEME-6. Full Monorepo Build, Theme Toggle E2E Verification & Blast Radius Gate** — End-to-end theme switching integration test `ThemeToggleIntegration.test.ts` verifying seamless live toggling between light and dark modes across navbar, login, and all landing modules without contrast loss, CSS layout shifts, or console warnings. Full monorepo test suite pass (`pnpm test`), production build (`pnpm --filter client build`), and programmatic blast radius verification strictly confirming `["client"]`. <!-- wargame-state: outcome; wargame-disposition: active -->
+  - Depends on: THEME-2@canonical, THEME-3@canonical, THEME-4@canonical, THEME-5@canonical
+  - Required stage: OUTCOME
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_THEME-6_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_THEME-6/execution.md`
+  - Verifier/consumer: `packages/client/tests/ThemeToggleIntegration.test.ts` + `pnpm test` (all 176 monorepo tests pass 100%) + `pnpm --filter client build` (code 0) + `npx ts-node wargame-metaharness/src/scripts/get-blast-radius.ts` strictly returning `["client"]`
+  - Preserves: 100% backward compatibility of all existing routes, navigation bars, and passing test suites
+  - User flows: FLOW-THEME-NAVBAR, FLOW-LANDING-CONVERSION, FLOW-AUTH-LOGIN
+  - Point of no return: none
+  - Subagent lane: `lane_theme_integration`
+  - Contract charter: Git base `d3fe405`, exclude `packages/server/`, worktree `wt/theme_integration`, subsystem complete theme tokens + client build verification
+

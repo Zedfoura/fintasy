@@ -15,7 +15,7 @@ describe('marketing Landing Page Gameplay Pillars (LANDING-2)', () => {
         stubs: {
           NCard: defineComponent({
             name: 'NCard',
-            template: '<div class="pillar-card-stub"><slot /></div>',
+            template: '<div class="pillar-card-stub" :class="$attrs.class"><slot /></div>',
           }),
           NTag: defineComponent({
             name: 'NTag',
@@ -107,5 +107,20 @@ describe('marketing Landing Page Gameplay Pillars (LANDING-2)', () => {
     expect(wrapper.text()).toContain('Concentric topology')
     expect(wrapper.text()).toContain('Third-party battle escalation')
     expect(wrapper.text()).toContain('Zero-sum MMR rating calculations')
+  })
+
+  it('assay F: dual-theme fintech styling tokens applied to cards and typography', () => {
+    const wrapper = mountPillars()
+    const firstCard = wrapper.find('.pillar-card')
+    expect(firstCard.exists()).toBe(true)
+
+    expect(firstCard.classes()).toContain('border-slate-200')
+    expect(firstCard.classes()).toContain('dark:border-[#1f2438]')
+    expect(firstCard.classes()).toContain('bg-white/95')
+    expect(firstCard.classes()).toContain('dark:bg-[#0c0d14]/90')
+
+    const sectionTitle = wrapper.find('h2')
+    expect(sectionTitle.classes()).toContain('text-slate-900')
+    expect(sectionTitle.classes()).toContain('dark:text-white')
   })
 })
