@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": 2,
   "project": "fintasy",
-  "generated_at": "2026-10-01T19:08:00Z",
+  "generated_at": "2026-10-05T23:25:00Z",
   "flows": [
     {
       "id": "FLOW-ROYALE-GOLDEN",
@@ -66,6 +66,33 @@
       "entry_route": "/dashboard/royale/match/:id",
       "terminal_step": "Spectator view shows match conclusion and return to lobby button",
       "expected_duration_seconds": 120
+    },
+    {
+      "id": "FLOW-AUTH-LOGIN",
+      "tier": "critical-secondary",
+      "name": "Authentication, Registration & Quick Guest Entry",
+      "description": "User navigates to /login -> authenticates via credentials or instant guest session -> session token is stored and validated -> redirected to dashboard or previous destination with active wallet",
+      "entry_route": "/login",
+      "terminal_step": "Redirect to /dashboard with active authenticated user session",
+      "expected_duration_seconds": 5
+    },
+    {
+      "id": "FLOW-LANDING-CONVERSION",
+      "tier": "critical-secondary",
+      "name": "Marketing Landing Page Discovery & Conversion Funnel",
+      "description": "Visitor navigates to / -> views Stock Royale hero with live status badges -> explores 4 gameplay pillars -> interacts with live 30s duel demo widget -> reviews Golden Trader leaderboard preview & FAQ -> clicks CTA ('Deploy to Stock Royale' or 'Sign In / Register') -> transitions to /dashboard/royale or /login",
+      "entry_route": "/",
+      "terminal_step": "Conversion trigger to /dashboard/royale or /login",
+      "expected_duration_seconds": 30
+    },
+    {
+      "id": "FLOW-THEME-NAVBAR",
+      "tier": "supporting",
+      "name": "Adaptive Dual-Theme Switching & Sticky Navigation Bar",
+      "description": "User clicks ThemeSwitch in sticky glassmorphic navbar -> toggles between light and dark modes -> all surfaces (navbar, hero, login card, gameplay pillars, duel simulator, leaderboard, FAQ, footer) smoothly transition color tokens with WCAG AAA contrast maintained",
+      "entry_route": "/",
+      "terminal_step": "Full DOM surface re-renders with active theme tokens and zero legibility regression",
+      "expected_duration_seconds": 2
     }
   ]
 }

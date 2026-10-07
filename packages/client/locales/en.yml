@@ -5,11 +5,33 @@ example:
   hello-world: Hello World!
 pages:
   main:
-    title: Main
-    content-title: Take Your Stocks To The Next Level
+    title: Stock Royale • 60-Player Trading Simulator
+    hero-headline: The 60-Player Stock Market Battle Royale
+    hero-subtitle: >-
+      Drop into real-time S&P 500 sectors, loot volatile tickers, fight 30-second trading duels,
+      escape the Federal Reserve liquidity drain storm, and claim the #1 Victory Royale.
+    badge-season: 'Season 1: Liquidity Drain Active'
+    badge-traders: 30-60 Traders Per Match
+    badge-engine: 100ms Fast Match Engine
+    badge-starting-pot: '$15,000 Starting Pot'
+    cta-deploy: Deploy to Stock Royale
+    cta-login: Sign In / Register
+    cta-dashboard: Standard Paper Trading
+    ticker-tagline: Real-Time High Frequency Market Ticks & S&P 500 Sectors
+    content-title: The 60-Player Stock Market Battle Royale
     content-subtitle: >-
-      Fintasy is a stock market simulator that allows you to trade stocks with fake money.
-      Compete against your friends and see who can make the most money!
+      Drop into real-time S&P 500 sectors, loot volatile tickers, fight 30-second trading duels,
+      escape the Federal Reserve liquidity drain storm, and claim the #1 Victory Royale.
+    pillars-tag: THE 4 PILLARS OF STOCK ROYALE
+    pillars-title: Tactical High-Frequency Combat Mechanics
+    pillars-subtitle: Experience an entirely new genre of competitive market simulation engineered for 60 simultaneous traders.
+    duel-tag: TEST YOUR REFLEXES
+    duel-title: 30s LIVE DUEL DEMO
+    duel-subtitle: Experience the adrenaline of Stock Royale micro-trading before entering the 60-player arena.
+    social-tag: PROVEN MARKET INFRASTRUCTURE
+    social-title: Battle-Tested High Frequency Performance
+    social-subtitle: Real-time telemetry, competitive matchmaking ladders, and sub-100ms market state synchronization.
+    faq-title: Frequently Asked Questions
   login:
     title: Login/Register
     register: Register
@@ -37,6 +59,14 @@ pages:
       Letters, numbers, and underscores only.
     password-requirements: Must be at least 6 characters.
     unknown-error: An unknown error occurred. Please try again later.
+    terminal-access: TERMINAL ACCESS
+    operator-login: Operator Sign In
+    enlist-trader: Enlist Trader
+    quick-play: Quick Play Demo
+    quick-play-title: Instant Guest Trader Session
+    quick-play-desc: Deploy directly into Stock Royale and paper trading with a $15,000 demo pot. No registration required.
+    caps-lock-warning: Caps Lock is active
+    deploy-guest: Deploy as Guest Trader
   dashboard:
     title: Dashboard
     portfolio-value: Portfolio Value

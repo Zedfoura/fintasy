@@ -5,6 +5,6 @@
   "flows": [
     "FLOW-COMBAT-THIRDPARTY"
   ],
-  "stage": "proposed",
+  "stage": "canonical",
   "disposition": "active"
 }

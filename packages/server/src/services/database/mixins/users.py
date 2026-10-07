@@ -30,6 +30,26 @@ class UsersMixin:
         """
 
         conn = None
+        if not getattr(self, "connectionPool", None):
+            fallback_users = getattr(self, "_fallback_users", {})
+            for u in fallback_users.values():
+                if u.get("username") == username or u.get("email") == email:
+                    return None
+            import uuid
+
+            new_uuid = str(uuid.uuid4())
+            user_data = {
+                "uuid": new_uuid,
+                "username": username,
+                "email": email,
+                "password_hash": password_hash,
+                "coins": 1500000,
+                "created_at": "2026-10-01T00:00:00Z",
+                "updated_at": "2026-10-01T00:00:00Z",
+            }
+            fallback_users[new_uuid] = user_data
+            return dict(user_data)
+
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
@@ -69,6 +89,11 @@ class UsersMixin:
             dict: A dictionary representing the user if found, None otherwise.
         """
 
+        if not getattr(self, "connectionPool", None):
+            fallback_users = getattr(self, "_fallback_users", {})
+            user = fallback_users.get(str(uuid_user))
+            return dict(user) if user else None
+
         conn = None
         try:
             conn = self.connectionPool.getconn()
@@ -101,6 +126,13 @@ class UsersMixin:
         Returns:
             dict: A dictionary representing the user if found, None otherwise.
         """
+
+        if not getattr(self, "connectionPool", None):
+            fallback_users = getattr(self, "_fallback_users", {})
+            for u in fallback_users.values():
+                if u.get("username") == username:
+                    return dict(u)
+            return None
 
         conn = None
         try:
@@ -187,6 +219,13 @@ class UsersMixin:
         Returns:
             bool: True if successful, False otherwise.
         """
+
+        if not getattr(self, "connectionPool", None):
+            fallback_users = getattr(self, "_fallback_users", {})
+            if str(uuid_user) in fallback_users:
+                del fallback_users[str(uuid_user)]
+                return True
+            return False
 
         conn = None
         try:

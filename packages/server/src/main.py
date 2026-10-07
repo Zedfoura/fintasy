@@ -11,6 +11,7 @@ from pydantic import ValidationError
 from config import API_CORS_ORIGINS, API_HOST, API_PORT
 from routes.api.v1.portfolios import router as portfolios_router
 from routes.api.v1.quotes import router as quotes_router
+from routes.api.v1.royale import router as royale_router
 from routes.api.v1.sessions import router as sessions_router
 from routes.api.v1.tournaments import router as tournaments_router
 from routes.api.v1.transactions import router as transactions_router
@@ -59,6 +60,7 @@ app.include_router(quotes_router)
 app.include_router(portfolios_router)
 app.include_router(transactions_router)
 app.include_router(tournaments_router)
+app.include_router(royale_router)
 
 if __name__ == "__main__":
     uvicorn.run(

@@ -12,6 +12,8 @@
     "build": "pnpm --parallel --color run build",
     "clean": "pnpm --parallel run clean",
     "clean:all": "pnpm --parallel run clean:all && rm -rf node_modules/ .pnpm-store/",
+    "desktop:build": "tauri build",
+    "desktop:dev": "tauri dev",
     "dev": "pnpm -r run clean && pnpm --parallel --color run dev",
     "dev:client": "pnpm -r run clean && pnpm --parallel --color --filter client run dev",
     "dev:server": "pnpm -r run clean && pnpm --parallel --color --filter server run dev",
@@ -29,7 +31,8 @@
     "eslint-plugin-format": "^0.1.2",
     "lint-staged": "^15.2.7",
     "simple-git-hooks": "^2.11.1",
-    "taze": "^0.14.2"
+    "taze": "^0.14.2",
+    "ts-node": "^10.9.2"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

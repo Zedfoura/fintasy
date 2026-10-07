@@ -87,6 +87,41 @@ def create_session(
     return SessionResponse(code=200, message="Ok", data=session)
 
 
+@router.post(
+    "/sessions/guest",
+    response_model=SessionResponse,
+    status_code=status.HTTP_200_OK,
+)
+def create_guest_session():
+    """
+    Creates an instant guest session for playing Stock Royale without registration.
+    """
+    # Look up or create default guest trader
+    guest_user = db.get_user_by_username("guest_trader")
+    if guest_user is None:
+        guest_uuid = "00000000-0000-4000-8000-000000000001"
+        try:
+            guest_user = db.create_user(
+                username="guest_trader",
+                email="guest@fintasy.local",
+                password_hash=User.hash_password("guest123"),
+            )
+        except Exception:
+            pass
+        if guest_user is None:
+            guest_user = {"uuid": guest_uuid, "username": "guest_trader"}
+
+    owner_uuid = str(guest_user["uuid"])
+    session = db.create_session(owner_uuid)
+    if session is None:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to create guest session",
+        )
+
+    return SessionResponse(code=200, message="Ok", data=session)
+
+
 @router.delete(
     "/sessions", response_model=SessionResponse, status_code=status.HTTP_200_OK
 )

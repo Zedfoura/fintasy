@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div relative flex grow flex-col bg--c-bg p-4 text--c-text min-h-svh>
+  <div relative flex grow flex-col bg--c-bg text--c-text min-h-svh>
     <HomeNav />
     <RouterView />
   </div>

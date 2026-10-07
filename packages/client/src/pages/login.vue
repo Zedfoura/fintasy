@@ -1,41 +1,116 @@
 <!--
-  @author: adibarra (Alec Ibarra), Mariptime (Akshay)
-  @description: This component is used to display the login/register page of the application.
+  @author: adibarra (Alec Ibarra), Mariptime (Akshay), Zedfoura (Tinatsei Chingaya), Antigravity
+  @description: Tactical fintech/cyberpunk authentication portal for Stock Royale & Fintasy platform
 -->
 <script setup lang="ts">
+import {
+  NAlert,
+  NButton,
+  NCard,
+  NCheckbox,
+  NInput,
+  NTabPane,
+  NTabs,
+  NTag,
+} from 'naive-ui'
+
 const { t } = useI18n()
 const router = useRouter()
+const route = useRoute()
 const state = useStateStore()
 const fintasy = useAPI()
 
-const activeForm = useStorage<'login' | 'register'>('login-last-form', 'register')
+const activeTab = useStorage<'login' | 'register' | 'guest'>('login-active-tab', 'login')
 const rememberMe = useStorage('login-remember-me', false)
 const username = useStorage('login-username', '')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const error = ref('')
-const waitForLogin = ref(false)
+const isLoading = ref(false)
+const capsLockActive = ref(false)
 
 useHead({
   title: `${t('pages.login.title')} • Fintasy`,
 })
 
-// make sure uuid is set before redirecting
-watch(() => [fintasy.authenticated.value, waitForLogin.value], () => {
-  if (fintasy.authenticated.value && !waitForLogin.value)
-    router.push('/dashboard')
-}, { immediate: true })
-
-async function handleSubmit() {
-  if (activeForm.value === 'login')
-    await login()
-  else
-    await createAccount()
+// Check caps lock status on key events
+function checkCapsLock(event: any) {
+  if (!event)
+    return
+  if (typeof event.getModifierState === 'function')
+    capsLockActive.value = Boolean(event.getModifierState('CapsLock') || event.modifierCapsLock)
+  else if (event.modifierCapsLock !== undefined)
+    capsLockActive.value = Boolean(event.modifierCapsLock)
 }
 
-async function createAccount() {
-  if (!email.value || !username.value || !password.value) {
+function clearCapsLock() {
+  capsLockActive.value = false
+}
+
+function onLoginPasswordKeydown(event: KeyboardEvent) {
+  checkCapsLock(event)
+  if (event.key === 'Enter')
+    handleLogin()
+}
+
+function onRegisterPasswordKeydown(event: KeyboardEvent) {
+  checkCapsLock(event)
+  if (event.key === 'Enter')
+    handleRegister()
+}
+
+// Redirect on authenticated state once async loading settles
+watch(() => [fintasy.authenticated.value, isLoading.value], () => {
+  if (fintasy.authenticated.value && !isLoading.value) {
+    const destination = (route.query.redirect as string) || '/dashboard'
+    router.push(destination)
+  }
+}, { immediate: true })
+
+async function handleLogin() {
+  error.value = ''
+  if (!username.value.trim() || !password.value) {
+    error.value = t('pages.login.missing-credentials')
+    return
+  }
+
+  isLoading.value = true
+  try {
+    const res = await fintasy.login({
+      username: username.value.trim(),
+      password: password.value,
+    })
+
+    switch (res.code) {
+      case 404:
+        error.value = t('pages.login.no-account-found')
+        break
+      case 403:
+        error.value = t('pages.login.invalid-credentials')
+        break
+      case 200:
+        if (!rememberMe.value)
+          username.value = ''
+        if ('data' in res && res.data)
+          state.user.uuid = res.data.owner
+        break
+      default:
+        error.value = t('pages.login.unknown-error')
+        break
+    }
+  }
+  catch {
+    error.value = t('pages.login.unknown-error')
+  }
+  finally {
+    isLoading.value = false
+  }
+}
+
+async function handleRegister() {
+  error.value = ''
+  if (!email.value.trim() || !username.value.trim() || !password.value) {
     error.value = t('pages.login.missing-credentials')
     return
   }
@@ -45,207 +120,342 @@ async function createAccount() {
     return
   }
 
-  const createUser = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
-  switch (createUser.code) {
-    case 400:
-      error.value = t('pages.login.invalid-registration')
-      break
-    case 409:
-      error.value = t('pages.login.unique-taken')
-      break
-    case 200:
-      login()
-      break
-    default:
-      error.value = t('pages.login.unknown-error')
-      break
+  isLoading.value = true
+  try {
+    const createUser = await fintasy.createUser({
+      email: email.value.trim(),
+      username: username.value.trim(),
+      password: password.value,
+    })
+
+    switch (createUser.code) {
+      case 400:
+        error.value = t('pages.login.invalid-registration')
+        break
+      case 409:
+        error.value = t('pages.login.unique-taken')
+        break
+      case 200:
+        // Automatically sign in upon successful registration
+        await handleLogin()
+        return
+      default:
+        error.value = t('pages.login.unknown-error')
+        break
+    }
+  }
+  catch {
+    error.value = t('pages.login.unknown-error')
+  }
+  finally {
+    isLoading.value = false
   }
 }
 
-async function login() {
-  if (!username.value || !password.value) {
-    error.value = t('pages.login.missing-credentials')
-    return
-  }
-
-  waitForLogin.value = true
-  const login = await fintasy.login({ username: username.value, password: password.value })
-  switch (login.code) {
-    case 404:
-      error.value = t('pages.login.no-account-found')
-      break
-    case 403:
-      error.value = t('pages.login.invalid-credentials')
-      break
-    case 200:
-      if (!rememberMe.value)
-        username.value = ''
-      state.user.uuid = login.data.owner
-      break
-    default:
+async function handleGuestLogin() {
+  error.value = ''
+  isLoading.value = true
+  try {
+    const res = await state.loginAsGuest()
+    if (res.code !== 200)
       error.value = t('pages.login.unknown-error')
-      break
   }
-  waitForLogin.value = false
+  catch {
+    error.value = t('pages.login.unknown-error')
+  }
+  finally {
+    isLoading.value = false
+  }
 }
 
-function toggleForm() {
-  activeForm.value = activeForm.value === 'login' ? 'register' : 'login'
-
-  // clear confirm password if switching forms
-  if (activeForm.value === 'register')
+function onTabChange(tab: 'login' | 'register' | 'guest') {
+  activeTab.value = tab
+  error.value = ''
+  capsLockActive.value = false
+  if (tab === 'register')
     confirmPassword.value = ''
 }
 </script>
 
 <template>
-  <div h-15svh />
+  <div class="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden px-4 py-8">
+    <!-- Ambient background glows -->
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] rounded-full bg-emerald-500/5 blur-[120px] -translate-x-1/2 -translate-y-1/2 dark:bg-[#00e676]/10" />
+      <div class="pointer-events-none absolute right-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-cyan-500/5 blur-[100px] dark:bg-[#00e5ff]/5" />
+    </div>
 
-  <!-- Login and Registration Forms -->
-  <div flex flex-col justify-center>
-    <!-- Form Container -->
-    <div mx-auto mb-5 max-w-150 min-w-80 w-90svw flex flex-col gap-5 fn-outline bg--c-fg px-8 py-8>
-      <!-- Form Title -->
-      <div mb-5 text-center text-3xl>
-        {{ activeForm === 'login' ? t('pages.login.login') : t('pages.login.register') }}
+    <!-- Cyberpunk / Fintech Terminal Outer Card -->
+    <NCard
+      class="login-card relative z-10 max-w-[480px] w-full border border-slate-200 rounded-2xl bg-white/95 shadow-xl backdrop-blur-xl transition-colors duration-200 dark:border-[#1f2438] dark:bg-[#0c0d14]/95 dark:shadow-[0_0_50px_rgba(0,0,0,0.8)]"
+      size="large"
+    >
+      <!-- Header HUD -->
+      <div class="mb-6 flex flex-col items-center text-center">
+        <div class="mb-2 flex items-center gap-2">
+          <span class="h-2 w-2 animate-ping rounded-full bg-emerald-500 dark:bg-[#00e676]" />
+          <NTag size="small" type="success" :bordered="false" class="tracking-widest font-mono uppercase">
+            LIVE TICK ENGINE
+          </NTag>
+        </div>
+        <h1 class="text-2xl text-slate-900 font-black tracking-wider font-mono dark:text-white">
+          STOCK ROYALE
+        </h1>
+        <p class="text-xs text-emerald-600 font-semibold tracking-widest font-mono uppercase dark:text-[#00e5ff]">
+          {{ t('pages.login.terminal-access') }}
+        </p>
       </div>
 
-      <!-- Email Input (Only for Registration) -->
-      <div v-if="activeForm === 'register'">
-        <div fn-outline fn-hover>
-          <n-input-group>
-            <n-input-group-label class="w-17%" min-w-fit>
-              {{ t('pages.login.email') }}
-            </n-input-group-label>
-            <n-input
-              v-model:value="email"
-              :placeholder="t('pages.login.email')"
-              autocomplete="email"
-              type="text"
-            />
-          </n-input-group>
-        </div>
-      </div>
+      <!-- Mode Selector Tabs -->
+      <NTabs
+        :value="activeTab"
+        type="segment"
+        animated
+        class="mb-6"
+        @update:value="onTabChange as any"
+      >
+        <NTabPane name="login" :tab="t('pages.login.operator-login')" />
+        <NTabPane name="register" :tab="t('pages.login.enlist-trader')" />
+        <NTabPane name="guest" :tab="t('pages.login.quick-play')" />
+      </NTabs>
 
-      <!-- Username Input -->
-      <div>
-        <div fn-outline fn-hover>
-          <n-input-group>
-            <n-input-group-label class="w-17%" min-w-fit>
-              {{ t('pages.login.username') }}
-            </n-input-group-label>
-            <n-input
-              v-model:value="username"
-              :placeholder="t('pages.login.username')"
-              :status="username.length >= 3 || username.length === 0 ? undefined : 'error'"
-              :maxlength="20"
-              autocomplete="username"
-              type="text"
-            />
-          </n-input-group>
+      <!-- Error Feedback Banner -->
+      <NAlert
+        v-if="error"
+        type="error"
+        closable
+        class="mb-4 text-xs font-mono"
+        @close="error = ''"
+      >
+        {{ error }}
+      </NAlert>
+
+      <!-- Caps Lock Warning -->
+      <NAlert
+        v-if="capsLockActive"
+        type="warning"
+        class="mb-4 text-xs font-mono"
+      >
+        <div class="flex items-center gap-2">
+          <span class="font-bold">⚠️</span>
+          <span>{{ t('pages.login.caps-lock-warning') }}</span>
+        </div>
+      </NAlert>
+
+      <!-- 1. SIGN IN FORM -->
+      <div v-if="activeTab === 'login'" class="space-y-4">
+        <div>
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
+            {{ t('pages.login.username') }}
+          </label>
+          <NInput
+            v-model:value="username"
+            :placeholder="t('pages.login.username')"
+            :maxlength="20"
+            size="large"
+            autocomplete="username"
+            class="font-mono"
+            @keydown.enter="handleLogin"
+          />
         </div>
 
-        <!-- Username Requirements (Only for Registration) -->
-        <div v-if="activeForm === 'register'">
-          <div px-2 py-1 op-75>
-            {{ t('pages.login.username-requirements') }}
-          </div>
-        </div>
-      </div>
-
-      <!-- Password Input -->
-      <div fn-outline fn-hover>
-        <n-input-group>
-          <n-input-group-label class="w-17%" min-w-fit>
+        <div>
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
             {{ t('pages.login.password') }}
-          </n-input-group-label>
-          <n-input
+          </label>
+          <NInput
             v-model:value="password"
-            :placeholder="t('pages.login.password')"
-            :status="password.length >= 6 || password.length === 0 ? undefined : 'error'"
-            :autocomplete="activeForm === 'register' ? 'new-password' : 'current-password'"
             type="password"
             show-password-on="click"
-            @keypress.enter="handleSubmit"
+            :placeholder="t('pages.login.password')"
+            size="large"
+            autocomplete="current-password"
+            class="font-mono"
+            @keydown="onLoginPasswordKeydown"
+            @keyup="checkCapsLock"
+            @blur="clearCapsLock"
           />
-        </n-input-group>
-      </div>
-
-      <!-- Confirm Password Input (Only for Registration) -->
-      <div
-        v-if="activeForm === 'register'"
-        mb-3
-      >
-        <div fn-outline fn-hover>
-          <n-input-group>
-            <n-input-group-label class="w-17%" min-w-fit>
-              {{ t('pages.login.confirm') }}
-            </n-input-group-label>
-            <n-input
-              v-model:value="confirmPassword"
-              :placeholder="t('pages.login.confirm-password')"
-              :status="password === confirmPassword ? 'success' : 'error'"
-              autocomplete="new-password"
-              type="password"
-              show-password-on="click"
-              @keypress.enter="handleSubmit"
-            />
-          </n-input-group>
         </div>
-        <div px-2 py-1 op-75>
-          {{ t('pages.login.password-requirements') }}
+
+        <div class="flex items-center justify-between py-1">
+          <NCheckbox v-model:checked="rememberMe">
+            <span class="text-xs text-slate-600 font-mono dark:text-gray-400">
+              {{ t('pages.login.remember-me') }}
+            </span>
+          </NCheckbox>
         </div>
-      </div>
 
-      <!-- Remember and Forgot password (Only for Login) -->
-      <div
-        v-if="activeForm === 'login'"
-        flex items-center justify-between
-      >
-        <n-checkbox v-model:checked="rememberMe">
-          {{ t('pages.login.remember-me') }}
-        </n-checkbox>
-        <!-- forgot password link commented out for now
-        <router-link to="/forgot-password" fn-link>
-          {{ t('pages.login.forgot-password') }}
-        </router-link>
-        -->
-      </div>
-
-      <!-- Error Message -->
-      <div v-if="error" text-red>
-        {{ error }}
-      </div>
-
-      <!-- Submit Button -->
-      <button
-        mt-5 fn-outline bg--c-inverse hover:bg--c-accent px-2 py-0.5 text-lg text--c-bg
-        @click="handleSubmit"
-      >
-        {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.create-account') }}
-      </button>
-
-      <!-- Redirect Link -->
-      <span flex flex-row items-center justify-center gap-2 text-lg>
-        {{ activeForm === 'login' ? t('pages.login.no-account') : t('pages.login.already-have-account') }}
-        <a
-          cursor-pointer fn-link
-          @click="toggleForm"
+        <NButton
+          type="primary"
+          size="large"
+          block
+          :loading="isLoading"
+          class="h-12 text-sm font-bold tracking-wider font-mono uppercase shadow-sm"
+          @click="handleLogin"
         >
-          {{ activeForm === 'login' ? t('pages.login.sign-up') : t('pages.login.sign-in') }}
-        </a>
-      </span>
-    </div>
+          {{ t('pages.login.sign-in') }}
+        </NButton>
+      </div>
+
+      <!-- 2. REGISTER FORM -->
+      <div v-else-if="activeTab === 'register'" class="space-y-4">
+        <div>
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
+            {{ t('pages.login.email') }}
+          </label>
+          <NInput
+            v-model:value="email"
+            :placeholder="t('pages.login.email')"
+            size="large"
+            autocomplete="email"
+            class="font-mono"
+          />
+        </div>
+
+        <div>
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
+            {{ t('pages.login.username') }}
+          </label>
+          <NInput
+            v-model:value="username"
+            :placeholder="t('pages.login.username')"
+            :maxlength="20"
+            :status="username.length >= 3 || username.length === 0 ? undefined : 'error'"
+            size="large"
+            autocomplete="username"
+            class="font-mono"
+          />
+          <p class="mt-1 text-[11px] text-slate-500 font-mono dark:text-gray-400">
+            {{ t('pages.login.username-requirements') }}
+          </p>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
+            {{ t('pages.login.password') }}
+          </label>
+          <NInput
+            v-model:value="password"
+            type="password"
+            show-password-on="click"
+            :placeholder="t('pages.login.password')"
+            :status="password.length >= 6 || password.length === 0 ? undefined : 'error'"
+            size="large"
+            autocomplete="new-password"
+            class="font-mono"
+            @keydown="onRegisterPasswordKeydown"
+            @keyup="checkCapsLock"
+            @blur="clearCapsLock"
+          />
+          <p class="mt-1 text-[11px] text-slate-500 font-mono dark:text-gray-400">
+            {{ t('pages.login.password-requirements') }}
+          </p>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-xs text-slate-600 font-medium tracking-wider font-mono uppercase dark:text-gray-400">
+            {{ t('pages.login.confirm') }}
+          </label>
+          <NInput
+            v-model:value="confirmPassword"
+            type="password"
+            show-password-on="click"
+            :placeholder="t('pages.login.confirm-password')"
+            :status="password && confirmPassword ? (password === confirmPassword ? 'success' : 'error') : undefined"
+            size="large"
+            autocomplete="new-password"
+            class="font-mono"
+            @keydown="onRegisterPasswordKeydown"
+            @keyup="checkCapsLock"
+            @blur="clearCapsLock"
+          />
+        </div>
+
+        <NButton
+          type="primary"
+          size="large"
+          block
+          :loading="isLoading"
+          class="h-12 text-sm font-bold tracking-wider font-mono uppercase shadow-sm"
+          @click="handleRegister"
+        >
+          {{ t('pages.login.create-account') }}
+        </NButton>
+      </div>
+
+      <!-- 3. GUEST QUICK-PLAY DEMO -->
+      <div v-else-if="activeTab === 'guest'" class="space-y-4">
+        <div class="border border-emerald-500/30 rounded-lg bg-emerald-50/50 p-4 text-center dark:border-[#00e676]/30 dark:bg-[#00e676]/5">
+          <div class="mb-1 text-sm text-slate-900 font-bold tracking-wide font-mono dark:text-white">
+            {{ t('pages.login.quick-play-title') }}
+          </div>
+          <div class="mb-3 text-xs text-slate-600 font-mono dark:text-gray-400">
+            {{ t('pages.login.quick-play-desc') }}
+          </div>
+          <NTag type="success" size="large" class="font-bold tracking-widest font-mono">
+            💰 $15,000.00 STARTING POT
+          </NTag>
+        </div>
+
+        <NButton
+          type="success"
+          size="large"
+          block
+          :loading="isLoading"
+          class="h-12 text-sm font-bold tracking-wider font-mono uppercase shadow-sm"
+          @click="handleGuestLogin"
+        >
+          ⚡ {{ t('pages.login.deploy-guest') }}
+        </NButton>
+      </div>
+    </NCard>
   </div>
 </template>
 
-<style>
-.n-input .n-input__state-border {
-  display: none !important;
+<style scoped>
+:deep(.n-tabs-rail) {
+  background-color: #f1f5f9 !important;
+  padding: 3px !important;
+  border-radius: 8px !important;
+}
+:global(.dark) :deep(.n-tabs-rail) {
+  background-color: #121526 !important;
+}
+
+:deep(.n-tabs-tab) {
+  font-family: monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #475569 !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+:global(.dark) :deep(.n-tabs-tab) {
+  color: #94a3b8 !important;
+}
+
+:deep(.n-tabs-tab.n-tabs-tab--active) {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+:global(.dark) :deep(.n-tabs-tab.n-tabs-tab--active) {
+  color: #00e676 !important;
+}
+
+:deep(.n-tabs-capsule) {
+  background-color: #ffffff !important;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+}
+:global(.dark) :deep(.n-tabs-capsule) {
+  background-color: #1c2236 !important;
+  box-shadow: 0 0 12px rgba(0, 230, 118, 0.2) !important;
 }
 </style>
 
 <route lang="yaml">
-  meta:
-    layout: home
+meta:
+  layout: home
 </route>

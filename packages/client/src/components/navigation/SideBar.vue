@@ -13,6 +13,7 @@ import {
   ArrowsHorizontal as TradeIcon,
 } from '@vicons/carbon'
 import {
+  Crosshair as RoyaleIcon,
   Tournament as TournamentIcon,
 } from '@vicons/tabler'
 
@@ -21,6 +22,7 @@ const route = useRoute()
 const store = useSidebarStore()
 const menuOptions1: MenuOption[] = [
   { label: `${t('pages.dashboard.title')}`, key: '/dashboard', icon: renderIcon(DashboardIcon) },
+  { label: 'Stock Royale', key: '/dashboard/royale', icon: renderIcon(RoyaleIcon) },
   { label: `${t('pages.dashboard.trade.title')}`, key: '/dashboard/trade', icon: renderIcon(TradeIcon) },
   { label: `${t('pages.dashboard.tournaments.title')}`, key: '/dashboard/tournaments', icon: renderIcon(TournamentIcon) },
 ]

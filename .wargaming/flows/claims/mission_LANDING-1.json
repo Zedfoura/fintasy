@@ -1,0 +1,10 @@
+{
+  "mission_id": "LANDING-1",
+  "campaign": "2026-10-01_fintasy-stock-royale",
+  "inventory_hash": "6fb5b2c907252dd4f47949b2bd4dfd2609db634b1a82fec0d25177a496a19a3b",
+  "flows": [
+    "FLOW-LANDING-CONVERSION"
+  ],
+  "stage": "canonical",
+  "disposition": "active"
+}
