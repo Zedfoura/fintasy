@@ -73,6 +73,7 @@ import { HYPE_ANCHOR, HYPE_BEATS, HYPE_INTRO, HYPE_KICKER, HYPE_STATS, HYPE_TITL
   --hype-gutter: clamp(16px, 5.4vw, 108px);
   --hype-col-gap: 24px;
 
+  box-sizing: border-box;
   width: 100%;
   padding: clamp(72px, 12vh, 160px) var(--hype-gutter) clamp(72px, 12vh, 140px);
   border-top: 1px solid var(--hype-line);
