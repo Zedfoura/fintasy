@@ -8,6 +8,9 @@
 
 <h3 align="center"><strong>A Competitive Paper Trading & Stock Royale Battle Platform</strong></h3>
 
+> [!NOTE]
+> Fintasy is a portfolio project, not a live service, so there is no public server to join. Read the case study at [tinatseichingaya.com/projects/fintasy](https://www.tinatseichingaya.com/projects/fintasy), or run it locally with the [Quickstart](#quickstart).
+
 <p align="center">
   <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.111-009688?style=flat&logo=fastapi&logoColor=white">
   <img alt="Vue 3" src="https://img.shields.io/badge/Vue-3.4-4FC08D?style=flat&logo=vuedotjs&logoColor=white">
@@ -22,6 +25,7 @@
   <a href="#features">Features</a> •
   <a href="#architecture">Architecture</a> •
   <a href="#quickstart">Quickstart</a> •
+  <a href="#marketing-page">Marketing Page</a> •
   <a href="#testing--verification">Testing</a> •
   <a href="#desktop--steam-deck">Desktop & Steam Deck</a> •
   <a href="#api-documentation">API Docs</a> •
@@ -43,11 +47,11 @@ All currency transactions adhere to a strict **integer-cent accounting invariant
 ### ⚔️ Stock Royale Mode
 
 - **60-Trader Matchmaking:** Rapid in-memory lobbies with sub-100ms transitions and automated archetype bot filling (Momentum, Mean Reversion, Breakout, Scalper).
-- **12-Sector Concentric Topography:** Sector rings (Outer: Utilities, Materials, Industrials, Real Estate; Mid: Healthcare, Financials, Energy, Consumer; Inner: Big Tech, AI Semiconductors, High-Beta).
-- **Collapsing Storm Zones:** 5-round storm progression with progressive tick damage deductions ($50/s up to $1,000/s in the Final Circle).
+- **12-Sector Concentric Topography:** Sector rings (Outer: Utilities, Real Estate, Materials, Industrials; Mid: Healthcare, Financials, Energy, Consumer; Inner: Big Tech, Semis & AI, Biotech, Meme Alpha).
+- **Collapsing Storm Zones:** 5-round storm progression with progressive tick damage deductions ($50/s up to $200/s in the Final Circle).
 - **30-Second Micro-Trading Duels:** Contested sector drop battles with 1x, 2x, and 5x leverage options, real-time tick streaming, and third-party battle escalation.
 - **Auto-Liquidation Engine:** Strict 90% drawdown margin liquidation buffer preventing debt creation.
-- **Ranked MMR Progression:** Rocket League-style MMR tiers from Unranked and Bronze up to Master and Apex Grandmaster, paired with Apex Legends RP scoring.
+- **Ranked MMR Progression:** Rocket League-style MMR tiers from Bronze through Silver, Gold, Platinum, Diamond and Champion up to Golden Trader, paired with Apex Legends RP scoring.
 
 ### 📈 Traditional Paper Trading
 
@@ -149,6 +153,22 @@ pnpm dev
 - **Web App:** [http://localhost:3333](http://localhost:3333)
 - **FastAPI Server:** [http://localhost:3332](http://localhost:3332)
 - **Interactive Swagger Docs:** [http://localhost:3332/docs](http://localhost:3332/docs)
+
+---
+
+## Marketing Page
+
+The client's `/` route is a one-page marketing site for the game: a hero, a match timeline with live vignettes (drop, duel, storm, last one solvent), an FAQ and a closing call to action. Its only links point out to this repository and the case study.
+
+The same page also builds as a standalone static site with no router, auth or API code:
+
+```bash
+# Build the standalone page into packages/client/dist-hero
+pnpm --filter client build:hero
+
+# Preview it at http://localhost:4173
+pnpm --filter client preview:hero
+```
 
 ---
 
