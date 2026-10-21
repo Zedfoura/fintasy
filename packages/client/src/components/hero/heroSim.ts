@@ -125,7 +125,7 @@ function lerpR(a: Rect, b: Rect, t: number): Rect {
 }
 
 /** Storm geometry at cycle progress t (0..1): rect, round (1..rounds) and whether it is moving. */
-function stormAt(w: number, h: number, t: number): StormInfo {
+export function stormAt(w: number, h: number, t: number): StormInfo {
   const { rounds, roundHoldFraction: hold } = HERO_MOTION
   const k = Math.min(rounds - 1, Math.floor(t * rounds))
   const f = t * rounds - k
