@@ -42,3 +42,17 @@ $ bundlecheck.sh dist-hero → clean (exit 0); leak control exit 1; empty-input 
 - script `index-u_fCTaRx.js`.
 
 The server is left running for your review.
+
+## Review fix (2026-10-21): CTA copy escaped the storm box
+- **User:** "In certain viewports, the body of the Final CTA looks off as it escapes the colored portion of the container." A screenshot showed the body line wider than the dashed box, with ring edges crossing the text.
+- **Cause:** `.close-ring-storm` was sized `min(760px, 70vw)` × 56% of the section, independently of the copy, and the inner ring sat behind the text.
+- **Instrument:** for each width from 320 to 1680 px in 40 px steps (35 widths), every child of the CTA body must be inside the storm box.
+  - **Before** (build `index-u_fCTaRx.js`): escaping at **19 of 35** widths. At 320–480 the h2, body and links escape; at 520–680 the body; at 1360–1680 the h2.
+- **Fix:**
+  - The storm box is now the content container itself (`.close-cta-box`: dashed border and fill, `width: fit-content; max-width: 100%`, padding `clamp(32px, 6vw, 64px) clamp(20px, 5vw, 72px)`).
+  - The body is capped at `46ch` with `text-wrap: balance`.
+  - The inner ring is removed; the outer ring is inset `clamp(40px, 8vh, 96px)` by half a gutter.
+- **After** (build `index-E_cUJzYg.js`): escaping box **0 of 35**; box outside outer ring 0 of 35; CTA elements past the viewport 0 of 35.
+- **Checks:** CloseSections and PageRetention 19/19; eslint clean; build:hero exit 0 (JS 80.62 kB, CSS 15.73 kB); bundle clean.
+- **Screenshots:** at 1280 and 375 the copy wraps inside the box (at 375 the h2 is on two lines and the links stack).
+- **Spec:** `close-direction.md` anatomy item 5 revised to match.

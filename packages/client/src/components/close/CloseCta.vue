@@ -1,8 +1,9 @@
 <!--
   @author: Tinatsei Chingaya (Zedfoura), Claude
-  @description: Final CTA (CLOSE-2, locked direction C1 "Closing bell"): "That's the match." over three static,
-  aria-hidden storm rings, with the hero's two outbound links in the hero's own styles (D4: no live game, so the only
-  links are the source and the case study). Tokens are scoped to .close-cta as --close-* variables.
+  @description: Final CTA (CLOSE-2, locked direction C1 "Closing bell"): "That's the match." inside the dashed storm
+  box, which wraps its content so nothing escapes it at any width, under a static aria-hidden outer ring, with the
+  hero's two outbound links in the hero's own styles (D4: no live game, so the only links are the source and the case
+  study). Tokens are scoped to .close-cta as --close-* variables.
 -->
 
 <script setup lang="ts">
@@ -14,10 +15,8 @@ import { CTA_ANCHOR, CTA_BODY, CTA_KICKER, CTA_TITLE } from './closeCopy'
   <section :id="CTA_ANCHOR" class="close-cta" aria-labelledby="cta-title">
     <div class="close-rings" aria-hidden="true">
       <span class="close-ring close-ring-outer" />
-      <span class="close-ring close-ring-storm" />
-      <span class="close-ring close-ring-inner" />
     </div>
-    <div class="close-cta-body">
+    <div class="close-cta-body close-cta-box">
       <p class="close-kicker">
         <span class="close-bracket" aria-hidden="true">[</span> {{ CTA_KICKER }} <span class="close-bracket" aria-hidden="true">]</span>
       </p>
@@ -71,38 +70,30 @@ import { CTA_ANCHOR, CTA_BODY, CTA_KICKER, CTA_TITLE } from './closeCopy'
   margin: 0;
 }
 
-/* Static rings, echoing the sector map */
+/* Static outer ring, echoing the sector map; inset from the section so it always surrounds the storm box */
 .close-rings {
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+  inset: clamp(40px, 8vh, 96px) calc(var(--close-gutter) / 2);
   pointer-events: none;
 }
 .close-ring {
   position: absolute;
+  inset: 0;
   border: 1px solid rgba(236, 233, 226, 0.09);
 }
-.close-ring-outer {
-  width: min(1100px, 92vw);
-  height: 78%;
-}
-.close-ring-storm {
-  width: min(760px, 70vw);
-  height: 56%;
-  border: 1px dashed rgba(139, 124, 255, 0.5);
-  background: rgba(139, 124, 255, 0.06);
-}
-.close-ring-inner {
-  width: min(420px, 46vw);
-  height: 34%;
-}
 
+/* The dashed storm box is the content's own container, so its size follows the copy at every width */
 .close-cta-body {
   position: relative;
   display: grid;
   justify-items: center;
   gap: 22px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: clamp(32px, 6vw, 64px) clamp(20px, 5vw, 72px);
+  border: 1px dashed rgba(139, 124, 255, 0.5);
+  background: rgba(139, 124, 255, 0.06);
 }
 .close-kicker {
   font: 400 12px/1 var(--close-font-mono);
@@ -120,8 +111,10 @@ import { CTA_ANCHOR, CTA_BODY, CTA_KICKER, CTA_TITLE } from './closeCopy'
   color: var(--close-bone);
 }
 .close-cta-text {
+  max-width: 46ch;
   font: 400 14px/1.65 var(--close-font-mono);
   color: var(--close-body);
+  text-wrap: balance;
 }
 
 /* Same treatment as the hero's .hero-ctas / .hero-btn / .hero-link */

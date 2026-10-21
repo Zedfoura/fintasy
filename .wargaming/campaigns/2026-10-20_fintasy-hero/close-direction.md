@@ -27,7 +27,7 @@ The FAQ settles the questions a recruiter or player asks first, in the same 12-c
    - Item 01 starts open; the rest start closed.
    - Items are independent (opening one does not close the others).
 4. **CTA shell:** `<section id="cta" aria-labelledby="cta-title">`, centred text, larger vertical padding.
-5. **CTA rings:** three aria-hidden rectangles (outer, a dashed violet "storm" middle, inner) echoing the sector map. They are static; nothing animates.
+5. **CTA rings:** an aria-hidden outer rectangle inset from the section, plus the dashed violet "storm" box. The storm box **is the content container**: it is sized by its padding and wraps the kicker, h2, body and links at every width, inside the outer ring. Both are static; nothing animates. (Revised 2026-10-21 after review: the original free-sized storm box and inner ring let the copy escape the box at 19 of 35 widths, and the inner ring's edges crossed the body text.)
 6. **CTA body:**
    - kicker `[ Closing bell ]`;
    - `h2` "That's the match." (display size);
