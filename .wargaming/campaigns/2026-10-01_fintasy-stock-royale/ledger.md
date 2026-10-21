@@ -389,3 +389,119 @@
   - Subagent lane: `lane_theme_integration`
   - Contract charter: Git base `d3fe405`, exclude `packages/server/`, worktree `wt/theme_integration`, subsystem complete theme tokens + client build verification
 
+### Epic 10 — Grounded in Reason Design System & Dieter Rams Architecture <!-- wargame-epic: grounded-design-system; wargame-epic-priority: 10 -->
+
+- [x] **DESIGN-1. Token Contract, Tri-Font Engine & UnoCSS Utility Shortcuts** — Codify the design system into `packages/client/src/styles/design-tokens.css` and `packages/client/unocss.config.ts`: register the tri-font stack (`Geist`, `Geist Mono`, `Instrument Serif`), 4-tier surface elevation tokens (`#07090E`, `#0E121B`, `#151C2B`, `#1D263B`), Action Horizon safety orange (`#FF5522`), and UnoCSS utility shortcuts (`fn-surface-*`, `fn-btn-*`, `fn-badge-*`, `fn-chip-*`, `fn-dot-matrix`, `fn-pulse-*`). <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: THEME-6@outcome
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_DESIGN-1_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_DESIGN-1/execution.md`
+  - Verifier/consumer: `pnpm --filter client build` exits 0 with tokens compiled and zero CSS build errors; `npx ts-node wargame-metaharness/src/scripts/get-blast-radius.ts` returning strictly `["client"]`
+  - Preserves: Backward compatibility of existing `--c-*` variables and legacy utility classes
+  - User flows: FLOW-THEME-NAVBAR, FLOW-ROYALE-GOLDEN
+  - Point of no return: none
+  - Subagent lane: `lane_tokens`
+
+- [x] **DESIGN-2. Global Shell & 4-Tier Midnight HUD Elevation Refactor** — Refactor `packages/client/src/App.vue`, `NavBar.vue`, and `SideBar.vue` to adopt the Unified Deep Midnight HUD (`#07090E`), $1\text{px}$ hairline boundaries (`rgba(255, 255, 255, 0.08)`), reticle crosshairs (`+`), and live 10 Hz telemetry status dot (`● 10 Hz | 14ms`), strictly adhering to Dieter Rams' unobtrusive and aesthetic principles. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: DESIGN-1@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_DESIGN-2_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_DESIGN-2/execution.md`
+  - Verifier/consumer: `packages/client/tests/NavBarTheme.test.ts` passing with updated HUD classes and zero layout shifts
+  - Preserves: Router navigation links, theme toggle state preservation, and user profile badges
+  - User flows: FLOW-THEME-NAVBAR, FLOW-AUTH-LOGIN
+  - Point of no return: none
+  - Subagent lane: `lane_shell`
+
+- [x] **DESIGN-3. Stock Royale Arena & Combat HUD Action Horizon Polish** — Update `TradingDuelArena.vue` and `MarketRadarMap.vue` to strictly enforce the Action Horizon: restrict International Safety Orange (`#FF5522`) to $\le 10\text{s}$ countdown and $\ge 70\%$ margin risk; implement graduated 90% auto-liquidation meter stroke; format all leverage selectors with bracketed chips (`[ 1x ]`, `[ 2x ]`, `[ 5x ]`). <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: DESIGN-1@canonical, DESIGN-2@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_DESIGN-3_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_DESIGN-3/execution.md`
+  - Verifier/consumer: `packages/client/tests/TradingDuelArena.test.ts` and `packages/client/tests/MarketRadarMap.test.ts` passing 100%
+  - Preserves: 10 Hz tick stream calculations, integer-cent P&L fidelity, and 30s timer state machine
+  - User flows: FLOW-COMBAT-DUEL, FLOW-COMBAT-THIRDPARTY
+  - Point of no return: none
+  - Subagent lane: `lane_combat_hud`
+
+- [x] **DESIGN-4. Atrium Decision Queue & Dashboard Telemetry Integration** — Implement the Atrium cognitive triage pattern on `packages/client/src/pages/dashboard/index.vue`: introduce a dedicated "Needs your decision" queue component segregating active duels, margin risk alerts, and tournament invites from passive portfolio equity charts, with primary/secondary action button differentiation. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: DESIGN-2@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_DESIGN-4_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_DESIGN-4/execution.md`
+  - Verifier/consumer: `packages/client/tests/DecisionQueue.test.ts` passing 100%
+  - Preserves: Portfolio balance queries, historical equity charts, and transaction history tables
+  - User flows: FLOW-ROYALE-GOLDEN, FLOW-RANKED-PROGRESS
+  - Point of no return: none
+  - Subagent lane: `lane_dashboard`
+
+- [x] **DESIGN-5. Landing Blueprint Surface, Editorial Typography & Full Monorepo E2E Gate** — Refactor `packages/client/src/pages/index.vue` with subtle 24px dot-matrix canvas texture, `Instrument Serif` editorial hero typography, and bracketed feature cards; run full monorepo test suite (`pnpm test`); verify production build (`pnpm --filter client build`); confirm programmatic blast radius strictly `["client"]`. <!-- wargame-state: outcome; wargame-disposition: active -->
+  - Depends on: DESIGN-3@canonical, DESIGN-4@canonical
+  - Required stage: OUTCOME
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_DESIGN-5_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_DESIGN-5/execution.md`
+  - Verifier/consumer: `pnpm test` (all monorepo tests pass 100%), `pnpm --filter client build` exits 0, and `npx ts-node wargame-metaharness/src/scripts/get-blast-radius.ts` returns strictly `["client"]`
+  - Preserves: All existing routes, authentication flows, and conversion metrics
+  - User flows: FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_integration`
+
+### Epic 11 — Complete Ground-Up Landing Page Re-architecture (11 Essential Elements & High-Stakes Fintech Aesthetic) <!-- wargame-epic: landing-rebuild; wargame-epic-priority: 11 -->
+
+- [x] **LANDING-REV-1. Aesthetic Direction, Tri-Font Typography & Design System Specification** — Formulate the comprehensive aesthetic specification fusing Dieter Rams' unobtrusive design with high-stakes financial luxury, editorial typography, and 11 essential elements framework; commit to zero legacy copy and zero AI cliches; register design tokens, typography scale, and layout contract. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: DESIGN-5@outcome
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-REV-1_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-REV-1/execution.md`
+  - Verifier/consumer: Specification document and UnoCSS/token verification
+  - Preserves: Deep Midnight elevation hierarchy, tabular figures, and Action Horizon constraints
+  - User flows: FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_landing_spec`
+
+- [x] **LANDING-REV-2. Navigation Header & Hero Combat Terminal (Elements 1-5)** — Implement Elements 1-5 with 100% brand-new copy and design: SEO metadata & URL structure, animated high-fidelity sticky navbar (`LandingHeader.vue`), massive editorial hero display headline & subtitle (`Instrument Serif` / `Space Grotesk` display), high-contrast Action Horizon primary CTA (`Enter Live Combat Arena`) with micro-interactions, secondary demo CTA, and live social proof metrics bar ($142M+ simulated capital, 48,200+ traders, 100ms loop, 4.92/5 rating). <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: LANDING-REV-1@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-REV-2_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-REV-2/execution.md`
+  - Verifier/consumer: Vitest unit tests verifying header, hero typography, CTA clicks, router dispatch, and live stats counters
+  - Preserves: Navigation routing to `/dashboard/royale`, `/login`, and `/dashboard`
+  - User flows: FLOW-LANDING-CONVERSION, FLOW-THEME-NAVBAR
+  - Point of no return: none
+  - Subagent lane: `lane_landing_hero`
+
+- [x] **LANDING-REV-3. Interactive Media Showcase & Bento Grid Features (Elements 6-7)** — Implement Elements 6-7: realistic 3D tilt Combat Terminal preview (`LandingMediaSection.vue`) featuring animated order book, active tick sparkline, and sector liquidity storm radar; and 4 core gameplay pillars in an asymmetric bento grid (`LandingBenefits.vue`) detailing PVP Micro-Trading Duels, Liquidity Storm Dynamics, Rocket League Ranked Ladder, and Institutional Simulation Engine with custom tactical badges. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: LANDING-REV-2@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-REV-3_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-REV-3/execution.md`
+  - Verifier/consumer: Vitest unit tests verifying terminal preview rendering, dynamic state updates, and bento card content
+  - Preserves: Realistic $15,000 starting equity, 1x-5x leverage selector, and 30s duel math
+  - User flows: FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_landing_media`
+
+- [x] **LANDING-REV-4. Social Proof Testimonials, FAQ Accordion & Final Hero CTA (Elements 8-10)** — Implement Elements 8-10: authentic trader reviews with custom avatars, competitive ranks, and verified win rates (`LandingTestimonials.vue`); smooth interactive 6-question FAQ accordion (`LandingFAQ.vue`); and dramatic full-width final conversion hero (`LandingFinalCTA.vue`) with Action Horizon accents, tournament countdown, and zero-risk trust badges. <!-- wargame-state: canonical; wargame-disposition: active -->
+  - Depends on: LANDING-REV-3@canonical
+  - Required stage: CANONICAL
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-REV-4_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-REV-4/execution.md`
+  - Verifier/consumer: Vitest unit tests verifying testimonial cards, accordion expansion/collapse, and final CTA trigger
+  - Preserves: Keyboard navigation, accessibility attributes, and router links
+  - User flows: FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_landing_conversion`
+
+- [x] **LANDING-REV-5. Multi-Column Footer, Full Monorepo Build, E2E Vitest Suite & Programmatic Blast Radius Gate (Element 11 & Gate)** — Assemble complete landing page in `packages/client/src/pages/index.vue` with multi-column authoritative footer (`LandingFooter.vue`); update and verify full Vitest test suite; verify production build (`npx vite build`); run programmatic blast radius verification strictly confirming `["client"]`. <!-- wargame-state: outcome; wargame-disposition: active -->
+  - Depends on: LANDING-REV-4@canonical
+  - Required stage: OUTCOME
+  - Battle Plan: `.wargaming/campaigns/2026-10-01_fintasy-stock-royale/success/mission_LANDING-REV-5_battleplan.md`
+  - Execution Receipt: `.wargaming/receipts/mission_LANDING-REV-5/execution.md`
+  - Verifier/consumer: 100% passing tests (client + server), `npx vite build` exit 0, and `npx ts-node wargame-metaharness/src/scripts/get-blast-radius.ts` strictly returning `["client"]`
+  - Preserves: 100% backward compatibility of all routes, navigation, and state machines
+  - User flows: FLOW-LANDING-CONVERSION
+  - Point of no return: none
+  - Subagent lane: `lane_landing_gate`
+
+
+

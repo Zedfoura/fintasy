@@ -89,6 +89,15 @@ const totalTradersAlive = computed(() => {
   return values.reduce((sum, count) => sum + count, 0)
 })
 
+// Action Horizon collapse countdown styling
+const countdownClass = computed(() => {
+  if (props.stormState.secondsRemaining <= 10)
+    return 'text-[#FF5522] animate-pulse font-mono tabular-nums'
+  if (props.stormState.secondsRemaining <= 15)
+    return 'text-rose-400 animate-pulse font-mono tabular-nums'
+  return 'text-slate-100 font-mono tabular-nums'
+})
+
 const currentPhaseBadge = computed(() => {
   const phase = props.stormState.phase
   switch (phase) {
@@ -185,11 +194,11 @@ function drawRadar(timestamp: number) {
 
   // 1. Tactical grid background
   ctx.save()
-  ctx.fillStyle = '#070b13'
+  ctx.fillStyle = '#07090E'
   ctx.fillRect(0, 0, width, height)
 
-  // Concentric radar grid rings
-  ctx.strokeStyle = 'rgba(30, 41, 59, 0.6)'
+  // Concentric radar grid rings (hairline)
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'
   ctx.lineWidth = 1
   for (const factor of [0.36, 0.68, 0.98]) {
     ctx.beginPath()
@@ -198,6 +207,7 @@ function drawRadar(timestamp: number) {
   }
 
   // Crosshair tactical axes
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'
   ctx.beginPath()
   ctx.moveTo(centerX - maxRadius, centerY)
   ctx.lineTo(centerX + maxRadius, centerY)
@@ -402,17 +412,17 @@ watch(
 
 <template>
   <div
-    class="flex flex-col border border-slate-800 rounded-lg bg-[#0a0f18] p-4 text-slate-100 font-mono shadow-2xl"
+    class="flex flex-col border border-white/10 rounded-lg bg-[#07090E] p-4 text-slate-100 font-mono"
     data-test="market-radar-container"
   >
     <!-- Tactical Football Manager Header Telemetry -->
-    <div class="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
       <div class="flex items-center gap-3">
         <div class="flex items-center gap-2">
           <span class="h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-400" />
           <span class="text-xs text-slate-400 font-bold tracking-wider uppercase">TACTICAL RADAR</span>
         </div>
-        <div class="border border-slate-700 rounded bg-slate-900/80 px-2 py-0.5 text-xs text-slate-300 font-bold">
+        <div class="border border-white/10 rounded bg-[#0E121B] px-2 py-0.5 text-xs text-slate-300 font-bold font-mono tabular-nums">
           ROUND {{ String(stormState.roundNumber).padStart(2, '0') }} / 05
         </div>
         <div
@@ -425,12 +435,12 @@ watch(
       </div>
 
       <div class="flex items-center gap-4 text-right">
-        <!-- Countdown Clock -->
+        <!-- Countdown Clock (Action Horizon) -->
         <div class="flex flex-col items-end">
-          <span class="text-[10px] text-slate-500 uppercase">COLLAPSE TIMER</span>
+          <span class="text-[10px] text-slate-400 tracking-wider uppercase">COLLAPSE TIMER</span>
           <span
             class="text-lg font-bold tracking-widest"
-            :class="stormState.secondsRemaining <= 15 ? 'text-rose-400 animate-pulse' : 'text-slate-100'"
+            :class="countdownClass"
             data-test="storm-countdown"
           >
             {{ formattedCountdown }}
@@ -439,9 +449,9 @@ watch(
 
         <!-- Storm Damage Rate -->
         <div class="flex flex-col items-end">
-          <span class="text-[10px] text-slate-500 uppercase">STORM DRAIN</span>
+          <span class="text-[10px] text-slate-400 tracking-wider uppercase">STORM DRAIN</span>
           <span
-            class="text-sm text-rose-400 font-bold"
+            class="text-sm text-rose-400 font-bold font-mono tabular-nums"
             data-test="storm-damage-rate"
           >
             {{ formattedDamageRate }}
@@ -450,9 +460,9 @@ watch(
 
         <!-- Traders Alive -->
         <div class="flex flex-col items-end">
-          <span class="text-[10px] text-slate-500 uppercase">TRADERS ALIVE</span>
+          <span class="text-[10px] text-slate-400 tracking-wider uppercase">TRADERS ALIVE</span>
           <span
-            class="text-sm text-amber-400 font-bold"
+            class="text-sm text-amber-400 font-bold font-mono tabular-nums"
             data-test="traders-count"
           >
             {{ totalTradersAlive }} / 40
@@ -462,7 +472,7 @@ watch(
     </div>
 
     <!-- Canvas Map Container -->
-    <div class="relative flex items-center justify-center overflow-hidden border border-slate-800 rounded-md bg-[#070b13]">
+    <div class="relative flex items-center justify-center overflow-hidden border border-white/10 rounded-md bg-[#07090E]">
       <canvas
         ref="canvasRef"
         :style="{ width: `${width}px`, height: `${height}px` }"
@@ -476,17 +486,17 @@ watch(
       <!-- Hover Tooltip Overlay -->
       <div
         v-if="hoveredSector && SECTOR_DEFINITIONS[hoveredSector]"
-        class="pointer-events-none absolute bottom-3 left-3 border border-cyan-500/40 rounded bg-slate-950/90 p-2.5 text-xs shadow-lg backdrop-blur"
+        class="pointer-events-none absolute bottom-3 left-3 border border-white/20 rounded bg-[#0E121B]/95 p-2.5 text-xs shadow-2xl backdrop-blur-md"
         data-test="sector-hover-tooltip"
       >
-        <div class="flex items-center justify-between gap-4 text-cyan-400 font-bold">
+        <div class="flex items-center justify-between gap-4 text-cyan-400 font-bold font-mono">
           <span>{{ SECTOR_DEFINITIONS[hoveredSector].name }}</span>
           <span
             class="rounded px-1.5 py-0.2 text-[10px]"
             :class="{
-              'bg-emerald-950 text-emerald-400': sectorStates[hoveredSector] === 'SAFE',
-              'bg-amber-950 text-amber-400': sectorStates[hoveredSector] === 'CLOSING',
-              'bg-rose-950 text-rose-400': sectorStates[hoveredSector] === 'STORM',
+              'bg-emerald-950 text-emerald-400 border border-emerald-500/50': sectorStates[hoveredSector] === 'SAFE',
+              'bg-amber-950 text-amber-400 border border-amber-500/50': sectorStates[hoveredSector] === 'CLOSING',
+              'bg-rose-950 text-rose-400 border border-rose-500/50': sectorStates[hoveredSector] === 'STORM',
             }"
           >
             {{ sectorStates[hoveredSector] || 'SAFE' }}
@@ -495,14 +505,14 @@ watch(
         <div class="mt-1 text-[11px] text-slate-300">
           {{ SECTOR_DEFINITIONS[hoveredSector].description }}
         </div>
-        <div class="mt-1.5 flex items-center gap-3 text-[10px] text-slate-400">
+        <div class="mt-1.5 flex items-center gap-3 text-[10px] text-slate-400 font-mono">
           <span>Tier: <strong class="text-slate-200">{{ SECTOR_DEFINITIONS[hoveredSector].tier }}</strong></span>
           <span>Tickers: <strong class="text-slate-200">{{ SECTOR_DEFINITIONS[hoveredSector].tickers.map(t => t.symbol).join(', ') }}</strong></span>
-          <span>Traders: <strong class="text-amber-300">{{ playerDistribution[hoveredSector] || 0 }}</strong></span>
+          <span>Traders: <strong class="text-amber-300 tabular-nums">{{ playerDistribution[hoveredSector] || 0 }}</strong></span>
         </div>
         <div
           v-if="currentSector && isSectorAdjacent(currentSector, hoveredSector)"
-          class="mt-1 text-[10px] text-emerald-400 font-bold"
+          class="mt-1 text-[10px] text-emerald-400 font-bold font-mono"
         >
           ✓ DIRECT ADJACENT SECTOR — CLICK TO ROTATE
         </div>
@@ -510,8 +520,8 @@ watch(
     </div>
 
     <!-- Quick Tactical Grid / Accessibility Navigation -->
-    <div class="mt-4 border-t border-slate-800/80 pt-3">
-      <div class="mb-2 flex items-center justify-between text-xs text-slate-400">
+    <div class="mt-4 border-t border-white/10 pt-3">
+      <div class="mb-2 flex items-center justify-between text-xs text-slate-400 font-mono">
         <span>SECTOR TELEMETRY & FAST ROTATION</span>
         <span>CURRENT SECTOR: <strong class="text-cyan-400">{{ currentSector || 'NONE' }}</strong></span>
       </div>
@@ -521,13 +531,13 @@ watch(
           :key="def.id"
           type="button"
           :data-test="`sector-card-${def.id}`"
-          class="flex flex-col border rounded p-2 text-left transition"
+          class="flex flex-col border rounded p-2 text-left font-mono transition"
           :class="[
             currentSector === def.id
               ? 'border-cyan-400 bg-cyan-950/40'
               : currentSector && isSectorAdjacent(currentSector, def.id)
                 ? 'border-emerald-600/60 bg-emerald-950/20 hover:bg-emerald-900/40'
-                : 'border-slate-800 bg-slate-900/40 hover:bg-slate-800/40',
+                : 'border-white/10 bg-[#0E121B] hover:bg-white/5',
             sectorStates[def.id] === 'STORM' ? 'opacity-50 border-rose-900' : '',
           ]"
           @click="triggerSelectSector(def.id)"
@@ -548,7 +558,7 @@ watch(
           </div>
           <div class="mt-1 flex items-center justify-between text-[9px]">
             <span class="text-slate-500">{{ def.tier }}</span>
-            <span v-if="playerDistribution[def.id]" class="text-amber-400 font-bold">
+            <span v-if="playerDistribution[def.id]" class="text-amber-400 font-bold tabular-nums">
               👤 {{ playerDistribution[def.id] }}
             </span>
           </div>

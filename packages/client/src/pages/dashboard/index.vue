@@ -5,10 +5,19 @@
 
 <script setup lang="ts">
 import seedrandom from 'seedrandom'
+import DecisionQueue, { type DecisionQueueItem } from '~/components/dashboard/DecisionQueue.vue'
 import { ACTION } from '~/types'
 
 const { t } = useI18n()
+const router = useRouter()
 const state = useStateStore()
+
+function handleDecisionAccept(item: DecisionQueueItem) {
+  if (item.category === 'DUEL')
+    router.push('/royale')
+  else if (item.category === 'TOURNAMENT')
+    router.push('/tournaments')
+}
 
 useHead({
   title: `${t('pages.dashboard.title')} • Fintasy`,
@@ -131,27 +140,34 @@ onMounted(() => {
 </script>
 
 <template>
-  <div h-full w-full flex flex-col gap-2 xl:flex-row>
-    <div flex grow flex-col gap-2>
-      <div flex grow-1 flex-col fn-outline bg--c-fg p-2>
-        <PortfolioChart
-          :name="t('pages.dashboard.portfolio-value')"
-          :data="chartData"
+  <div h-full w-full flex flex-col gap-3>
+    <!-- Atrium Decision Queue (Cognitive Triage) -->
+    <DecisionQueue
+      @accept-decision="handleDecisionAccept"
+    />
+
+    <div flex grow flex-col gap-3 xl:flex-row>
+      <div flex grow flex-col gap-3>
+        <div flex grow-1 flex-col fn-outline bg--c-fg p-2>
+          <PortfolioChart
+            :name="t('pages.dashboard.portfolio-value')"
+            :data="chartData"
+          />
+        </div>
+        <div flex grow-3 flex-col fn-outline bg--c-fg p-2 max-xl:h-122>
+          <PortfolioAssets
+            :name="t('pages.dashboard.assets')"
+            :assets="assets"
+            :cash="cash"
+          />
+        </div>
+      </div>
+      <div flex grow flex-col fn-outline bg--c-fg p-2 max-xl:h-205>
+        <TransactionHistory
+          :name="t('pages.dashboard.history')"
+          :transactions="transactions"
         />
       </div>
-      <div flex grow-3 flex-col fn-outline bg--c-fg p-2 max-xl:h-122>
-        <PortfolioAssets
-          :name="t('pages.dashboard.assets')"
-          :assets="assets"
-          :cash="cash"
-        />
-      </div>
-    </div>
-    <div flex grow flex-col fn-outline bg--c-fg p-2 max-xl:h-205>
-      <TransactionHistory
-        :name="t('pages.dashboard.history')"
-        :transactions="transactions"
-      />
     </div>
   </div>
 </template>

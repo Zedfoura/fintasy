@@ -1,6 +1,6 @@
 /**
  * @author: Tinatsei Chingaya (Zedfoura), Antigravity
- * @description: Vitest integration test suite for Mission LANDING-5: Full Landing Page Assembly & E2E Flow Verification
+ * @description: Vitest integration test suite for Mission LANDING-REV-5: Full 11-Element Assembly & E2E Flow Verification
  */
 
 import { mount } from '@vue/test-utils'
@@ -13,15 +13,8 @@ vi.mock('vue-i18n', async (importOriginal) => {
   const actual = await importOriginal<Record<string, any>>()
   const messages: Record<string, string> = {
     'pages.main.title': 'Stock Royale • 60-Player Trading Simulator',
-    'pages.main.hero-headline': 'The 60-Player Stock Market Battle Royale',
-    'pages.main.hero-subtitle': 'Drop into real-time S&P 500 sectors, loot volatile tickers, fight 30-second trading duels, escape the Federal Reserve liquidity drain storm, and claim the #1 Victory Royale.',
-    'pages.main.badge-season': 'Season 1: Liquidity Drain Active',
-    'pages.main.badge-traders': '30-60 Traders Per Match',
-    'pages.main.badge-engine': '100ms Fast Match Engine',
-    'pages.main.badge-starting-pot': '$15,000 Starting Pot',
-    'pages.main.cta-deploy': 'Deploy to Stock Royale',
-    'pages.main.cta-login': 'Sign In / Register',
-    'pages.main.cta-dashboard': 'Standard Paper Trading',
+    'pages.dashboard.title': 'Dashboard',
+    'misc.home': 'Home',
   }
 
   return {
@@ -53,19 +46,14 @@ vi.mock('@vueuse/head', () => ({
   useHead: vi.fn(),
 }))
 
-describe('marketing Landing Page Full Assembly & Verification (LANDING-5)', () => {
+describe('marketing Landing Page Full Assembly & Verification (LANDING-REV-5)', () => {
   function mountFullPage() {
     return mount(LandingPage, {
       global: {
         stubs: {
           NCard: defineComponent({
             name: 'NCard',
-            template: '<div class="pillar-card-stub"><slot /></div>',
-          }),
-          NTag: defineComponent({
-            name: 'NTag',
-            props: ['type'],
-            template: '<span class="n-tag-stub" :data-type="type"><slot /></span>',
+            template: '<div class="card-stub"><slot /></div>',
           }),
           NButton: defineComponent({
             name: 'NButton',
@@ -91,28 +79,45 @@ describe('marketing Landing Page Full Assembly & Verification (LANDING-5)', () =
     mockPush.mockClear()
   })
 
-  it('assay A: mounts full landing page verifying presence of all 5 core sections in DOM', () => {
+  it('assay A: mounts full landing page verifying presence of all core sections in DOM', () => {
     const wrapper = mountFullPage()
+    const text = wrapper.text()
 
-    // 1. Hero Arena Section
-    expect(wrapper.text()).toContain('The 60-Player Stock Market Battle Royale')
-    expect(wrapper.text()).toContain('Season 1: Liquidity Drain Active')
+    // 1. Navigation Header
+    expect(text).toContain('FINTASY')
+    expect(text).toContain('STOCK ROYALE')
+    expect(text).toContain('10 Hz LIVE')
 
-    // 2. 4 Pillars Section
-    expect(wrapper.text()).toContain('THE 4 PILLARS OF STOCK ROYALE')
-    expect(wrapper.text()).toContain('Dynamic Sector Map')
+    // 2. Hero Section
+    expect(text).toContain('High-Stakes Capital Warfare.')
+    expect(text).toContain('Where Wall Street Meets Battle Royale.')
+    expect(text).toContain('SEASON 01 • S&P 500 LIQUIDITY WARFARE')
 
-    // 3. Duel Mini-Simulator Widget
-    expect(wrapper.text()).toContain('TEST YOUR REFLEXES')
-    expect(wrapper.text()).toContain('HIGH-FREQUENCY COMBAT SIMULATOR')
+    // 3. Media Terminal Preview Section
+    expect(text).toContain('TACTICAL COMBAT TERMINAL')
+    expect(text).toContain('High-Frequency Combat HUD')
+    expect(text).toContain('MATCH #9421 • FINAL CIRCLE')
 
-    // 4. Social Proof, Leaderboard & FAQ
-    expect(wrapper.text()).toContain('GOLDEN TRADER APEX LADDER')
-    expect(wrapper.text()).toContain('FREQUENTLY ASKED QUESTIONS')
+    // 4. 4 Pillars Section
+    expect(text).toContain('THE 4 PILLARS OF STOCK ROYALE')
+    expect(text).toContain('30-Second PVP Micro-Trading Duels')
+    expect(text).toContain('Federal Reserve Liquidity Storm')
 
-    // 5. Platform Footer
-    expect(wrapper.text()).toContain('STEAM DECK READY • TAURI 2.0')
-    expect(wrapper.text()).toContain('© 2026 Fintasy Inc.')
+    // 5. Testimonials Section
+    expect(text).toContain('VERIFIED TRADER DEBRIEFINGS')
+    expect(text).toContain('Marcus Vance')
+
+    // 6. FAQ Section
+    expect(text).toContain('FREQUENTLY ASKED QUESTIONS')
+    expect(text).toContain('Is real money required to play Stock Royale?')
+
+    // 7. Final Hero CTA
+    expect(text).toContain('NEXT GLOBAL TOURNAMENT DROPS IN 04:32')
+    expect(text).toContain('The Arena is Live.')
+
+    // 8. Footer Section
+    expect(text).toContain('© 2026 Fintasy Inc.')
+    expect(text).toContain('DESIGNED BY DIETER RAMS PRINCIPLES')
   })
 
   it('assay B: dual hero conversion CTAs execute router navigation to /dashboard/royale and /login', async () => {
@@ -131,39 +136,35 @@ describe('marketing Landing Page Full Assembly & Verification (LANDING-5)', () =
 
   it('assay C: verifies invariant preservation throughout assembled surface (INV-1)', () => {
     const wrapper = mountFullPage()
+    const fullText = wrapper.text()
 
     // Invariant INV-1: $15,000 starting capital appears across multiple sections
-    const fullText = wrapper.text()
-    expect(fullText).toContain('$15,000 Starting Pot')
+    expect(fullText).toContain('$15,000 Starting Stake')
     expect(fullText).toContain('$15,000.00')
 
     // Key engine specs
-    expect(fullText).toContain('100ms Fast Match Engine')
-    expect(fullText).toContain('30-60 Traders Per Match')
+    expect(fullText).toContain('100ms')
+    expect(fullText).toContain('48,200+')
+    expect(fullText).toContain('$142M+')
   })
 
   it('assay D: interactive widgets execute independently without cross-component contamination', async () => {
     const wrapper = mountFullPage()
 
-    // 1. Test pillar tab filter
-    const mapTabBtn = wrapper.find('[data-tab="map"]')
-    if (mapTabBtn.exists()) {
-      await mapTabBtn.trigger('click')
-      expect(wrapper.text()).toContain('Dynamic Sector Map')
+    // 1. Test duel simulator leverage selector in media section
+    const levChips = wrapper.findAll('.leverage-chip')
+    if (levChips.length >= 3) {
+      await levChips[0].trigger('click')
+      expect(wrapper.text()).toContain('+$368.10')
+      await levChips[2].trigger('click')
+      expect(wrapper.text()).toContain('+$1,840.50')
     }
 
-    // 2. Test duel simulator leverage selector
-    const lev5Btn = wrapper.find('[data-leverage="5"]')
-    if (lev5Btn.exists()) {
-      await lev5Btn.trigger('click')
-      expect(lev5Btn.classes()).toContain('dark:border-[#00e676]')
-    }
-
-    // 3. Test FAQ accordion toggle
-    const faqButtons = wrapper.findAll('.faq-question-btn')
-    if (faqButtons.length > 1) {
-      await faqButtons[1].trigger('click')
-      expect(wrapper.text()).toContain('100% risk-free simulated capital')
+    // 2. Test FAQ accordion toggle
+    const faqTriggers = wrapper.findAll('.faq-trigger')
+    if (faqTriggers.length > 1) {
+      await faqTriggers[1].trigger('click')
+      expect(wrapper.text()).toContain('macro interest rate shocks drain liquidity')
     }
   })
 })

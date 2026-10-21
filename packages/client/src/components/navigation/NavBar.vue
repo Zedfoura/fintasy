@@ -80,7 +80,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <n-layout-header bordered h-48px w-full flex>
+  <n-layout-header bordered h-48px w-full flex class="border-b border-white/10 bg-[#0E121B]/95 backdrop-blur-md">
     <div flex grow items-center gap-5 py-1>
       <!-- parent should be w-55 to match sidebar size -->
       <div hidden h-full w-55 items-center justify-center lg:flex>
@@ -113,9 +113,25 @@ onMounted(() => {
       <!-- spacer to push the rest of the items to the right -->
       <div grow />
 
+      <!-- 10 Hz Telemetry Dot -->
+      <div
+        class="hidden items-center gap-1.5 border border-emerald-500/30 rounded-sm bg-emerald-950/20 px-2 py-0.5 text-[10px] text-emerald-400 font-bold font-mono lg:flex"
+        data-test="nav-telemetry-chip"
+      >
+        <span class="relative h-2 w-2 flex">
+          <span class="absolute h-full w-full inline-flex animate-ping rounded-full bg-emerald-400 opacity-75" />
+          <span class="relative h-2 w-2 inline-flex rounded-full bg-emerald-500" />
+        </span>
+        <span>10 Hz | 14ms</span>
+      </div>
+
       <!-- portfolio balance -->
-      <div hidden w-fit items-center justify-center fn-outline px-2 op-85 md:flex>
-        Balance: {{ balance }}
+      <div
+        class="hidden w-fit items-center justify-center border border-white/10 rounded-sm bg-white/5 px-2.5 py-0.5 text-xs text-slate-200 tracking-tight font-mono tabular-nums md:flex"
+        data-test="nav-balance-chip"
+      >
+        <span class="mr-1 text-[11px] text-slate-400 uppercase">Balance:</span>
+        <span class="text-emerald-400 font-bold">{{ balance }}</span>
       </div>
 
       <!-- switch / create portfolio -->

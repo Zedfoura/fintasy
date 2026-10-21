@@ -253,4 +253,62 @@ describe('tradingDuelArena (ROYALE-9)', () => {
       expect(wrapper.find('[data-test="victor-name"]').text()).toContain('ApexPredator')
     })
   })
+
+  describe('assay G: Action Horizon invariants & bracketed leverage formatting (DESIGN-3)', () => {
+    it('should format leverage selectors with bracketed chips [ 1x ], [ 2x ], [ 5x ]', () => {
+      const wrapper = mount(TradingDuelArena, {
+        props: {
+          phase: 'ACTIVE',
+          participants: baseParticipants,
+        },
+      })
+
+      const btn1 = wrapper.find('[data-test="leverage-btn-1"]')
+      const btn2 = wrapper.find('[data-test="leverage-btn-2"]')
+      const btn5 = wrapper.find('[data-test="leverage-btn-5"]')
+
+      expect(btn1.text()).toBe('[ 1x ]')
+      expect(btn2.text()).toBe('[ 2x ]')
+      expect(btn5.text()).toBe('[ 5x ]')
+    })
+
+    it('should apply Action Horizon colors: Cyan (>10s), Safety Orange (<=10s), Crimson (<=3s)', async () => {
+      const wrapper = mount(TradingDuelArena, {
+        props: {
+          secondsRemaining: 20,
+          durationSeconds: 30,
+          participants: baseParticipants,
+        },
+      })
+
+      const clock = wrapper.find('[data-test="duel-clock"]')
+      const bar = wrapper.find('[data-test="countdown-progress-bar"]')
+
+      expect(clock.classes()).toContain('text-cyan-400')
+      expect(bar.classes()).toContain('bg-cyan-400')
+
+      // Transition to <= 10s (Safety Orange Action Horizon)
+      await wrapper.setProps({ secondsRemaining: 8 })
+      expect(clock.classes()).toContain('text-[#FF5522]')
+      expect(clock.classes()).toContain('animate-pulse')
+      expect(bar.classes()).toContain('bg-[#FF5522]')
+
+      // Transition to <= 3s (Storm Crimson heartbeat)
+      await wrapper.setProps({ secondsRemaining: 2 })
+      expect(clock.classes()).toContain('text-rose-500')
+      expect(clock.classes()).toContain('animate-pulse')
+      expect(bar.classes()).toContain('bg-rose-500')
+    })
+
+    it('should adopt Deep Midnight HUD surface elevation', () => {
+      const wrapper = mount(TradingDuelArena, {
+        props: {
+          participants: baseParticipants,
+        },
+      })
+
+      const root = wrapper.find('[data-test="trading-duel-arena"]')
+      expect(root.classes()).toContain('bg-[#07090E]')
+    })
+  })
 })

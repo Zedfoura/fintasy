@@ -63,6 +63,7 @@ watch(() => route.path, () => {
     collapse-mode="width"
     show-trigger="bar"
     bordered
+    class="border-r border-white/10 bg-[#0E121B]"
     @update:collapsed="store.toggle"
   >
     <div h-full flex flex-col>
