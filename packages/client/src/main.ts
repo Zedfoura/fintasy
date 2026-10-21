@@ -13,6 +13,7 @@ import type { UserModule } from './types'
 
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
+import './styles/design-tokens.css'
 
 const head = createHead()
 

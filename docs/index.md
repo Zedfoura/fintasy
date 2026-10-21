@@ -136,3 +136,17 @@ To bring Fintasy to desktop gamers and handheld console users, the application i
 - **Rust Backend:** The Tauri Core in `src-tauri/` manages window chrome, native file system caching, and gamepad events.
 - **Steamworks SDK Bridge:** Prepared integration hooks for Steam Achievements, Steam Cloud Saves, and Steam Rich Presence via `steamworks-rs`.
 - **Controller Friendly:** Designed for Steam Deck's 1280x800 resolution with full gamepad navigation.
+
+---
+
+## 7. Design System & Visual Foundations
+
+The visual language of Fintasy is documented in the **[Fintasy Design System Guide](design-system/README.md)**. Grounded in blueprint drafting physics, financial telemetry invariants, and cognitive triage, the system ensures all interfaces remain readable and purposeful:
+
+- **[00. The 10 Principles of Dieter Rams](design-system/00-DIETER-RAMS-PRINCIPLES.md):** The core philosophical rubric: _Weniger, aber besser_ (Less, but better) applied to financial simulation, 10 Hz telemetry, and Stock Royale combat.
+- **[01. Foundations & Chromatic Semantics](design-system/01-FOUNDATIONS.md):** Deep Midnight HUD (`#07090E`), surface elevation tiers, and strict semantic color mapping (Safety Orange for action horizons, Emerald for solvency, Crimson for storm damage).
+- **[02. Typography & The Tabular Law](design-system/02-TYPOGRAPHY.md):** `Geist Mono` tabular numerical engine, `Geist Sans` UI structure, and `Instrument Serif` editorial gravity.
+- **[03. Grid, Blueprint Surfaces & Geometry](design-system/03-GRID-AND-SURFACES.md):** Reticle crosshairs (`+`), bracket chips (`[ ... ]`), hairline boundaries, and tactile dot-matrix canvas.
+- **[04. Component Architecture & Patterns](design-system/04-COMPONENTS.md):** The Atrium decision queue model, radial telemetry gauges, and split-screen combat arena HUD.
+- **[05. Visual Telemetry & State Dynamics](design-system/05-TELEMETRY-AND-STATE.md):** Silent, luminescent feedback, warning pulse escalations, and 10 Hz stream health indicators.
+- **[06. Code Implementation & UnoCSS Tokens](design-system/06-CODE-INTEGRATION.md):** Engineering guide, UnoCSS utility shortcuts, and CSS custom property contracts.

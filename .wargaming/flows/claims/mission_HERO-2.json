@@ -1,0 +1,15 @@
+{
+  "mission_id": "HERO-2",
+  "campaign": "2026-10-20_fintasy-hero",
+  "inventory_hash": "d4d54cb089c2b0b3d507217c7a1294e80e158633be1b28a605ae39d0b7c6b82e",
+  "flows": [
+    "FLOW-HERO-FIRST-IMPRESSION"
+  ],
+  "target_stage": "MECHANISM",
+  "stage": "activated",
+  "disposition": "active",
+  "receipts": [
+    ".wargaming/campaigns/2026-10-20_fintasy-hero/receipts/mission_HERO-2/execution.md"
+  ],
+  "battle_plan": ".wargaming/campaigns/2026-10-20_fintasy-hero/success/mission_HERO-2_battleplan.md"
+}

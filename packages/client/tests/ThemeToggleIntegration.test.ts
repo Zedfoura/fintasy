@@ -9,10 +9,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent } from 'vue'
 
 import HomeNav from '../src/components/navigation/HomeNav.vue'
-import LandingDuelSimulator from '../src/components/landing/LandingDuelSimulator.vue'
 import LandingFooter from '../src/components/landing/LandingFooter.vue'
-import LandingGameplayPillars from '../src/components/landing/LandingGameplayPillars.vue'
-import LandingSocialProof from '../src/components/landing/LandingSocialProof.vue'
 import IndexPage from '../src/pages/index.vue'
 import LoginView from '../src/pages/login.vue'
 
@@ -150,76 +147,21 @@ describe('full Monorepo Theme Toggle & Design Consistency Verification (THEME-6)
     expect(title.classes()).toContain('dark:text-white')
   })
 
-  it('assay C: Landing Page Hero features adaptive headline gradient and high-contrast subtitle', () => {
+  it('assay C: landing route renders the dark-only marketing hero (replaced by HERO-4)', () => {
     const wrapper = mount(IndexPage, {
       global: {
         stubs: {
-          LandingGameplayPillars: { template: '<div />' },
-          LandingDuelSimulator: { template: '<div />' },
-          LandingSocialProof: { template: '<div />' },
-          LandingFooter: { template: '<div />' },
-          RouterLink: defineComponent({
-            props: ['to'],
-            template: '<a :href="to"><slot /></a>',
-          }),
+          HeroVisual: { template: '<div data-test="hero-visual-stub" />' },
         },
       },
     })
-
-    const headlineSpan = wrapper.find('.landing-hero-headline span')
-    expect(headlineSpan.exists()).toBe(true)
-    expect(headlineSpan.classes()).toContain('from-emerald-700')
-    expect(headlineSpan.classes()).toContain('dark:from-emerald-400')
-
-    const subtitle = wrapper.find('.landing-hero-subtitle')
-    expect(subtitle.exists()).toBe(true)
-    expect(subtitle.classes()).toContain('text-slate-600')
-    expect(subtitle.classes()).toContain('dark:text-gray-300')
+    const hero = wrapper.find('section.hero')
+    expect(hero.exists()).toBe(true)
+    expect(wrapper.get('h1#hero-title').text()).toContain('Last one solvent.')
+    expect(wrapper.find('.landing-hero-headline').exists()).toBe(false)
   })
 
-  it('assay D: 4-Pillar Showcase features adaptive card background and section header', () => {
-    const wrapper = mount(LandingGameplayPillars)
-
-    const title = wrapper.find('h2')
-    expect(title.classes()).toContain('text-slate-900')
-    expect(title.classes()).toContain('dark:text-white')
-
-    const card = wrapper.find('.pillar-card')
-    expect(card.exists()).toBe(true)
-    expect(card.classes()).toContain('border-slate-200')
-    expect(card.classes()).toContain('dark:border-[#1f2438]')
-    expect(card.classes()).toContain('bg-white/95')
-    expect(card.classes()).toContain('dark:bg-[#0c0d14]/90')
-  })
-
-  it('assay E: Duel Simulator arena card implements dual-theme fintech surfaces', () => {
-    const wrapper = mount(LandingDuelSimulator, {
-      props: { autoStart: false },
-    })
-
-    const card = wrapper.find('.duel-arena-card')
-    expect(card.exists()).toBe(true)
-    expect(card.classes()).toContain('border-slate-200')
-    expect(card.classes()).toContain('dark:border-[#1f2438]')
-    expect(card.classes()).toContain('bg-white/95')
-    expect(card.classes()).toContain('dark:bg-[#0c0d14]/95')
-  })
-
-  it('assay F: Social Proof, Leaderboard and Footer feature dual-theme surfaces and borders', () => {
-    const proofWrapper = mount(LandingSocialProof)
-
-    const statCard = proofWrapper.find('.social-stat-card')
-    expect(statCard.exists()).toBe(true)
-    expect(statCard.classes()).toContain('border-slate-200')
-    expect(statCard.classes()).toContain('dark:border-[#1f2438]')
-    expect(statCard.classes()).toContain('bg-white/90')
-    expect(statCard.classes()).toContain('dark:bg-[#0c0d14]/80')
-
-    const leaderboardCard = proofWrapper.find('.leaderboard-card')
-    expect(leaderboardCard.exists()).toBe(true)
-    expect(leaderboardCard.classes()).toContain('border-slate-200')
-    expect(leaderboardCard.classes()).toContain('dark:border-[#1f2438]')
-
+  it('assay F: Footer features dual-theme surfaces and borders', () => {
     const footerWrapper = mount(LandingFooter, {
       global: {
         stubs: {

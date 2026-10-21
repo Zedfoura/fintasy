@@ -149,6 +149,8 @@ export default defineConfig({
       'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap',
       'https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400;500;700&display=swap',
       'https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&display=swap',
+      'https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap',
+      'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap',
     ]),
   ],
 

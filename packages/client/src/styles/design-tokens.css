@@ -1,0 +1,49 @@
+/**
+ * Fintasy Design System Tokens — Grounded in Reason
+ * Governed by Dieter Rams Principles & docs/design-system/
+ */
+
+:root {
+  /* 4-Tier Surface Elevation (Deep Space Midnight) */
+  --fn-surface-canvas: #07090e;
+  --fn-surface-panel: #0e121b;
+  --fn-surface-card: #151c2b;
+  --fn-surface-float: #1d263b;
+  --fn-surface-hover: #232e47;
+
+  /* Hairline Drafting Boundaries */
+  --fn-border-subtle: rgba(255, 255, 255, 0.06);
+  --fn-border-default: rgba(255, 255, 255, 0.1);
+  --fn-border-focus: rgba(255, 255, 255, 0.28);
+
+  /* Functional Chromatic Telemetry */
+  --fn-accent-orange: #ff5522; /* Action Horizon: Urgency <= 10s, Margin >= 70% */
+  --fn-accent-emerald: #10b981; /* Solvency, In-Zone, Positive P&L */
+  --fn-accent-crimson: #f43f5e; /* Hazard, Storm Damage, Auto-Liquidation BUST */
+  --fn-accent-cyan: #06b6d4; /* 10 Hz Telemetry, Bot Archetypes, Neutral Reticles */
+  --fn-accent-indigo: #6366f1; /* Governance, Tournaments, Decision Queues */
+
+  /* Text & Telemetry Contrast (WCAG AA/AAA) */
+  --fn-text-primary: #f8fafc;
+  --fn-text-secondary: #94a3b8;
+  --fn-text-muted: #64748b;
+}
+
+/* Atmospheric Dot-Matrix Texture */
+.fn-dot-matrix {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* Monospace Tabular Figure Invariant */
+.fn-mono-tabular {
+  font-family: 'Geist Mono', 'DM Mono', ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
+  font-feature-settings:
+    'tnum' 1,
+    'zero' 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}

@@ -30,20 +30,20 @@ useHead({
 
 <style>
 :root {
-  color-scheme: light dark;
-  --c-bg: #ededed;
-  --c-fg: #ffffff;
-  --c-text: #151515;
-  --c-inverse: #121212;
-  --c-accent: #1da54f;
+  color-scheme: dark light;
+  --c-bg: #07090e;
+  --c-fg: #0e121b;
+  --c-text: #f8fafc;
+  --c-inverse: #151c2b;
+  --c-accent: #10b981;
 }
 
 html.dark {
-  --c-bg: #121212;
-  --c-fg: #1b1b1b;
-  --c-text: #eaeaea;
-  --c-inverse: #ededed;
-  --c-accent: #4ade80;
+  --c-bg: #07090e;
+  --c-fg: #0e121b;
+  --c-text: #f8fafc;
+  --c-inverse: #151c2b;
+  --c-accent: #10b981;
 }
 
 html,

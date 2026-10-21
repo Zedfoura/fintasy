@@ -211,4 +211,30 @@ describe('marketRadarMap & Sector Topology (ROYALE-8)', () => {
       expect(wrapper.find('[data-test="traders-count"]').text()).toBe('24 / 40')
     })
   })
+
+  describe('assay G: Action Horizon storm countdown & HUD elevation (DESIGN-3)', () => {
+    it('should adopt Deep Midnight HUD surface elevation', () => {
+      const wrapper = mount(MarketRadarMap)
+      expect(wrapper.find('[data-test="market-radar-container"]').classes()).toContain('bg-[#07090E]')
+    })
+
+    it('should activate Safety Orange pulse when storm countdown <= 10s', async () => {
+      const wrapper = mount(MarketRadarMap, {
+        props: {
+          stormState: {
+            roundNumber: 1,
+            name: 'Outer Sector Contraction',
+            phase: 'WARNING',
+            secondsRemaining: 9,
+            damageRateCentsPerSec: 5000,
+            safeSectorCount: 8,
+          },
+        },
+      })
+
+      const countdown = wrapper.find('[data-test="storm-countdown"]')
+      expect(countdown.classes()).toContain('text-[#FF5522]')
+      expect(countdown.classes()).toContain('animate-pulse')
+    })
+  })
 })

@@ -1,0 +1,300 @@
+{
+  "version": 2,
+  "kind": "wargame-flow-inventory",
+  "inventory_id": "fintasy-hero-campaign-flows-v2",
+  "discovery_evidence": "Inspected pages/index.vue, layouts, App.vue, modules/auth.ts, components/hero/*, Logo.vue and HeroSection.test.ts in wt/hero_layout (base 511b80c).",
+  "golden_flow_status": "present",
+  "omissions": [
+    {
+      "flow": "FLOW-LANDING-CONVERSION (Stock Royale campaign)",
+      "reason": "Lives in the shared workspace inventory, which this campaign must not rewrite; HERO-3 only touches its CTA leg, which is modelled here as transition enter-match.",
+      "owner_or_clearing_condition": "Stock Royale campaign migrates the shared inventory to schema v2."
+    }
+  ],
+  "flows": [
+    {
+      "id": "FLOW-HERO-FIRST-IMPRESSION",
+      "tier": "golden",
+      "user_goal": "A signed-out visitor understands what Fintasy is from the hero and can start a match or sign in.",
+      "terminal_outcome": "The visitor sees one nav, the locked headline, the caption strip and visual frame, and 'Enter a match' leads to /dashboard/royale (auth guard redirects signed-out visitors to /login?redirect=/dashboard/royale).",
+      "discovery_evidence": "pages/index.vue, layouts/none.vue, App.vue, modules/auth.ts isPublicRoute, components/hero/HeroSection.vue, HeroNav.vue, components/common/Logo.vue (router-link to /), tests/HeroSection.test.ts",
+      "actor": {
+        "id": "ACT-hero-visitor",
+        "identity": "anonymous visitor",
+        "role": "signed-out visitor",
+        "tenant_or_account": "not applicable: public marketing route"
+      },
+      "entry_points": [
+        {
+          "id": "EP-hero-direct",
+          "kind": "deep_link",
+          "location": "/",
+          "component": "HeroSection",
+          "consumer": "mounted index route on layout none",
+          "activation_oracle": "direct load of / mounts HeroSection with exactly one nav",
+          "applicability": "required"
+        },
+        {
+          "id": "EP-hero-nav",
+          "kind": "navigation",
+          "location": "dashboard Logo router-link to /",
+          "component": "HeroSection",
+          "consumer": "mounted index route on layout none",
+          "activation_oracle": "client-side navigation to / mounts HeroSection and unmounts dashboard chrome",
+          "applicability": "required"
+        },
+        {
+          "id": "EP-hero-reentry",
+          "kind": "reentry",
+          "location": "refresh or back-navigation to /",
+          "component": "HeroSection",
+          "consumer": "mounted index route on layout none",
+          "activation_oracle": "refresh of / re-mounts HeroSection with the same single nav",
+          "applicability": "required"
+        }
+      ],
+      "reentry_applicability": {
+        "status": "required",
+        "evidence": "Public route; refresh and back-navigation return to /."
+      },
+      "target_bindings": [
+        {
+          "id": "TGT-hero-local-dev",
+          "environment": "local Vite dev server http://localhost:3333 (pnpm --filter client dev)",
+          "consumer": "packages/client Vue SPA route / (pages/index.vue, layout none)",
+          "authority": "Zedfoura/fintasy local canonical checkout",
+          "ref": "refs/heads/feature/stock-royale-full-platform",
+          "entry_point_ids": [
+            "EP-hero-direct",
+            "EP-hero-nav",
+            "EP-hero-reentry"
+          ],
+          "applicability": "required"
+        }
+      ],
+      "external_prerequisites": [
+        {
+          "id": "PR-hero-fonts",
+          "description": "Archivo and JetBrains Mono bundled via vite-plugin-webfont-dl",
+          "requirement": "required",
+          "evidence": "vite.config.ts WebfontDownload list; vite build log downloads both css2 URLs"
+        },
+        {
+          "id": "PR-hero-auth-guard",
+          "description": "existing auth guard redirects signed-out /dashboard/royale to /login",
+          "requirement": "required",
+          "evidence": "modules/auth.ts isPublicRoute inspection"
+        }
+      ],
+      "trace": {
+        "id": "TRACE-hero-first-impression",
+        "route": "/",
+        "component": "HeroSection (HeroNav, statement band, caption strip, visual slot)",
+        "transport": "not applicable: static client-rendered marketing route",
+        "handler": "not applicable: client route; CTA hands off to vue-router + auth guard",
+        "data": "static copy and hero-scoped tokens (tokens.json); strip state from props / onVisualUpdate",
+        "consumer": "mounted index route rendered in the browser"
+      },
+      "owned_boundaries": [
+        "browser"
+      ],
+      "boundary_requirements": [
+        {
+          "id": "BR-hero-browser",
+          "boundary": "browser",
+          "requirement": "required",
+          "evidence": "owned mounted route"
+        }
+      ],
+      "state_cases": [
+        {
+          "id": "ST-hero-initial",
+          "category": "initial",
+          "requirement": "required",
+          "oracle": "hero renders with one nav, h1, CTAs, strip defaults Round 1 / 5 · Storm holding · 60 / 60",
+          "evidence": "HeroSection defaults"
+        },
+        {
+          "id": "ST-hero-loading",
+          "category": "loading",
+          "requirement": "required",
+          "oracle": "static aria-hidden ring fallback fills the visual frame until a visual is slotted; fonts swap without layout loss",
+          "evidence": "slot fallback + font-display swap"
+        },
+        {
+          "id": "ST-hero-empty",
+          "category": "empty",
+          "requirement": "not_applicable",
+          "oracle": "no data-driven list",
+          "evidence": "static copy inspection",
+          "not_applicable_reason": "The hero has no user or service data that can be empty."
+        },
+        {
+          "id": "ST-hero-error",
+          "category": "error",
+          "requirement": "not_applicable",
+          "oracle": "no runtime service call",
+          "evidence": "trace inspection",
+          "not_applicable_reason": "No transport or handler exists on the hero route."
+        },
+        {
+          "id": "ST-hero-success",
+          "category": "success",
+          "requirement": "required",
+          "oracle": "Enter a match reaches /dashboard/royale or /login?redirect=%2Fdashboard%2Froyale when signed out",
+          "evidence": "terminal outcome"
+        },
+        {
+          "id": "ST-hero-reentry",
+          "category": "reentry",
+          "requirement": "required",
+          "oracle": "refresh of / re-renders the same hero with one nav",
+          "evidence": "router contract"
+        },
+        {
+          "id": "ST-hero-concurrency",
+          "category": "concurrency",
+          "requirement": "not_applicable",
+          "oracle": "read-only route",
+          "evidence": "no mutable state",
+          "not_applicable_reason": "The hero performs no writes."
+        },
+        {
+          "id": "ST-hero-accessibility",
+          "category": "accessibility",
+          "requirement": "required",
+          "oracle": "single nav landmark, h1, keyboard-operable links, strip aria-live off, decorative fallback aria-hidden",
+          "evidence": "hero-direction.md accessibility gate"
+        }
+      ],
+      "accessibility_capabilities": [
+        {
+          "id": "A11Y-hero-structure",
+          "capability": "headings and landmarks",
+          "requirement": "required",
+          "oracle": "one nav, one h1, figure/figcaption for the visual frame",
+          "evidence": "HeroSection markup",
+          "semantics": [
+            "semantics_status",
+            "automated_scan"
+          ]
+        },
+        {
+          "id": "A11Y-hero-keyboard",
+          "capability": "keyboard navigation and focus",
+          "requirement": "required",
+          "oracle": "nav links and CTAs reachable by Tab with visible focus",
+          "evidence": "focus-visible styles",
+          "semantics": [
+            "keyboard_focus"
+          ]
+        },
+        {
+          "id": "A11Y-hero-reflow",
+          "capability": "zoom and reflow",
+          "requirement": "required",
+          "oracle": "no horizontal scroll at 375, 768, 1440; stacks below 760px",
+          "evidence": "responsive tokens",
+          "semantics": [
+            "zoom_reflow",
+            "visual_perceptual"
+          ]
+        }
+      ],
+      "matrix_cases": [
+        {
+          "id": "MC-hero-identity",
+          "dimension": "identity_role_tenant",
+          "requirement": "required",
+          "evidence": "Signed-out vs signed-in CTA destination."
+        },
+        {
+          "id": "MC-hero-viewport",
+          "dimension": "viewport_breakpoint",
+          "requirement": "required",
+          "evidence": "760px stack breakpoint; 375/768/1440 checks."
+        },
+        {
+          "id": "MC-hero-browser",
+          "dimension": "browser_platform",
+          "requirement": "required",
+          "evidence": "Desktop browser pane (Chromium) per battle plan."
+        },
+        {
+          "id": "MC-hero-input",
+          "dimension": "input_modality",
+          "requirement": "required",
+          "evidence": "Pointer and keyboard links."
+        },
+        {
+          "id": "MC-hero-network",
+          "dimension": "network_service",
+          "requirement": "not_applicable",
+          "evidence": "Static route trace.",
+          "not_applicable_reason": "No service boundary on the hero route."
+        },
+        {
+          "id": "MC-hero-permission",
+          "dimension": "permission_entitlement",
+          "requirement": "required",
+          "evidence": "Auth guard redirect of the primary CTA."
+        },
+        {
+          "id": "MC-hero-reentry",
+          "dimension": "lifecycle_reentry",
+          "requirement": "required",
+          "evidence": "Refresh/back to /."
+        },
+        {
+          "id": "MC-hero-volume",
+          "dimension": "data_volume_content",
+          "requirement": "required",
+          "evidence": "Longest copy (h1 at clamp max, paragraph 40ch)."
+        },
+        {
+          "id": "MC-hero-locale",
+          "dimension": "locale_content",
+          "requirement": "not_applicable",
+          "evidence": "Hero copy is authored English only (hero-direction.md).",
+          "not_applicable_reason": "Hero copy is not routed through vue-i18n."
+        }
+      ],
+      "transitions": [
+        {
+          "id": "load-hero",
+          "action": "Load / as a signed-out visitor.",
+          "external_prerequisites": [
+            "PR-hero-fonts"
+          ],
+          "signal": "HeroSection renders; document has exactly one nav and the locked h1.",
+          "if_fails": "Inspect route meta layout, mounted components, and nav count in the DOM.",
+          "cleanup": "not applicable: read-only navigation",
+          "next_transition_ids": [
+            "enter-match"
+          ]
+        },
+        {
+          "id": "enter-match",
+          "action": "Activate 'Enter a match'.",
+          "external_prerequisites": [
+            "PR-hero-auth-guard"
+          ],
+          "signal": "URL becomes /login?redirect=%2Fdashboard%2Froyale when signed out.",
+          "if_fails": "Inspect RouterLink target and modules/auth.ts guard.",
+          "cleanup": "not applicable: no state written",
+          "next_transition_ids": []
+        }
+      ],
+      "start_transition_ids": [
+        "load-hero"
+      ],
+      "terminal_transition_ids": [
+        "enter-match"
+      ],
+      "known_good_invariants": [
+        "/login and /dashboard/** behave as before",
+        "dashboard keeps the DM font stack outside .hero"
+      ]
+    }
+  ]
+}

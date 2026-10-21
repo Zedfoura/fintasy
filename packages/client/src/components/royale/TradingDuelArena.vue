@@ -126,6 +126,35 @@ const marginDepletionPercent = computed(() => {
 
 const isCriticalMarginRisk = computed(() => marginDepletionPercent.value >= 70)
 
+// Action Horizon countdown styling (Cyan > 10s, Safety Orange <= 10s, Crimson <= 3s)
+const countdownClass = computed(() => {
+  if (props.secondsRemaining <= 3)
+    return 'text-rose-500 animate-pulse'
+  if (props.secondsRemaining <= 10)
+    return 'text-[#FF5522] animate-pulse'
+  return 'text-cyan-400'
+})
+
+const timerProgressClass = computed(() => {
+  if (props.secondsRemaining <= 3)
+    return 'bg-rose-500 animate-pulse'
+  if (props.secondsRemaining <= 10)
+    return 'bg-[#FF5522] animate-pulse'
+  return 'bg-cyan-400'
+})
+
+// Graduated 90% auto-liquidation meter color (Emerald 0-50%, Amber 50-69%, Safety Orange 70-84%, Crimson 85%+)
+const marginMeterColorClass = computed(() => {
+  const val = marginDepletionPercent.value
+  if (val >= 85)
+    return 'bg-rose-500 animate-pulse'
+  if (val >= 70)
+    return 'bg-[#FF5522] animate-pulse'
+  if (val >= 50)
+    return 'bg-amber-400'
+  return 'bg-emerald-500'
+})
+
 // Winner attribution
 const victor = computed(() => {
   if (props.phase !== 'CONCLUDED')
@@ -273,40 +302,40 @@ watch(
 
 <template>
   <div
-    class="flex flex-col overflow-hidden border border-slate-800 rounded-xl bg-[#090d16] p-4 text-slate-100 font-mono shadow-2xl"
+    class="flex flex-col overflow-hidden border border-white/10 rounded-xl bg-[#07090E] p-4 text-slate-100 font-mono"
     data-test="trading-duel-arena"
   >
     <!-- TOP COMBAT TELEMETRY BAR -->
-    <div class="mb-4 border-b border-slate-800/90 pb-3">
+    <div class="mb-4 border-b border-white/10 pb-3">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <!-- Sector & Ticker Focus -->
         <div class="flex items-center gap-3">
           <div class="flex items-center gap-2">
-            <span class="h-3 w-3 animate-ping rounded-full bg-rose-500" />
-            <span class="text-sm text-rose-400 font-black tracking-wider">TRADING DUEL ARENA</span>
+            <span class="h-2.5 w-2.5 animate-pulse rounded-full bg-[#FF5522]" />
+            <span class="text-xs text-[#FF5522] font-black tracking-wider uppercase">TRADING DUEL ARENA</span>
           </div>
-          <span class="border border-slate-700 rounded bg-slate-900 px-2 py-0.5 text-xs text-slate-300 font-bold">
+          <span class="border border-white/10 rounded bg-[#0E121B] px-2 py-0.5 text-xs text-slate-300 font-bold">
             {{ sector }}
           </span>
-          <span class="border border-cyan-500/50 rounded bg-cyan-950/60 px-2 py-0.5 text-xs text-cyan-300 font-bold">
+          <span class="border border-cyan-500/40 rounded bg-cyan-950/40 px-2 py-0.5 text-xs text-cyan-300 font-bold">
             FOCUS: {{ ticker }}
           </span>
         </div>
 
         <!-- Bounty Pot & Countdown Clock -->
         <div class="flex items-center gap-5">
-          <div class="flex items-center gap-1.5 border border-amber-500/40 rounded bg-amber-950/40 px-3 py-1">
+          <div class="flex items-center gap-1.5 border border-amber-500/30 rounded bg-amber-950/30 px-3 py-1">
             <span class="text-xs text-amber-400">🏆 BOUNTY POT:</span>
-            <span class="text-sm text-amber-300 font-bold" data-test="bounty-pot">
+            <span class="text-sm text-amber-300 font-bold font-mono tabular-nums" data-test="bounty-pot">
               {{ formatCentsWhole(bountyCents) }}
             </span>
           </div>
 
           <div class="flex flex-col items-end">
-            <span class="text-[10px] text-slate-500 uppercase">CLOCK EXPIRY</span>
+            <span class="text-[10px] text-slate-400 tracking-wider uppercase">CLOCK EXPIRY</span>
             <span
-              class="text-xl font-black tracking-widest"
-              :class="secondsRemaining <= 10 ? 'text-rose-400 animate-pulse' : 'text-slate-100'"
+              class="text-xl font-black tracking-widest font-mono tabular-nums"
+              :class="countdownClass"
               data-test="duel-clock"
             >
               {{ formattedCountdown }}
@@ -315,11 +344,11 @@ watch(
         </div>
       </div>
 
-      <!-- Linear Countdown Bar -->
-      <div class="mt-2.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+      <!-- Linear Countdown Bar (Action Horizon) -->
+      <div class="mt-2.5 h-1.5 w-full overflow-hidden border border-white/5 rounded-full bg-[#151C2B]">
         <div
           class="h-full transition-all duration-300 ease-linear"
-          :class="secondsRemaining <= 10 ? 'bg-rose-500 animate-pulse' : 'bg-cyan-400'"
+          :class="timerProgressClass"
           :style="{ width: `${timerProgressPercent}%` }"
           data-test="countdown-progress-bar"
         />
@@ -328,35 +357,35 @@ watch(
       <!-- THIRD-PARTY ESCALATION BANNER -->
       <div
         v-if="participants.length > 2 || thirdPartyAlert"
-        class="mt-2.5 flex animate-pulse items-center justify-between border border-amber-500/80 rounded bg-amber-950/80 px-3 py-1.5 text-xs text-amber-200 font-bold shadow-lg"
+        class="mt-2.5 flex animate-pulse items-center justify-between border border-[#FF5522]/80 rounded bg-[#FF5522]/15 px-3 py-1.5 text-xs text-[#FF5522] font-bold shadow-lg"
         data-test="third-party-alert-banner"
       >
         <div class="flex items-center gap-2">
           <span>⚠️</span>
           <span>THIRD-PARTY ESCALATION: {{ thirdPartyAlert || `${participants.length}-WAY BATTLE ACTIVE!` }}</span>
         </div>
-        <span class="rounded bg-amber-500/30 px-1.5 py-0.5 text-[10px] text-amber-300 uppercase">CLOCK EXTENDED</span>
+        <span class="border border-[#FF5522]/40 rounded bg-[#FF5522]/20 px-1.5 py-0.5 text-[10px] text-[#FF5522] font-bold uppercase">CLOCK EXTENDED</span>
       </div>
     </div>
 
     <!-- MAIN SPLIT-SCREEN ARENA LAYOUT -->
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
       <!-- LEFT PANE: EXECUTION TERMINAL (7 COLS) -->
-      <div class="flex flex-col border border-slate-800 rounded-lg bg-[#060a12] p-4 lg:col-span-7">
-        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+      <div class="flex flex-col border border-white/10 rounded-lg bg-[#0E121B] p-4 lg:col-span-7">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2">
           <div class="flex items-center gap-2">
-            <span class="text-xs text-slate-400 font-bold uppercase">LIVE TICK STREAM</span>
-            <span class="text-xs text-slate-500">10 Hz GBM</span>
+            <span class="text-xs text-slate-400 font-bold tracking-wider uppercase">LIVE TICK STREAM</span>
+            <span class="text-xs text-slate-400 font-mono">[ 10 Hz GBM ]</span>
           </div>
           <div class="text-right">
-            <span class="text-lg text-slate-100 font-black" data-test="current-price">
+            <span class="text-lg text-slate-100 font-black font-mono tabular-nums" data-test="current-price">
               {{ formatCentsToUsd(currentPriceCents) }}
             </span>
           </div>
         </div>
 
         <!-- Canvas Chart -->
-        <div class="relative my-3 h-48 w-full overflow-hidden border border-slate-800/60 rounded bg-[#04070d]">
+        <div class="relative my-3 h-48 w-full overflow-hidden border border-white/10 rounded bg-[#07090E]">
           <canvas
             ref="chartCanvasRef"
             class="h-full w-full"
@@ -365,22 +394,22 @@ watch(
         </div>
 
         <!-- Active Position Display or Order Entry Controls -->
-        <div v-if="localParticipant?.position" class="border border-cyan-500/40 rounded bg-cyan-950/20 p-3" data-test="active-position-card">
+        <div v-if="localParticipant?.position" class="border border-cyan-500/40 rounded bg-[#151C2B] p-3" data-test="active-position-card">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <span
-                class="rounded px-2 py-0.5 text-xs font-bold"
+                class="rounded px-2 py-0.5 text-xs font-bold tracking-tight font-mono"
                 :class="localParticipant.position.side === 'LONG' ? 'bg-emerald-950 text-emerald-400 border border-emerald-500' : 'bg-rose-950 text-rose-400 border border-rose-500'"
               >
                 {{ localParticipant.position.side }} {{ localParticipant.position.leverage }}x
               </span>
-              <span class="text-xs text-slate-300">
+              <span class="text-xs text-slate-300 font-mono tabular-nums">
                 {{ localParticipant.position.quantity }} shares @ {{ formatCentsToUsd(localParticipant.position.entryPriceCents) }}
               </span>
             </div>
             <div class="text-right">
               <span
-                class="text-sm font-bold"
+                class="text-sm font-bold font-mono tabular-nums"
                 :class="localParticipant.netProfitCents >= 0 ? 'text-emerald-400' : 'text-rose-400'"
                 data-test="position-pnl"
               >
@@ -389,34 +418,40 @@ watch(
             </div>
           </div>
 
-          <!-- Auto-Liquidation Margin Risk Gauge -->
+          <!-- Auto-Liquidation Margin Risk Gauge (Graduated) -->
           <div class="mt-2.5">
             <div class="flex items-center justify-between text-[10px]">
-              <span class="text-slate-400 uppercase">MARGIN DEPLETION (90% BUST CAP)</span>
+              <span class="text-slate-400 tracking-wider uppercase">MARGIN DEPLETION (90% BUST CAP)</span>
               <span
-                :class="isCriticalMarginRisk ? 'text-rose-400 font-bold animate-pulse' : 'text-slate-400'"
+                class="font-mono tabular-nums"
+                :class="isCriticalMarginRisk ? 'text-[#FF5522] font-bold animate-pulse' : 'text-slate-400'"
                 data-test="margin-risk-value"
               >
                 {{ marginDepletionPercent }}%
               </span>
             </div>
-            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+            <div class="mt-1 h-1.5 w-full overflow-hidden border border-white/5 rounded-full bg-[#07090E]">
               <div
                 class="h-full transition-all duration-200"
-                :class="isCriticalMarginRisk ? 'bg-rose-500 animate-pulse' : 'bg-amber-400'"
+                :class="marginMeterColorClass"
                 :style="{ width: `${marginDepletionPercent}%` }"
                 data-test="margin-risk-meter"
               />
             </div>
-            <div v-if="isCriticalMarginRisk" class="mt-1 animate-pulse text-[10px] text-rose-400 font-bold" data-test="liquidation-warning">
-              ⚠️ CRITICAL MARGIN DANGER: 90% AUTO-LIQUIDATION IMMINENT
+            <div
+              v-if="isCriticalMarginRisk"
+              class="mt-1.5 flex animate-pulse items-center gap-1.5 border border-[#FF5522] rounded bg-[#FF5522]/15 px-2 py-1 text-[10px] text-[#FF5522] font-bold"
+              data-test="liquidation-warning"
+            >
+              <span>⚠️</span>
+              <span>CRITICAL MARGIN DANGER: 90% AUTO-LIQUIDATION IMMINENT</span>
             </div>
           </div>
 
           <!-- Close Position Action -->
           <button
             type="button"
-            class="mt-3 w-full border border-slate-700 rounded bg-slate-800/80 py-1.5 text-xs text-slate-200 font-bold transition hover:bg-slate-700"
+            class="mt-3 w-full cursor-pointer border border-white/10 rounded bg-[#07090E] py-1.5 text-xs text-slate-200 font-bold font-mono transition hover:bg-white/10"
             data-test="close-position-btn"
             @click="handleClose"
           >
@@ -425,36 +460,38 @@ watch(
         </div>
 
         <!-- Order Entry Form (When Flat) -->
-        <div v-else class="flex flex-col gap-3 border border-slate-800/80 rounded bg-slate-900/40 p-3" data-test="order-entry-panel">
+        <div v-else class="flex flex-col gap-3 border border-white/10 rounded bg-[#151C2B] p-3" data-test="order-entry-panel">
           <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-400 font-bold uppercase">SELECT LEVERAGE</span>
+            <span class="text-xs text-slate-400 font-bold tracking-wider uppercase">SELECT LEVERAGE</span>
             <div class="flex items-center gap-1.5">
               <button
                 v-for="lev in [1, 2, 5] as DuelLeverage[]"
                 :key="lev"
                 type="button"
                 :data-test="`leverage-btn-${lev}`"
-                class="rounded px-2.5 py-0.5 text-xs font-bold transition"
-                :class="selectedLeverage === lev ? 'bg-cyan-500 text-slate-950 font-black' : 'border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700'"
+                class="inline-flex cursor-pointer select-none items-center rounded px-2.5 py-0.5 text-xs font-bold font-mono transition"
+                :class="selectedLeverage === lev ? 'border border-cyan-400 bg-cyan-500 text-slate-950 font-black' : 'border border-white/10 bg-[#0E121B] text-slate-300 hover:bg-white/10'"
                 @click="selectedLeverage = lev"
               >
-                {{ lev }}x
+                <span class="select-none text-slate-500">[ </span>
+                <span class="px-0.5">{{ lev }}x</span>
+                <span class="select-none text-slate-500"> ]</span>
               </button>
             </div>
           </div>
 
           <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-400 font-bold uppercase">ORDER QUANTITY</span>
+            <span class="text-xs text-slate-400 font-bold tracking-wider uppercase">ORDER QUANTITY</span>
             <div class="flex items-center gap-2">
               <input
                 v-model.number="orderQuantity"
                 type="number"
                 min="1"
                 max="100"
-                class="w-20 border border-slate-700 rounded bg-slate-950 px-2 py-0.5 text-right text-xs text-slate-100 font-bold focus:border-cyan-500 focus:outline-none"
+                class="w-20 border border-white/10 rounded bg-[#07090E] px-2 py-0.5 text-right text-xs text-slate-100 font-bold font-mono tabular-nums focus:border-cyan-500 focus:outline-none"
                 data-test="order-quantity-input"
               >
-              <span class="text-xs text-slate-500">SHARES</span>
+              <span class="text-xs text-slate-400 font-mono">SHARES</span>
             </div>
           </div>
 
@@ -463,7 +500,7 @@ watch(
             <button
               type="button"
               :disabled="phase !== 'ACTIVE'"
-              class="flex items-center justify-center gap-1.5 border border-emerald-500 rounded bg-emerald-950/60 py-2 text-xs text-emerald-300 font-black tracking-wider transition hover:bg-emerald-900/80 disabled:opacity-40"
+              class="flex cursor-pointer select-none items-center justify-center gap-1.5 border border-emerald-500/80 rounded bg-emerald-950/60 py-2 text-xs text-emerald-300 font-black tracking-wider transition hover:bg-emerald-900/80 disabled:opacity-40"
               data-test="buy-long-btn"
               @click="handleExecute('LONG')"
             >
@@ -474,7 +511,7 @@ watch(
             <button
               type="button"
               :disabled="phase !== 'ACTIVE'"
-              class="flex items-center justify-center gap-1.5 border border-rose-500 rounded bg-rose-950/60 py-2 text-xs text-rose-300 font-black tracking-wider transition hover:bg-rose-900/80 disabled:opacity-40"
+              class="flex cursor-pointer select-none items-center justify-center gap-1.5 border border-rose-500/80 rounded bg-rose-950/60 py-2 text-xs text-rose-300 font-black tracking-wider transition hover:bg-rose-900/80 disabled:opacity-40"
               data-test="sell-short-btn"
               @click="handleExecute('SHORT')"
             >
@@ -486,10 +523,10 @@ watch(
       </div>
 
       <!-- RIGHT PANE: COMBAT RADAR & OPPONENTS (5 COLS) -->
-      <div class="flex flex-col gap-3 border border-slate-800 rounded-lg bg-[#060a12] p-4 lg:col-span-5">
-        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
-          <span class="text-xs text-slate-400 font-bold uppercase">COMBATANTS TELEMETRY</span>
-          <span class="text-xs text-slate-500">{{ participants.length }} PARTICIPANTS</span>
+      <div class="flex flex-col gap-3 border border-white/10 rounded-lg bg-[#0E121B] p-4 lg:col-span-5">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2">
+          <span class="text-xs text-slate-400 font-bold tracking-wider uppercase">COMBATANTS TELEMETRY</span>
+          <span class="text-xs text-slate-400 font-mono">[ {{ participants.length }} PARTICIPANTS ]</span>
         </div>
 
         <!-- Participants List -->
@@ -500,7 +537,7 @@ watch(
             :data-test="`participant-card-${p.userUuid}`"
             class="flex flex-col border rounded p-2.5 transition"
             :class="[
-              p.isLocalUser ? 'border-cyan-500/60 bg-cyan-950/20' : 'border-slate-800 bg-slate-900/30',
+              p.isLocalUser ? 'border-cyan-500/60 bg-cyan-950/20' : 'border-white/10 bg-[#07090E]',
               p.isBusted ? 'opacity-40 border-rose-950 bg-rose-950/10' : '',
             ]"
           >
@@ -522,7 +559,7 @@ watch(
               </span>
               <span
                 v-else
-                class="text-xs font-bold"
+                class="text-xs font-bold font-mono tabular-nums"
                 :class="p.netProfitCents >= 0 ? 'text-emerald-400' : 'text-rose-400'"
               >
                 {{ formatCentsWithSign(p.netProfitCents) }} ({{ p.roiPercent >= 0 ? '+' : '' }}{{ p.roiPercent }}%)
@@ -531,10 +568,10 @@ watch(
 
             <!-- Position Badge & Equity -->
             <div class="mt-1 flex items-center justify-between text-[10px] text-slate-400">
-              <span>
+              <span class="font-mono">
                 {{ p.position ? `${p.position.side} ${p.position.leverage}x (${p.position.quantity})` : 'FLAT' }}
               </span>
-              <span>POT: <strong class="text-slate-300">{{ formatCentsWhole(p.equityCents) }}</strong></span>
+              <span class="font-mono tabular-nums">POT: <strong class="text-slate-300">{{ formatCentsWhole(p.equityCents) }}</strong></span>
             </div>
           </div>
         </div>
@@ -542,16 +579,16 @@ watch(
         <!-- CONCLUDED SUMMARY OVERLAY -->
         <div
           v-if="phase === 'CONCLUDED'"
-          class="mt-auto border border-amber-500/80 rounded bg-amber-950/50 p-3 text-center shadow-lg"
+          class="mt-auto border border-amber-500/60 rounded bg-amber-950/50 p-3 text-center shadow-lg"
           data-test="duel-concluded-summary"
         >
-          <div class="text-xs text-amber-300 font-bold tracking-wider uppercase">
+          <div class="text-xs text-amber-300 font-bold tracking-wider font-mono uppercase">
             DUEL CONCLUDED
           </div>
-          <div class="my-1 text-sm text-slate-100 font-black" data-test="victor-name">
+          <div class="my-1 text-sm text-slate-100 font-black font-mono" data-test="victor-name">
             VICTOR: {{ victor ? victor.username : 'NO SURVIVOR' }}
           </div>
-          <div class="text-xs text-amber-200">
+          <div class="text-xs text-amber-200 font-mono tabular-nums">
             SPOILS CLAIMED: {{ formatCentsWhole(bountyCents) }} + {{ ticker }} LOOT CARD
           </div>
         </div>

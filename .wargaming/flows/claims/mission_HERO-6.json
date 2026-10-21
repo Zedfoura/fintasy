@@ -1,0 +1,11 @@
+{
+  "mission_id": "HERO-6",
+  "campaign": "2026-10-20_fintasy-hero",
+  "flows": [
+    "FLOW-HERO-FIRST-IMPRESSION"
+  ],
+  "stage": "activated",
+  "receipts": [
+    ".wargaming/campaigns/2026-10-20_fintasy-hero/receipts/mission_HERO-6/execution.md"
+  ]
+}
