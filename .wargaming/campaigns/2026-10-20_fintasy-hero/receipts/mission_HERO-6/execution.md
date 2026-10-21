@@ -12,3 +12,9 @@
 ## Note
 Module scripts don't run from file:// in Chromium, so the build needs a static host (or `pnpm --filter client preview:hero`). base './' lets it live in any sub-path, e.g. /projects/fintasy/demo/.
 ## Stage: activated (OUTCOME needs the user to open the built page and confirm it's the one they'll link)
+
+## Outcome (2026-10-21, user)
+- **Reviewed artifact:** standalone build `dist-hero` (`assets/index-BqOzzip0.js`) served by `vite preview` on :4173 at `refs/heads/feature/hype-section` @ `2227c2d`: the hero plus the Match-timeline section with live vignettes.
+- **Change made during review:** beat 03 copy no longer names $15,000 (`2227c2d`, at the user's request).
+- **User confirmation:** "Reviewed the page: looks good. Record the outcome as confirmed, then stop the preview server."
+- Preview server stopped afterwards; ports 3333 and 4173 confirmed closed.

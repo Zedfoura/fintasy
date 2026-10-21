@@ -71,3 +71,9 @@ page bottom  hero 0 · drop 0 · duel 0 · storm 840 (100%) · lobby 120 (100%)
 - **Reduced motion live:** **UNVERIFIED (not emulable in the pane).** It is proven by unit tests: HypeVignettes asserts reduced motion gives 0 rAF and ≥1 draw.
 - **Hidden-tab pause live:** **UNVERIFIED.** It is proven by unit tests (`visibilitychange`).
 - **Flow claim:** the per-row matrix stays at PLAN (campaign precedent). The claim `stage` records `activated` with this receipt.
+
+## Outcome (2026-10-21, user)
+- **Reviewed artifact:** standalone build `dist-hero` (`assets/index-BqOzzip0.js`) served by `vite preview` on :4173 at `refs/heads/feature/hype-section` @ `2227c2d`: the hero plus the Match-timeline section with live vignettes.
+- **Change made during review:** beat 03 copy no longer names $15,000 (`2227c2d`, at the user's request).
+- **User confirmation:** "Reviewed the page: looks good. Record the outcome as confirmed, then stop the preview server."
+- Preview server stopped afterwards; ports 3333 and 4173 confirmed closed.

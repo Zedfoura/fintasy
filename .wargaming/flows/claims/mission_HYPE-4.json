@@ -3,7 +3,7 @@
   "kind": "wargame-flow-claim",
   "mission_id": "HYPE-4",
   "campaign": "2026-10-20_fintasy-hero",
-  "stage": "activated",
+  "stage": "retained",
   "target_stage": "RETENTION",
   "disposition": "active",
   "battle_plan": ".wargaming/campaigns/2026-10-20_fintasy-hero/success/mission_HYPE-4_battleplan.md",
