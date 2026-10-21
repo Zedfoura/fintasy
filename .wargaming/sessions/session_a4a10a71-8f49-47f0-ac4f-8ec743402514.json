@@ -10,7 +10,7 @@
   },
   "active_campaign": "2026-10-20_fintasy-hero",
   "active_mission": "CLOSE-3",
-  "mode": "PLAN",
+  "mode": "EXECUTE",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
   "ledger_hash": "9cd6728408454ac39bb2a06efc8b97e1ed903768b289fa03e8a1a65d941f9187",
   "ledger_generation": 18,
@@ -38,16 +38,18 @@
     ]
   },
   "authority_grant": {
-    "grant_id": "grant-2026-10-21-close-2-exec",
-    "authorizing_message": "Authorized: execute CLOSE-2 per the battle plan on feature/closing-sections (local commits only; no push/PR/merge).",
+    "grant_id": "grant-2026-10-21-close-3-exec",
+    "authorizing_message": "Authorized: plan and execute CLOSE-3 on feature/closing-sections (extend PageRetention for the FAQ and CTA, rebuild the standalone page), then start the preview so I can review the finished page. Local commits only; no push/PR/merge.",
     "missions": [
-      "CLOSE-2"
+      "CLOSE-3"
     ],
     "allowed_actions": [
+      "plan",
       "implement",
       "test",
       "verify",
-      "local_commit"
+      "local_commit",
+      "start_preview"
     ],
     "forbidden_actions": [
       "git_push",
@@ -55,7 +57,7 @@
       "merge_to_main",
       "deploy"
     ],
-    "granted_at": "2026-10-21T16:08:21-05:00"
+    "granted_at": "2026-10-21T16:31:04-05:00"
   },
   "last_verified_transition": "CLOSE-2 -> activated (ef3034b, 2026-10-21, local only)",
   "next_transition": "PLAN/EXECUTE CLOSE-3 (PageRetention covers FAQ/CTA, final review). Needs a packages/client grant. Push of feature/closing-sections + PR need a separate go-ahead.",
@@ -118,6 +120,26 @@
         "deploy"
       ],
       "granted_at": "2026-10-21T14:00:23-05:00"
+    },
+    {
+      "grant_id": "grant-2026-10-21-close-2-exec",
+      "authorizing_message": "Authorized: execute CLOSE-2 per the battle plan on feature/closing-sections (local commits only; no push/PR/merge).",
+      "missions": [
+        "CLOSE-2"
+      ],
+      "allowed_actions": [
+        "implement",
+        "test",
+        "verify",
+        "local_commit"
+      ],
+      "forbidden_actions": [
+        "git_push",
+        "open_pr",
+        "merge_to_main",
+        "deploy"
+      ],
+      "granted_at": "2026-10-21T16:08:21-05:00"
     }
   ]
 }

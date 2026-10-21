@@ -1,8 +1,9 @@
 /**
  * @author: Tinatsei Chingaya (Zedfoura), Claude
- * @description: Page-level retention guard for the Fintasy marketing page (HYPE-4). Fails if the Match-timeline
- * section, its four locked beats, the beat -> vignette wiring, the fact rule, the outbound-only links (D4) or the
- * hero above it regress on `/`, or if the standalone build stops rendering the same page.
+ * @description: Page-level retention guard for the Fintasy marketing page (HYPE-4, extended in CLOSE-3). Fails if
+ * the Match-timeline section, its four locked beats, the beat -> vignette wiring, the FAQ and its six locked
+ * questions, the closing CTA, the section order, the fact rule, the outbound-only links (D4) or the hero above it
+ * regress on `/`, or if the standalone build stops rendering the same page.
  */
 
 import { describe, expect, it, vi } from 'vitest'
@@ -25,6 +26,16 @@ const LOCKED_BEATS = [
   { id: 'storm', title: 'Storm' },
   { id: 'lobby', title: 'Last one solvent' },
 ] as const
+
+// Locked in close-direction.md; deliberately not read from closeCopy.ts.
+const LOCKED_QUESTIONS = [
+  'Can I play Fintasy?',
+  'Is real money involved?',
+  'Where do the prices come from?',
+  'Who am I up against?',
+  'How does a match end?',
+  'What is it built with?',
+]
 
 function stub(name: string, marker: string) {
   return defineComponent({ name, setup: () => () => h('div', { 'data-test': marker }) })
@@ -95,10 +106,39 @@ describe('hYPE-4 retention guard: marketing page on /', () => {
     wrapper.unmount()
   })
 
-  it('renders the same section in the standalone build', () => {
+  it('keeps the page order: hero, Match timeline, FAQ, then the closing CTA', () => {
+    const wrapper = mountIndex()
+    expect(wrapper.findAll('main > section').map(s => s.attributes('id') ?? s.classes()[0])).toEqual(['hero', 'match', 'faq', 'cta'])
+    wrapper.unmount()
+  })
+
+  it('keeps the six locked FAQ questions as disclosure buttons wired to their answers', () => {
+    const wrapper = mountIndex()
+    const faq = wrapper.get('section#faq')
+    expect(faq.attributes('aria-labelledby')).toBe('faq-title')
+    const buttons = faq.findAll('h3 > button')
+    expect(buttons.map(b => b.find('.close-q-text').text())).toEqual(LOCKED_QUESTIONS)
+    for (const b of buttons) {
+      expect(b.attributes('aria-expanded')).toMatch(/^(true|false)$/)
+      const region = faq.get(`#${b.attributes('aria-controls')}`)
+      expect(region.attributes('aria-labelledby')).toBe(b.attributes('id'))
+    }
+    wrapper.unmount()
+  })
+
+  it('closes on the locked CTA with only the source and case-study links', () => {
+    const wrapper = mountIndex()
+    const cta = wrapper.get('section#cta')
+    expect(cta.get('h2#cta-title').text()).toBe('That\'s the match.')
+    expect(cta.findAll('a').map(a => a.attributes('href'))).toEqual([SOURCE_URL, CASE_STUDY_URL])
+    wrapper.unmount()
+  })
+
+  it('renders the same sections in the standalone build', () => {
     const page = mountIndex()
     const standalone = mount(StandaloneHero, { global: { stubs } })
-    expect(standalone.get('section#match').html()).toBe(page.get('section#match').html())
+    for (const sel of ['section#match', 'section#faq', 'section#cta'])
+      expect(standalone.get(sel).html(), sel).toBe(page.get(sel).html())
     page.unmount()
     standalone.unmount()
   })

@@ -3,10 +3,10 @@
   "kind": "wargame-flow-claim",
   "mission_id": "CLOSE-3",
   "campaign": "2026-10-20_fintasy-hero",
-  "stage": "proposed",
+  "stage": "planned",
   "target_stage": "RETENTION",
   "disposition": "active",
-  "battle_plan": null,
+  "battle_plan": ".wargaming/campaigns/2026-10-20_fintasy-hero/success/mission_CLOSE-3_battleplan.md",
   "receipts": [],
   "inventory": {
     "id": "fintasy-hero-campaign-flows-v2",
