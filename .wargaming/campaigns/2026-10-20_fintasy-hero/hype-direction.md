@@ -30,7 +30,7 @@ The hero promises "Last one solvent." This section pays that off by walking thro
 | 02 · h3 | Duel |
 | 02 · body | Meet a rival and a 30-second trading duel starts. Long or short, 1x–5x leverage. Higher P&L takes the fight, the tickers and the bounty. |
 | 03 · h3 | Storm |
-| 03 · body | A liquidity storm collapses the map ring by ring over 5 rounds. Caught outside, your $15,000 bleeds every tick. |
+| 03 · body | A liquidity storm collapses the map ring by ring over 5 rounds. Get caught in the storm and your balance bleeds every tick. |
 | 04 · h3 | Last one solvent |
 | 04 · body | Third parties crash live duels. AI bots fill every empty seat. Up to 60 traders drop in. One walks out. |
 | Stats strip | 60 traders · 11 sectors · 30 s duels · 10 Hz ticks · 5 rounds |
@@ -69,3 +69,6 @@ Rules for every vignette:
 
 ## Finding carried into HYPE-3
 The hero's screen-reader text (`HeroVisual.vue:308`) says "12 market sectors". The correct count is **11** (DATA-MODEL-AUTHORITY §1.2: 4 + 4 + 3; heroSim draws 11). HYPE-3 fixes the string. `hero-direction.md` is corrected in this lock.
+
+## Copy change (2026-10-21, user)
+Beat 03 body no longer names $15,000: every trader starts with $15,000 but holds more or less as the match goes, so "your $15,000 bleeds" was wrong mid-match. Now: "A liquidity storm collapses the map ring by ring over 5 rounds. Get caught in the storm and your balance bleeds every tick." The hero's "Starting pot $15,000" stays (it is the starting value). `$15,000` stays on the fact allowlist for the hero.

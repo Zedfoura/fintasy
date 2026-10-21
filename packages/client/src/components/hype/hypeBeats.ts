@@ -49,7 +49,7 @@ export const HYPE_BEATS: readonly HypeBeat[] = [
     id: 'storm',
     ordinal: '03',
     title: 'Storm',
-    body: 'A liquidity storm collapses the map ring by ring over 5 rounds. Caught outside, your $15,000 bleeds every tick.',
+    body: 'A liquidity storm collapses the map ring by ring over 5 rounds. Get caught in the storm and your balance bleeds every tick.',
     vignette: 'storm',
     caption: 'Storm boundary',
   },
