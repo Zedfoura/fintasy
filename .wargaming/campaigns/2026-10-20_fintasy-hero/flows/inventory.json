@@ -574,6 +574,284 @@
         "hero (FLOW-HERO-FIRST-IMPRESSION) unchanged: one nav, one h1, outbound-only links",
         "standalone bundle stays free of router/auth/API code"
       ]
+    },
+    {
+      "id": "FLOW-CLOSE-SECTIONS",
+      "tier": "critical_secondary",
+      "user_goal": "A visitor who scrolled past the hype section gets the six FAQ answers and a closing call to action that links only to the source and the case study.",
+      "terminal_outcome": "Below the hero, one FAQ and final CTA sections (h2-led, no second nav) presents the game's mechanics as feature beats using only DATA-MODEL-AUTHORITY facts; nothing claims the game is playable or coming soon; outbound links stay GitHub/case-study only.",
+      "discovery_evidence": "Planned (CLOSE-1..4): pages/index.vue and hero-standalone/StandaloneHero.vue both compose the page (probed 2026-10-21 at origin/main d46b06a); DATA-MODEL-AUTHORITY.md §1.2 lists the mechanics.",
+      "actor": {
+        "id": "ACT-close-visitor",
+        "identity": "anonymous visitor",
+        "role": "recruiter or portfolio reader",
+        "tenant_or_account": "not applicable: public marketing page"
+      },
+      "entry_points": [
+        {
+          "id": "EP-close-scroll",
+          "kind": "navigation",
+          "location": "scroll from the hero on /",
+          "component": "CloseFaq + CloseCta",
+          "consumer": "page composition shared by / and the standalone build",
+          "activation_oracle": "scrolling past the hero brings the FAQ and final CTA sections h2 into view; the hero visual pauses offscreen",
+          "applicability": "required"
+        },
+        {
+          "id": "EP-close-deeplink",
+          "kind": "deep_link",
+          "location": "/#faq",
+          "component": "CloseFaq + CloseCta",
+          "consumer": "page composition shared by / and the standalone build",
+          "activation_oracle": "direct load with the anchor scrolls to the section",
+          "applicability": "required",
+          "applicability_evidence": "close-direction.md locks anchors #faq and #cta (CLOSE-1, 2026-10-21)."
+        },
+        {
+          "id": "EP-close-reentry",
+          "kind": "reentry",
+          "location": "refresh while scrolled into the section",
+          "component": "CloseFaq + CloseCta",
+          "consumer": "page composition shared by / and the standalone build",
+          "activation_oracle": "refresh restores the page; the section renders identically",
+          "applicability": "required"
+        }
+      ],
+      "reentry_applicability": {
+        "status": "required",
+        "evidence": "Public route; refresh and back-navigation return to /."
+      },
+      "target_bindings": [
+        {
+          "id": "TGT-close-local-dev",
+          "environment": "local Vite dev server http://localhost:3333 and vite preview of dist-hero (http://localhost:4173)",
+          "consumer": "packages/client route / and hero-standalone build",
+          "authority": "Zedfoura/fintasy local checkout",
+          "ref": "branch cut from origin/main d46b06a at execution time",
+          "entry_point_ids": [
+            "EP-close-scroll",
+            "EP-close-deeplink",
+            "EP-close-reentry"
+          ],
+          "applicability": "required"
+        }
+      ],
+      "external_prerequisites": [
+        {
+          "id": "PR-close-fonts",
+          "description": "Archivo and JetBrains Mono (shared with the hero)",
+          "requirement": "required",
+          "evidence": "vite.config.ts and vite.hero.config.ts WebfontDownload lists"
+        }
+      ],
+      "trace": {
+        "id": "TRACE-close-section",
+        "route": "/ (and standalone index.html)",
+        "component": "CloseFaq + CloseCta (six FAQ items and the closing CTA)",
+        "transport": "not applicable: static client-rendered marketing page",
+        "handler": "not applicable: no service call",
+        "data": "static copy from DATA-MODEL-AUTHORITY facts and hero tokens.json",
+        "consumer": "mounted page in the browser"
+      },
+      "owned_boundaries": [
+        "browser"
+      ],
+      "boundary_requirements": [
+        {
+          "id": "BR-close-browser",
+          "boundary": "browser",
+          "requirement": "required",
+          "evidence": "owned mounted route"
+        }
+      ],
+      "state_cases": [
+        {
+          "id": "ST-close-initial",
+          "category": "initial",
+          "requirement": "required",
+          "oracle": "section renders below the hero with an h2 and every feature beat",
+          "evidence": "HeroSection defaults"
+        },
+        {
+          "id": "ST-close-loading",
+          "category": "loading",
+          "requirement": "required",
+          "oracle": "the FAQ icon transition is disabled before animating; no layout shift",
+          "evidence": "slot fallback + font-display swap"
+        },
+        {
+          "id": "ST-close-empty",
+          "category": "empty",
+          "requirement": "not_applicable",
+          "oracle": "no data-driven list",
+          "evidence": "static copy inspection",
+          "not_applicable_reason": "The hero has no user or service data that can be empty."
+        },
+        {
+          "id": "ST-close-error",
+          "category": "error",
+          "requirement": "not_applicable",
+          "oracle": "no runtime service call",
+          "evidence": "trace inspection",
+          "not_applicable_reason": "No transport or handler exists on the hero route."
+        },
+        {
+          "id": "ST-close-success",
+          "category": "success",
+          "requirement": "required",
+          "oracle": "every beat is readable and the outbound links are unchanged",
+          "evidence": "terminal outcome"
+        },
+        {
+          "id": "ST-close-reentry",
+          "category": "reentry",
+          "requirement": "required",
+          "oracle": "refresh re-renders the section identically",
+          "evidence": "router contract"
+        },
+        {
+          "id": "ST-close-concurrency",
+          "category": "concurrency",
+          "requirement": "not_applicable",
+          "oracle": "read-only route",
+          "evidence": "no mutable state",
+          "not_applicable_reason": "The hero performs no writes."
+        },
+        {
+          "id": "ST-close-accessibility",
+          "category": "accessibility",
+          "requirement": "required",
+          "oracle": "h2/h3 hierarchy under the single h1, no second nav, reduced-motion static frames, decorative visuals aria-hidden with text equivalents",
+          "evidence": "close-direction.md accessibility gate"
+        }
+      ],
+      "accessibility_capabilities": [
+        {
+          "id": "A11Y-close-structure",
+          "capability": "headings and landmarks",
+          "requirement": "required",
+          "oracle": "h2 section heading, h3 per beat, landmark is a section labelled by its h2",
+          "evidence": "HeroSection markup",
+          "semantics": [
+            "semantics_status",
+            "automated_scan"
+          ]
+        },
+        {
+          "id": "A11Y-close-keyboard",
+          "capability": "keyboard navigation and focus",
+          "requirement": "required",
+          "oracle": "any interactive element in the section is Tab-reachable with visible focus",
+          "evidence": "focus-visible styles",
+          "semantics": [
+            "keyboard_focus"
+          ]
+        },
+        {
+          "id": "A11Y-close-reflow",
+          "capability": "zoom and reflow",
+          "requirement": "required",
+          "oracle": "no horizontal scroll at 375, 768, 1440",
+          "evidence": "responsive tokens",
+          "semantics": [
+            "zoom_reflow",
+            "visual_perceptual"
+          ]
+        }
+      ],
+      "matrix_cases": [
+        {
+          "id": "MC-close-identity",
+          "dimension": "identity_role_tenant",
+          "requirement": "required",
+          "evidence": "Public page; identical for every visitor."
+        },
+        {
+          "id": "MC-close-viewport",
+          "dimension": "viewport_breakpoint",
+          "requirement": "required",
+          "evidence": "760px stack breakpoint; 375/768/1440 checks."
+        },
+        {
+          "id": "MC-close-browser",
+          "dimension": "browser_platform",
+          "requirement": "required",
+          "evidence": "Desktop browser pane (Chromium) per battle plan."
+        },
+        {
+          "id": "MC-close-input",
+          "dimension": "input_modality",
+          "requirement": "required",
+          "evidence": "Pointer and keyboard links."
+        },
+        {
+          "id": "MC-close-network",
+          "dimension": "network_service",
+          "requirement": "not_applicable",
+          "evidence": "Static route trace.",
+          "not_applicable_reason": "No service boundary on the hero route."
+        },
+        {
+          "id": "MC-close-permission",
+          "dimension": "permission_entitlement",
+          "requirement": "not_applicable",
+          "evidence": "No gated content (D4).",
+          "not_applicable_reason": "The hero links nowhere inside the app, so no permission or entitlement gates any step."
+        },
+        {
+          "id": "MC-close-reentry",
+          "dimension": "lifecycle_reentry",
+          "requirement": "required",
+          "evidence": "Refresh/back to /."
+        },
+        {
+          "id": "MC-close-volume",
+          "dimension": "data_volume_content",
+          "requirement": "required",
+          "evidence": "Longest beat copy and the largest beat count fixed at CLOSE-1."
+        },
+        {
+          "id": "MC-close-locale",
+          "dimension": "locale_content",
+          "requirement": "not_applicable",
+          "evidence": "Hero copy is authored English only (close-direction.md).",
+          "not_applicable_reason": "Hero copy is not routed through vue-i18n."
+        }
+      ],
+      "transitions": [
+        {
+          "id": "scroll-into-close",
+          "action": "Load / and scroll past the hero.",
+          "external_prerequisites": [
+            "PR-close-fonts"
+          ],
+          "signal": "FAQ and final CTA sections h2 is in the viewport; hero canvas loop paused (IntersectionObserver).",
+          "if_fails": "Inspect page composition order and the section's mount.",
+          "cleanup": "not applicable: read-only",
+          "next_transition_ids": [
+            "read-beats"
+          ]
+        },
+        {
+          "id": "read-beats",
+          "action": "Scroll through every feature beat.",
+          "external_prerequisites": [],
+          "signal": "Each beat's h3 and copy render; vignettes animate or show static frames under reduced motion.",
+          "if_fails": "Inspect the six FAQ items and the CTA links.",
+          "cleanup": "not applicable: read-only",
+          "next_transition_ids": []
+        }
+      ],
+      "start_transition_ids": [
+        "scroll-into-close"
+      ],
+      "terminal_transition_ids": [
+        "read-beats"
+      ],
+      "known_good_invariants": [
+        "hero (FLOW-HERO-FIRST-IMPRESSION) unchanged: one nav, one h1, outbound-only links",
+        "standalone bundle stays free of router/auth/API code"
+      ]
     }
   ]
 }

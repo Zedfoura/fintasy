@@ -80,3 +80,4 @@ page bottom  hero 0 · drop 0 · duel 0 · storm 840 (100%) · lobby 120 (100%)
 
 ## Correction (2026-10-21, found during CLOSE-1)
 The "no overflow at 375/768/1440" result above used `scrollWidth == innerWidth`. That signal is blind on this page: `main.fintasy-page` has `overflow-x: clip`, so overflowing content is clipped, not scrolled. A per-element rect check shows **`section.hype` is 1596 px wide at a 1440 px viewport**, because `.hype` is `width: 100%` plus padding without `box-sizing: border-box` (HypeSection.vue). The right gutter is lost. The overflow claim is withdrawn; see `receipts/mission_CLOSE-1/execution.md` § DEF-HYPE-OVERFLOW. The fix is not applied yet (it needs packages/ authority).
+- **Fixed (2026-10-21):** `c95d4bb` on `feature/hype-section`. Per-element rect check: 0 overflowing elements at 1440/768/375 (control 21/21/38). See `receipts/mission_CLOSE-1/execution.md` § DEF-HYPE-OVERFLOW fixed.

@@ -114,7 +114,7 @@
   - **Receipt (2026-10-21):** `receipts/mission_HYPE-2/execution.md`. Reached canonical: lane `06f051c`, merged `c25ceae`, knip cleanup `cb4221c`. Full suite 167/169 (only the 2 known DesignTokens failures); vite build exit 0; parity 14 alive; 0 knip findings in `hype/**`.
 
 - [ ] **HYPE-3. Hype Section Composition, Copy & Shared Page on `/` and the Standalone Build** — Scrolling past the hero on `/` and in the standalone build shows the locked hype section: one `<section>` labelled by its h2, an h3 per beat, the locked copy, vignette slots with static fallbacks, and the anchor if locked. Both entry points render the same page from one shared composition component, so `index.vue` and `StandaloneHero.vue` stop duplicating it. <!-- wargame-state: activated; wargame-disposition: active -->
-  - **Correction (2026-10-21):** the HYPE-3 overflow check (`scrollWidth`) is blind under `overflow-x: clip`; `section.hype` overflows by 2 gutters at 1440 (DEF-HYPE-OVERFLOW, open, fix needs packages/ authority). See `receipts/mission_CLOSE-1/execution.md`.
+  - **Correction (2026-10-21):** the HYPE-3 overflow check (`scrollWidth`) is blind under `overflow-x: clip`; `section.hype` overflows by 2 gutters at 1440 (DEF-HYPE-OVERFLOW; **fixed** in `c95d4bb` on PR #4, rect check 0 overflowing at 1440/768/375). See `receipts/mission_CLOSE-1/execution.md`.
   - Depends on: HYPE-1@outcome_verified ✅
   - Required stage: ACTIVATION (live in the dev server and in `vite preview` of dist-hero)
   - Also owns (from the HYPE-1 lock): (a) change `HeroVisual.vue:308` screen-reader text from "12" to "11 market sectors", with the fact gate run on it as the check (a parent-approved one-line edit in a HERO-2 file); (b) section anchor `#match`, which flips inventory EP-hype-deeplink to `required` and rebinds the HYPE claims to the new inventory hash.
@@ -132,7 +132,7 @@
   - Lane: `hype_layout` (worktree `wt/hype_layout` @ `d46b06a`). Owns `packages/client/src/components/hype/HypeSection.vue`, `packages/client/src/components/hype/hypeBeats.ts`, the shared page component (`packages/client/src/components/page/FintasyPage.vue`), `packages/client/src/pages/index.vue`, `packages/client/hero-standalone/StandaloneHero.vue`, `packages/client/tests/HypeSection.test.ts`, campaign `flows/**`, and the HYPE claim files. Excludes `components/hype/vignettes/**`, `components/hero/**` and all hero tests.
 
 - [x] **HYPE-4. Integration, Page Retention Guard & Live Scroll Verification** — The vignettes are mounted in the section on `/` and in the standalone build. Live, the full scroll from hero into section works at 1440/768/375: the hero canvas pauses when offscreen, each vignette animates only while visible, CLS is 0 and there are no console errors. A page-level retention guard fails if the section, its beats, its facts or the outbound-only rule regress. <!-- wargame-state: retained; wargame-disposition: active -->
-  - **Correction (2026-10-21):** DEF-HYPE-OVERFLOW (see HYPE-3) is open in the retained page; PageRetention cannot see layout (jsdom). The live rect check replaces `scrollWidth` from CLOSE-2 on.
+  - **Correction (2026-10-21):** DEF-HYPE-OVERFLOW (see HYPE-3) was open in the retained page and is fixed in `c95d4bb`; PageRetention cannot see layout (jsdom). The live rect check replaces `scrollWidth` from CLOSE-2 on.
   - **Outcome + retention (2026-10-21):** user reviewed the standalone page and confirmed it ("Reviewed the page: looks good. Record the outcome as confirmed, then stop the preview server."). PageRetention guard is in the suite with F1–F5 recorded red. See `receipts/mission_HYPE-4/execution.md` § Outcome.
   - Depends on: HYPE-2@canonical (or HYPE-2 `withdrawn_by_user`), HYPE-3@activated
   - Required stage: RETENTION
@@ -165,7 +165,7 @@
   - Preserves: no packages/ edits; the HYPE-1 prototypes stay as records.
   - User flows: FLOW-CLOSE-SECTIONS at PLAN (new inventory row, added at PLAN)
   - Point of no return: none
-- [ ] **CLOSE-2. FAQ & Final CTA Sections on `/` and the Standalone Build** — Below the hype section, an FAQ (accessible disclosure pattern: each question is a button with `aria-expanded`, or native `<details>`/`<summary>`; it works with the keyboard and without JS for the answers' text) and a final CTA with only outbound links. Both render inside the shared `FintasyPage`, so `/` and the standalone build stay identical. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **CLOSE-2. FAQ & Final CTA Sections on `/` and the Standalone Build** — Below the hype section, an FAQ (accessible disclosure pattern: each question is a button with `aria-expanded`, or native `<details>`/`<summary>`; it works with the keyboard and without JS for the answers' text) and a final CTA with only outbound links. Both render inside the shared `FintasyPage`, so `/` and the standalone build stay identical. <!-- wargame-state: planned; wargame-disposition: active -->
   - Depends on: CLOSE-1@outcome_verified
   - Required stage: ACTIVATION (dev server and `vite preview` of dist-hero)
   - Verifier/consumer: new unit tests (structure, one h2 each, disclosure state and keyboard toggling, fact rule over all copy, zero internal links, CTA hrefs equal to the locked outbound set); live DOM checks at 375/768/1440 (no overflow, CLS 0, 0 console errors on the standalone build).
@@ -173,6 +173,7 @@
   - Preserves: HeroSection, HeroRetention, HypeSection, HypeVignettes, PageRetention and ThemeToggleIntegration stay green; one nav and one h1; the standalone bundle check stays clean.
   - User flows: FLOW-CLOSE-SECTIONS at ACTIVATION; FLOW-HERO-FIRST-IMPRESSION and FLOW-HYPE-SECTION as regression
   - Point of no return: none locally
+  - Battle plan: `success/mission_CLOSE-2_battleplan.md` (2026-10-21). PLAN probes: `HypeSection.test.ts:152` pins the sections to `[hero, hype]` (planned update); `FACT_ALLOWLIST` lacks the 05/06 ordinals, which the whole-page fact test in PageRetention would flag (planned addition); the page link-set assertion is unchanged because the CTA reuses the hero URLs. Live overflow uses the rect check (CLOSE-1 lesson). Flows: new inventory row FLOW-CLOSE-SECTIONS; CLOSE-2/3 claims; all 7 campaign claims VALID at the new hash.
 - [ ] **CLOSE-3. Page Retention Extension & Final Review** — `PageRetention.test.ts` also guards the FAQ and CTA (presence, order hero → hype → FAQ → CTA, outbound-only links across the whole page, the fact rule over the whole page). Each new guard is run red against a seeded regression. The standalone build is rebuilt and you review the finished page. <!-- wargame-state: proposed; wargame-disposition: active -->
   - Depends on: CLOSE-2@activated
   - Required stage: RETENTION (after your review confirms the outcome)

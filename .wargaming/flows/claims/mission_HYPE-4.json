@@ -13,7 +13,7 @@
   "inventory": {
     "id": "fintasy-hero-campaign-flows-v2",
     "file": "../../campaigns/2026-10-20_fintasy-hero/flows/inventory.json",
-    "hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c"
+    "hash": "sha256:016ee9b5b4c9d17fff53169615be5c82490304c7c76ff05a07a47769bb0cf19e"
   },
   "claim": {
     "id": "claim-hype-4",
@@ -32,6 +32,13 @@
         "flow_id": "FLOW-HERO-FIRST-IMPRESSION",
         "disposition": "excluded",
         "evidence": "The hero must stay unchanged; HeroRetention.test.ts guards it.",
+        "owner": "parent session",
+        "clearing_condition": "Re-scope if this mission's diff touches that flow's components."
+      },
+      {
+        "flow_id": "FLOW-CLOSE-SECTIONS",
+        "disposition": "excluded",
+        "evidence": "HYPE-4 does not change FLOW-CLOSE-SECTIONS's components.",
         "owner": "parent session",
         "clearing_condition": "Re-scope if this mission's diff touches that flow's components."
       }

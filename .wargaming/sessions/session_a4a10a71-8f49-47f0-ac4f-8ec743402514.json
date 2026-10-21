@@ -12,9 +12,9 @@
   "active_mission": "CLOSE-2",
   "mode": "PLAN",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "55d0cd0307b5bacb90debab59b680d5c9a65168112864af05c12f81973def2dd",
-  "ledger_generation": 16,
-  "inventory_hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c",
+  "ledger_hash": "dfd21cab5312238430ec7938a42d6f0394fb354ec4b93ff761b0957d290265b9",
+  "ledger_generation": 17,
+  "inventory_hash": "sha256:016ee9b5b4c9d17fff53169615be5c82490304c7c76ff05a07a47769bb0cf19e",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
     "sha256": "1807e0c9a16c3f373c3b1e7b61a698d28a6608efc00401140d2bb1fe8edf3207",
@@ -57,10 +57,10 @@
     ],
     "granted_at": "2026-10-21T14:00:23-05:00"
   },
-  "last_verified_transition": "CLOSE-1 -> outcome_verified (C1 Closing bell locked, 2026-10-21)",
-  "next_transition": "PLAN CLOSE-2 (FAQ + CTA sections in FintasyPage) on feature/closing-sections; EXECUTE needs a packages/client grant. Open: DEF-HYPE-OVERFLOW fix on feature/hype-section (PR #4) needs a go-ahead.",
+  "last_verified_transition": "DEF-HYPE-OVERFLOW fixed (c95d4bb, pushed to PR #4); CLOSE-2 -> planned (2026-10-21)",
+  "next_transition": "EXECUTE CLOSE-2 per success/mission_CLOSE-2_battleplan.md on feature/closing-sections @ d4acd02 (+ plan commit). Needs a user grant to edit packages/client (local only).",
   "open_decisions": [],
-  "updated_at": "2026-10-21T15:59:29-05:00",
+  "updated_at": "2026-10-21T16:07:07-05:00",
   "rulings": [
     {
       "id": "D4",

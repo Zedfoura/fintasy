@@ -84,3 +84,17 @@ control flagged as failing: true · 0 failing pair(s) across 39 direction pairs 
 vitest HeroRetention + HypeVignettes (both read tokens.json): Test Files 2 passed (2) · Tests 33 passed (33)
 ```
 - **Stage:** `outcome_verified` (the user's pick is the CLOSE-1 outcome). The next transition is CLOSE-2 PLAN, then EXECUTE with a packages/ grant.
+
+## DEF-HYPE-OVERFLOW fixed (2026-10-21)
+- **User:** "Fix the hype-section overflow on feature/hype-section (one-line box-sizing fix in HypeSection.vue), verify it with the rect check, and push it to PR #4."
+- **Fix:** `c95d4bb fix(hype): stop the hype section overflowing its right gutter`, which adds `box-sizing: border-box` to `.hype`. Pushed to `origin/feature/hype-section` (PR #4 head = `c95d4bb`) and merged into `feature/closing-sections` as `d4acd02`.
+- **Tests:** HypeSection, PageRetention, HeroSection, HeroRetention and HypeVignettes pass 66/66. `build:hero` exits 0; bundle check clean.
+- **Rect check:** every element in `main` on the rebuilt standalone page (`vite preview`, iframes at fixed widths). Visually hidden 1px elements are excluded.
+
+| Width | `section.hype` width | Overflowing elements | Control (fix reverted in-page): width / overflowing |
+|---|---|---|---|
+| 1440 | 1440 | 0 | 1596 / 21 |
+| 768 | 768 | 0 | 851 / 21 |
+| 375 | 375 | 0 | 416 / 38 |
+
+The defect also affected mobile: before the fix the section was 416 px wide on a 375 px viewport.
