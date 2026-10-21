@@ -93,6 +93,16 @@
       "entry_route": "/",
       "terminal_step": "Full DOM surface re-renders with active theme tokens and zero legibility regression",
       "expected_duration_seconds": 2
+    },
+    {
+      "id": "FLOW-HERO-FIRST-IMPRESSION",
+      "tier": "critical-secondary",
+      "name": "Marketing Hero First Impression & Primary CTA",
+      "description": "Visitor (e.g. recruiter) loads / -> hero paints with single nav, display headline, subtitle and live domain visual (static under reduced motion) -> clicks primary CTA -> lands on /dashboard/royale (or /login redirect when unauthenticated)",
+      "entry_route": "/",
+      "terminal_step": "Navigation to /dashboard/royale or /login from hero CTA",
+      "expected_duration_seconds": 10,
+      "owner_campaign": "2026-10-20_fintasy-hero"
     }
   ]
 }

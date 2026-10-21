@@ -1,0 +1,15 @@
+{
+  "mission_id": "HERO-4",
+  "campaign": "2026-10-20_fintasy-hero",
+  "inventory_hash": "d4d54cb089c2b0b3d507217c7a1294e80e158633be1b28a605ae39d0b7c6b82e",
+  "flows": [
+    "FLOW-HERO-FIRST-IMPRESSION",
+    "FLOW-LANDING-CONVERSION"
+  ],
+  "target_stage": "RETENTION",
+  "stage": "retained",
+  "disposition": "active",
+  "receipts": [
+    ".wargaming/campaigns/2026-10-20_fintasy-hero/receipts/mission_HERO-4/execution.md"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "session_id": "a4a10a71-8f49-47f0-ac4f-8ec743402514",
+  "client": "claude-code",
+  "workspace_root": "/Users/tinatseichingaya/fintasy",
+  "repository": {
+    "root": "/Users/tinatseichingaya/fintasy",
+    "ref": "feature/stock-royale-full-platform",
+    "commit": "daf06c5"
+  },
+  "active_campaign": "2026-10-20_fintasy-hero",
+  "active_mission": "HERO-6",
+  "mode": "REPORT",
+  "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
+  "ledger_hash": "fced2aaa7b72b64ce07fbc310ba908729f25c30981b01dab830f43e98835233a",
+  "ledger_generation": 7,
+  "inventory_hash": "d4d54cb089c2b0b3d507217c7a1294e80e158633be1b28a605ae39d0b7c6b82e",
+  "data_model_authority": {
+    "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
+    "sha256": "1807e0c9a16c3f373c3b1e7b61a698d28a6608efc00401140d2bb1fe8edf3207",
+    "run_mode": "client-only / no-data-tier"
+  },
+  "campaign_decision": {
+    "decision": "create_new",
+    "campaign": "2026-10-20_fintasy-hero",
+    "reason": "User explicitly scoped a hero-only rebuild and directed to disregard all previous landing/design work, which is a distinct goal from the Stock Royale platform campaign.",
+    "identity_binding": "rebound",
+    "evidence": [
+      "user_request:/wargame-goal 2026-10-20 'disregard the previous work done, imagine we are starting from scratch'",
+      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md (Epics 8-11 landing work superseded by intent)",
+      "daemon: claims UNCLAIMED, 0 active sessions in scope (DAEMON_BUS_EMPTY)"
+    ],
+    "rejected_candidates": [
+      {
+        "campaign": "2026-10-01_fintasy-stock-royale",
+        "reason": "Goal is the full Stock Royale platform; user explicitly decoupled this work from prior landing epics; prior session bound to a different client (antigravity)."
+      }
+    ]
+  },
+  "authority_grant": {
+    "grant_id": "grant-2026-10-20-hero-5-4-6",
+    "authorizing_message": "And do HERO-6 (answering 'Build HERO-5 now?')",
+    "campaign": "2026-10-20_fintasy-hero",
+    "missions": [
+      "HERO-5",
+      "HERO-4 (dependency of HERO-6)",
+      "HERO-6"
+    ],
+    "allowed_actions": [
+      "implement",
+      "test",
+      "verify",
+      "local_commit",
+      "run_dev_server",
+      "local_static_build",
+      "pnpm_dlx_knip",
+      "write_wargame_artifacts"
+    ],
+    "forbidden": [
+      "git_push",
+      "deploy",
+      "hosting/publishing the standalone build",
+      "credential_mutation"
+    ]
+  },
+  "last_verified_transition": "HERO-4@retained, HERO-5@activated, HERO-6@activated",
+  "next_transition": "HERO-6 activated -> outcome_verified: user opens the standalone build and confirms. Hosting it is Tier B (needs a grant naming where).",
+  "open_decisions": [],
+  "updated_at": "2026-10-20T00:00:00Z",
+  "rulings": [
+    {
+      "id": "D4",
+      "date": "2026-10-20",
+      "text": "Game will not go live; no in-app links; CTA = Source + case study"
+    }
+  ],
+  "links": {
+    "case_study": "https://www.tinatseichingaya.com/projects/fintasy",
+    "source": "https://github.com/Zedfoura/fintasy"
+  }
+}

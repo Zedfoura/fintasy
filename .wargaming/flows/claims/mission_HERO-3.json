@@ -1,0 +1,636 @@
+{
+  "version": 2,
+  "kind": "wargame-flow-claim",
+  "mission_id": "HERO-3",
+  "campaign": "2026-10-20_fintasy-hero",
+  "stage": "activated",
+  "target_stage": "ACTIVATION",
+  "disposition": "active",
+  "battle_plan": ".wargaming/campaigns/2026-10-20_fintasy-hero/success/mission_HERO-3_battleplan.md",
+  "receipts": [
+    ".wargaming/campaigns/2026-10-20_fintasy-hero/receipts/mission_HERO-3/execution.md"
+  ],
+  "legacy_v1": {
+    "inventory_hash": "d4d54cb089c2b0b3d507217c7a1294e80e158633be1b28a605ae39d0b7c6b82e",
+    "flows": [
+      "FLOW-HERO-FIRST-IMPRESSION",
+      "FLOW-LANDING-CONVERSION"
+    ],
+    "note": "v1 binding to the shared workspace inventory; FLOW-LANDING-CONVERSION stays in the shared inventory (ROUTED to Stock Royale campaign)."
+  },
+  "inventory": {
+    "id": "fintasy-hero-campaign-flows-v2",
+    "file": "../../campaigns/2026-10-20_fintasy-hero/flows/inventory.json",
+    "hash": "sha256:b1323e86e4dfb58818ac9ae68b1bcb13023ccc73dfcc1f61e35eee42308bb1a9"
+  },
+  "claim": {
+    "id": "mission_HERO-3",
+    "flow_ids": [
+      "FLOW-HERO-FIRST-IMPRESSION"
+    ],
+    "flow_scope": [
+      {
+        "flow_id": "FLOW-HERO-FIRST-IMPRESSION",
+        "disposition": "affected",
+        "evidence": "HERO-3 rewrites / to render only HeroSection on layout none.",
+        "owner": "hero_layout lane (HERO-3)",
+        "clearing_condition": "Reach ACTIVATION via parent live checks."
+      }
+    ],
+    "required_stage": "ACTIVATION",
+    "achieved_stage": "PLAN",
+    "scope_basis": "Lane hero_layout changed pages/index.vue, components/hero/HeroSection.vue, HeroNav.vue, vite.config.ts font list, tests/HeroSection.test.ts.",
+    "authority": "Zedfoura/fintasy local canonical checkout",
+    "ref": "refs/heads/feature/stock-royale-full-platform",
+    "environment": "local Vite dev server http://localhost:3333 (pnpm --filter client dev)",
+    "consumer": "packages/client Vue SPA route / (pages/index.vue, layout none)",
+    "final_artifact": {
+      "status": "planned",
+      "id": "planned:hero-3-merged-client",
+      "binding_evidence": "Lane commit exists on hero/hero_layout; parent merge and live activation are pending, so no final artifact is bound."
+    }
+  },
+  "flows": [
+    {
+      "flow_id": "FLOW-HERO-FIRST-IMPRESSION",
+      "target_binding_ids": [
+        "TGT-hero-local-dev"
+      ],
+      "entry_scope": [
+        {
+          "entry_point_id": "EP-hero-direct",
+          "disposition": "included",
+          "evidence": "Entry exercised by parent live checks.",
+          "owner": "parent session",
+          "clearing_condition": "Exercise at ACTIVATION."
+        },
+        {
+          "entry_point_id": "EP-hero-nav",
+          "disposition": "included",
+          "evidence": "Entry exercised by parent live checks.",
+          "owner": "parent session",
+          "clearing_condition": "Exercise at ACTIVATION."
+        },
+        {
+          "entry_point_id": "EP-hero-reentry",
+          "disposition": "included",
+          "evidence": "Entry exercised by parent live checks.",
+          "owner": "parent session",
+          "clearing_condition": "Exercise at ACTIVATION."
+        }
+      ],
+      "target_scope": [
+        {
+          "target_binding_id": "TGT-hero-local-dev",
+          "disposition": "included",
+          "evidence": "Local dev server is the declared ACTIVATION target.",
+          "owner": "parent session",
+          "clearing_condition": "Exercise at ACTIVATION."
+        }
+      ],
+      "required_stage": "ACTIVATION",
+      "achieved_stage": "PLAN",
+      "baseline": {
+        "status": "passed",
+        "evidence_or_reason": "Before the change, the four legacy landing test files passed 22/22 with the base index.vue (run in wt/hero_layout on 2026-10-20).",
+        "run_id": "hero3-legacy-baseline-20261020",
+        "timestamp": "2026-10-20T20:50:00-04:00",
+        "authority": "Zedfoura/fintasy local canonical checkout",
+        "ref": "refs/heads/feature/stock-royale-full-platform",
+        "environment": "local Vite dev server http://localhost:3333 (pnpm --filter client dev)",
+        "consumer": "packages/client Vue SPA route / (pages/index.vue, layout none)"
+      },
+      "state_cases": [
+        {
+          "id": "SCR-hero-initial",
+          "case_id": "ST-hero-initial",
+          "state": "defaults rendered",
+          "status": "planned",
+          "evidence_or_reason": "Unit test asserts nav count, h1, strip defaults; live DOM check planned.",
+          "verifier_ids": [
+            "hero-section-unit",
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "SCR-hero-loading",
+          "case_id": "ST-hero-loading",
+          "state": "fallback visual",
+          "status": "planned",
+          "evidence_or_reason": "Unit test asserts aria-hidden fallback and slot replacement.",
+          "verifier_ids": [
+            "hero-section-unit",
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "SCR-hero-empty",
+          "case_id": "ST-hero-empty",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "Inventory marks empty not_applicable: no data-driven content.",
+          "verifier_ids": []
+        },
+        {
+          "id": "SCR-hero-error",
+          "case_id": "ST-hero-error",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "Inventory marks error not_applicable: no service call.",
+          "verifier_ids": []
+        },
+        {
+          "id": "SCR-hero-success",
+          "case_id": "ST-hero-success",
+          "state": "CTA reaches royale/login redirect",
+          "status": "planned",
+          "evidence_or_reason": "Unit test asserts CTA targets; live signed-out click-through planned.",
+          "verifier_ids": [
+            "hero-section-unit",
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "SCR-hero-reentry",
+          "case_id": "ST-hero-reentry",
+          "state": "refresh re-renders hero",
+          "status": "planned",
+          "evidence_or_reason": "Live refresh check planned.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "SCR-hero-concurrency",
+          "case_id": "ST-hero-concurrency",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "Inventory marks concurrency not_applicable: no writes.",
+          "verifier_ids": []
+        },
+        {
+          "id": "SCR-hero-accessibility",
+          "case_id": "ST-hero-accessibility",
+          "state": "landmarks, keyboard, aria-live off",
+          "status": "planned",
+          "evidence_or_reason": "Unit test asserts aria-live off and single nav; live keyboard pass planned.",
+          "verifier_ids": [
+            "hero-section-unit",
+            "hero-live-activation"
+          ]
+        }
+      ],
+      "prerequisites": [
+        {
+          "id": "PRR-hero-fonts",
+          "prerequisite_id": "PR-hero-fonts",
+          "state": "fonts bundled",
+          "status": "planned",
+          "evidence_or_reason": "vite build downloads both css2 URLs.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "PRR-hero-auth-guard",
+          "prerequisite_id": "PR-hero-auth-guard",
+          "state": "guard redirects signed-out",
+          "status": "planned",
+          "evidence_or_reason": "Live click-through planned.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        }
+      ],
+      "accessibility_capabilities": [
+        {
+          "id": "ACR-hero-structure",
+          "capability_id": "A11Y-hero-structure",
+          "state": "one nav, one h1",
+          "status": "planned",
+          "evidence_or_reason": "Unit + live DOM.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "ACR-hero-keyboard",
+          "capability_id": "A11Y-hero-keyboard",
+          "state": "keyboard and focus",
+          "status": "planned",
+          "evidence_or_reason": "Live keyboard probe planned.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "ACR-hero-reflow",
+          "capability_id": "A11Y-hero-reflow",
+          "state": "no horizontal scroll",
+          "status": "planned",
+          "evidence_or_reason": "Live overflow check at 375/768/1440 planned.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        }
+      ],
+      "coverage": [
+        {
+          "id": "COV-hero-data",
+          "dimension": "data",
+          "state": "static copy and strip props/onVisualUpdate",
+          "status": "planned",
+          "evidence_or_reason": "Unit tests on props and onVisualUpdate.",
+          "verifier_ids": [
+            "hero-section-unit",
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hero-action",
+          "dimension": "action",
+          "state": "CTA and nav link activation",
+          "status": "planned",
+          "evidence_or_reason": "Unit hrefs + live click.",
+          "verifier_ids": [
+            "hero-section-unit",
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hero-identity",
+          "dimension": "identity",
+          "state": "signed-out redirect via guard",
+          "status": "planned",
+          "evidence_or_reason": "Live click-through planned.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hero-lifecycle",
+          "dimension": "lifecycle",
+          "state": "direct load, in-app nav, refresh",
+          "status": "planned",
+          "evidence_or_reason": "Live checks planned.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hero-presentation",
+          "dimension": "presentation",
+          "state": "375, 760 edge, 768, 1440",
+          "status": "planned",
+          "evidence_or_reason": "Live screenshots and overflow planned.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hero-accessibility",
+          "dimension": "accessibility",
+          "state": "landmarks, keyboard, aria-live, reflow",
+          "status": "planned",
+          "evidence_or_reason": "Unit + live.",
+          "verifier_ids": [
+            "hero-section-unit",
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hero-concurrency",
+          "dimension": "concurrency",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "Read-only route; no writes.",
+          "verifier_ids": []
+        }
+      ],
+      "boundaries": [
+        {
+          "id": "BND-hero-browser",
+          "boundary": "browser",
+          "state": "mounted route in live dev server",
+          "status": "planned",
+          "evidence_or_reason": "Browser-pane DOM checks planned.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        }
+      ],
+      "boundary_matrix": [
+        {
+          "id": "MAT-hero-identity",
+          "matrix_case_id": "MC-hero-identity",
+          "dimension": "identity_role_tenant",
+          "state": "signed-out visitor",
+          "status": "planned",
+          "evidence_or_reason": "Live signed-out click-through.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hero-viewport",
+          "matrix_case_id": "MC-hero-viewport",
+          "dimension": "viewport_breakpoint",
+          "state": "375, 759/760, 768, 1440",
+          "status": "planned",
+          "evidence_or_reason": "Live overflow + screenshots.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hero-browser",
+          "matrix_case_id": "MC-hero-browser",
+          "dimension": "browser_platform",
+          "state": "desktop browser pane (Chromium)",
+          "status": "planned",
+          "evidence_or_reason": "Battle plan browser pane.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hero-input",
+          "matrix_case_id": "MC-hero-input",
+          "dimension": "input_modality",
+          "state": "pointer and keyboard",
+          "status": "planned",
+          "evidence_or_reason": "Live keyboard + click.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hero-network",
+          "matrix_case_id": "MC-hero-network",
+          "dimension": "network_service",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "No service boundary.",
+          "verifier_ids": []
+        },
+        {
+          "id": "MAT-hero-permission",
+          "matrix_case_id": "MC-hero-permission",
+          "dimension": "permission_entitlement",
+          "state": "guard redirect for primary CTA",
+          "status": "planned",
+          "evidence_or_reason": "Live click-through.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hero-reentry",
+          "matrix_case_id": "MC-hero-reentry",
+          "dimension": "lifecycle_reentry",
+          "state": "direct, in-app nav, refresh",
+          "status": "planned",
+          "evidence_or_reason": "Live checks.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hero-volume",
+          "matrix_case_id": "MC-hero-volume",
+          "dimension": "data_volume_content",
+          "state": "h1 at clamp max and min",
+          "status": "planned",
+          "evidence_or_reason": "Live screenshots at 375 and 1440.",
+          "verifier_ids": [
+            "hero-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hero-locale",
+          "matrix_case_id": "MC-hero-locale",
+          "dimension": "locale_content",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "English-only hero copy.",
+          "verifier_ids": []
+        }
+      ],
+      "resilience": {
+        "status": "not_applicable",
+        "reason": "Static client route with no owned service or datastore boundary to fault.",
+        "scenarios": []
+      },
+      "verifiers": [
+        {
+          "id": "hero-section-unit",
+          "class": "U",
+          "kind": "automated",
+          "name": "HeroSection composition and index route (vitest/jsdom)",
+          "file": "packages/client/tests/HeroSection.test.ts",
+          "command": "cd packages/client && npx vitest run tests/HeroSection.test.ts",
+          "oracle": "one nav, locked h1, CTA targets, Source rel, strip aria-live off and props, fallback/slot, index renders only HeroSection",
+          "status": "planned",
+          "evidence_stage": "MECHANISM",
+          "required": true,
+          "semantics": [
+            "double"
+          ],
+          "entry_point_ids": [],
+          "state_case_ids": [
+            "SCR-hero-initial",
+            "SCR-hero-loading",
+            "SCR-hero-success",
+            "SCR-hero-accessibility"
+          ],
+          "prerequisite_ids": [],
+          "target_binding_ids": [],
+          "accessibility_capability_ids": [],
+          "transition_ids": [
+            "load-hero",
+            "enter-match"
+          ],
+          "coverage_ids": [
+            "COV-hero-data",
+            "COV-hero-action",
+            "COV-hero-accessibility"
+          ],
+          "boundary_row_ids": [],
+          "matrix_row_ids": [],
+          "preserves": [],
+          "resilience_scenario_ids": [],
+          "real_owned_boundaries": [],
+          "doubled_boundaries": [
+            "browser"
+          ],
+          "real_fault_targets": [],
+          "mutable": false,
+          "cleanup": "not applicable: read-only",
+          "target_evidence": [],
+          "accessibility_evidence": [],
+          "fault_evidence": []
+        },
+        {
+          "id": "hero-live-activation",
+          "class": "E",
+          "kind": "guided_manual",
+          "name": "Live dev-server activation of / in the browser pane",
+          "file": "browser pane (parent session)",
+          "command": "pnpm --filter client dev; browser-pane DOM assertions on http://localhost:3333/",
+          "oracle": "nav count 1, h1 text, no horizontal scroll at 375/768/1440, signed-out CTA lands on /login?redirect=%2Fdashboard%2Froyale",
+          "status": "planned",
+          "evidence_stage": "OUTCOME",
+          "required": true,
+          "semantics": [
+            "real"
+          ],
+          "entry_point_ids": [
+            "EP-hero-direct",
+            "EP-hero-nav",
+            "EP-hero-reentry"
+          ],
+          "state_case_ids": [
+            "SCR-hero-initial",
+            "SCR-hero-loading",
+            "SCR-hero-success",
+            "SCR-hero-reentry",
+            "SCR-hero-accessibility"
+          ],
+          "prerequisite_ids": [
+            "PRR-hero-fonts",
+            "PRR-hero-auth-guard"
+          ],
+          "target_binding_ids": [
+            "TGT-hero-local-dev"
+          ],
+          "accessibility_capability_ids": [
+            "ACR-hero-structure",
+            "ACR-hero-keyboard",
+            "ACR-hero-reflow"
+          ],
+          "transition_ids": [
+            "load-hero",
+            "enter-match"
+          ],
+          "coverage_ids": [
+            "COV-hero-data",
+            "COV-hero-action",
+            "COV-hero-identity",
+            "COV-hero-lifecycle",
+            "COV-hero-presentation",
+            "COV-hero-accessibility"
+          ],
+          "boundary_row_ids": [
+            "BND-hero-browser"
+          ],
+          "matrix_row_ids": [
+            "MAT-hero-identity",
+            "MAT-hero-viewport",
+            "MAT-hero-browser",
+            "MAT-hero-input",
+            "MAT-hero-permission",
+            "MAT-hero-reentry",
+            "MAT-hero-volume"
+          ],
+          "preserves": [
+            "/login and /dashboard/** behave as before",
+            "dashboard keeps the DM font stack outside .hero"
+          ],
+          "resilience_scenario_ids": [],
+          "real_owned_boundaries": [
+            "browser"
+          ],
+          "doubled_boundaries": [],
+          "real_fault_targets": [],
+          "mutable": false,
+          "cleanup": "not applicable: read-only",
+          "target_evidence": [
+            {
+              "target_binding_id": "TGT-hero-local-dev",
+              "status": "planned",
+              "environment": "local Vite dev server http://localhost:3333 (pnpm --filter client dev)",
+              "consumer": "packages/client Vue SPA route / (pages/index.vue, layout none)",
+              "authority": "Zedfoura/fintasy local canonical checkout",
+              "ref": "refs/heads/feature/stock-royale-full-platform",
+              "actor_id": "ACT-hero-visitor",
+              "trace_id": "TRACE-hero-first-impression",
+              "entry_point_ids": [
+                "EP-hero-direct",
+                "EP-hero-nav",
+                "EP-hero-reentry"
+              ],
+              "activation_probe": "Load / directly, via the dashboard Logo link, and by refresh; read document.querySelectorAll('nav').length and h1 text.",
+              "activation_oracle": "Every entry mounts HeroSection with exactly one nav and the locked h1."
+            }
+          ],
+          "accessibility_evidence": [
+            {
+              "capability_row_id": "ACR-hero-structure",
+              "status": "planned",
+              "semantics": [
+                "semantics_status",
+                "automated_scan"
+              ],
+              "observation_id": "OBS-hero-structure",
+              "probe": "Read accessibility tree on /.",
+              "observations": [
+                "nav count",
+                "h1 count",
+                "figcaption aria-live"
+              ],
+              "oracle": "One nav, one h1, strip aria-live off.",
+              "oracle_result": "planned",
+              "evidence": "planned DOM read"
+            },
+            {
+              "capability_row_id": "ACR-hero-keyboard",
+              "status": "planned",
+              "semantics": [
+                "keyboard_focus"
+              ],
+              "observation_id": "OBS-hero-keyboard",
+              "probe": "Tab through nav links and CTAs.",
+              "observations": [
+                "tab order",
+                "visible focus"
+              ],
+              "oracle": "All links reachable with visible focus.",
+              "oracle_result": "planned",
+              "evidence": "planned keyboard trace"
+            },
+            {
+              "capability_row_id": "ACR-hero-reflow",
+              "status": "planned",
+              "semantics": [
+                "zoom_reflow",
+                "visual_perceptual"
+              ],
+              "observation_id": "OBS-hero-reflow",
+              "probe": "Resize to 375/768/1440, compare scrollWidth to innerWidth, screenshot.",
+              "observations": [
+                "375 width",
+                "768 width",
+                "1440 width"
+              ],
+              "oracle": "scrollWidth <= innerWidth at every width; layout stacks below 760px.",
+              "oracle_result": "planned",
+              "evidence": "planned screenshots"
+            }
+          ],
+          "fault_evidence": []
+        }
+      ],
+      "stage_receipts": [],
+      "retention_guard": {
+        "status": "planned",
+        "owner": "HERO-4 / client test suite",
+        "consumer": "pnpm --filter client test",
+        "location": "packages/client/tests/HeroSection.test.ts",
+        "exercise_verifier_id": "hero-section-unit",
+        "target_binding_ids": [
+          "TGT-hero-local-dev"
+        ]
+      }
+    }
+  ]
+}

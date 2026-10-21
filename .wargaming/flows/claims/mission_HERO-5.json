@@ -1,0 +1,16 @@
+{
+  "kind_note": "legacy-v1 placeholder; HERO-5 migrates to schema v2 when it rebinds the campaign inventory",
+  "mission_id": "HERO-5",
+  "campaign": "2026-10-20_fintasy-hero",
+  "inventory": ".wargaming/campaigns/2026-10-20_fintasy-hero/flows/inventory.json",
+  "inventory_hash_at_creation": "b1323e86e4dfb58818ac9ae68b1bcb13023ccc73dfcc1f61e35eee42308bb1a9",
+  "flows": [
+    "FLOW-HERO-FIRST-IMPRESSION"
+  ],
+  "target_stage": "ACTIVATION",
+  "stage": "activated",
+  "disposition": "active",
+  "receipts": [
+    ".wargaming/campaigns/2026-10-20_fintasy-hero/receipts/mission_HERO-5/execution.md"
+  ]
+}
