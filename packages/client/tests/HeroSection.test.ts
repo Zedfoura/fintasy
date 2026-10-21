@@ -1,6 +1,6 @@
 /**
  * @author: Tinatsei Chingaya (Zedfoura), Claude
- * @description: Vitest suite for HERO-3 — hero composition, single nav, CTA targets, caption strip and
+ * @description: Vitest suite for HERO-3/HERO-5 — hero composition, single nav, outbound-only links (D4), caption strip and
  * visual slot fallback, plus the `/` route rendering only the hero (legacy landing sections unmounted).
  */
 
@@ -62,28 +62,45 @@ describe('hERO-3 HeroSection composition', () => {
     expect(h1.element.innerHTML.replace(/ data-v-[a-z0-9]+=""/g, '').trim()).toBe('Sixty traders.<br>One market.<br>Last one solvent.')
   })
 
-  it('cTAs target /dashboard/royale and /login', () => {
+  it('primary CTA opens the GitHub source in a new tab (D4)', () => {
     const wrapper = mountHero()
     const primary = wrapper.get('[data-test="cta-primary"]')
-    const secondary = wrapper.get('[data-test="cta-secondary"]')
-    expect(primary.text()).toContain('Enter a match')
-    expect(primary.attributes('href')).toBe('/dashboard/royale')
-    expect(secondary.text()).toBe('Sign in')
-    expect(secondary.attributes('href')).toBe('/login')
+    expect(primary.text()).toContain('View the source')
+    expect(primary.attributes('href')).toBe('https://github.com/Zedfoura/fintasy')
+    expect(primary.attributes('target')).toBe('_blank')
+    expect(primary.attributes('rel')).toContain('noopener')
+    expect(primary.attributes('rel')).toContain('noreferrer')
   })
 
-  it('nav links: Match, How it plays, Source (new tab, noopener)', () => {
+  it('secondary CTA links to the portfolio case study, and hides when the URL is empty', () => {
+    const wrapper = mountHero()
+    const secondary = wrapper.get('[data-test="cta-secondary"]')
+    expect(secondary.text()).toBe('Read the case study')
+    expect(secondary.attributes('href')).toBe('https://www.tinatseichingaya.com/projects/fintasy')
+    expect(secondary.attributes('target')).toBeUndefined()
+    const hidden = mountHero({ props: { caseStudyUrl: '' } })
+    expect(hidden.find('[data-test="cta-secondary"]').exists()).toBe(false)
+  })
+
+  it('links nowhere inside the app: no game, sign-in or relative links (D4)', () => {
+    const wrapper = mountHero()
+    const hrefs = wrapper.findAll('a').map(a => a.attributes('href') ?? '')
+    expect(hrefs.length).toBeGreaterThan(0)
+    for (const href of hrefs)
+      expect(href).toMatch(/^https:\/\//)
+    expect(wrapper.text()).not.toMatch(/Enter a match|Sign in|Coming soon/i)
+  })
+
+  it('nav has only [Source] (new tab, noopener)', () => {
     const wrapper = mountHero()
     const nav = wrapper.get('nav')
-    expect(nav.get('[data-test="nav-match"]').attributes('href')).toBe('/dashboard/royale')
-    expect(nav.get('[data-test="nav-help"]').attributes('href')).toBe('/dashboard/help')
+    expect(nav.findAll('a')).toHaveLength(1)
     const source = nav.get('[data-test="nav-source"]')
     expect(source.text()).toBe('[Source]')
     expect(source.attributes('href')).toBe('https://github.com/Zedfoura/fintasy')
     expect(source.attributes('target')).toBe('_blank')
     expect(source.attributes('rel')).toContain('noopener')
     expect(source.attributes('rel')).toContain('noreferrer')
-    expect(nav.text()).not.toContain('Ranked')
     expect(wrapper.text()).toContain('FINTASY')
     expect(wrapper.text()).toContain('Tinatsei Chingaya')
   })

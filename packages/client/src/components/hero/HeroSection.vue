@@ -1,14 +1,14 @@
 <!--
   @author: Tinatsei Chingaya (Zedfoura), Claude
-  @description: Fintasy marketing hero (HERO-3, direction A "Closing Bell"): top bar, statement band with CTAs,
+  @description: Fintasy marketing hero (HERO-3, direction A "Closing Bell"; outbound-only CTAs per HERO-5/D4): top bar, statement band,
   caption strip (aria-live off) and a framed visual slot with a static ring fallback. All tokens are scoped
   to .hero as --hero-* variables; Archivo / JetBrains Mono apply only inside .hero.
 -->
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
 import HeroNav from './HeroNav.vue'
+import { CASE_STUDY_URL, SOURCE_URL } from './heroLinks'
 
 export type HeroStorm = 'holding' | 'closing' | 'winner'
 export interface HeroVisualUpdate {
@@ -21,10 +21,12 @@ const props = withDefaults(defineProps<{
   round?: number
   storm?: HeroStorm
   alive?: number
+  caseStudyUrl?: string
 }>(), {
   round: 1,
   storm: 'holding',
   alive: 60,
+  caseStudyUrl: CASE_STUDY_URL,
 })
 
 const TOTAL_ROUNDS = 5
@@ -78,12 +80,12 @@ const aliveLabel = computed(() => String(alive.value).padStart(2, '0'))
           and outrun the liquidity storm as the map closes in.
         </p>
         <div class="hero-ctas">
-          <RouterLink to="/dashboard/royale" class="hero-btn" data-test="cta-primary">
-            Enter a match <span aria-hidden="true">→</span>
-          </RouterLink>
-          <RouterLink to="/login" class="hero-link" data-test="cta-secondary">
-            Sign in
-          </RouterLink>
+          <a :href="SOURCE_URL" target="_blank" rel="noopener noreferrer" class="hero-btn" data-test="cta-primary">
+            View the source <span aria-hidden="true">→</span>
+          </a>
+          <a v-if="props.caseStudyUrl" :href="props.caseStudyUrl" class="hero-link" data-test="cta-secondary">
+            Read the case study
+          </a>
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
 <!--
   @author: Tinatsei Chingaya (Zedfoura), Claude
-  @description: Fintasy hero top bar (HERO-3): FINTASY wordmark + S01, bracketed mono nav links, and the author credit. The page's only <nav>.
+  @description: Fintasy hero top bar (HERO-3, links per HERO-5/D4): FINTASY wordmark + S01, the [Source] link, and the author credit. The page's only <nav>; nothing links into the app.
 -->
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { SOURCE_URL } from './heroLinks'
 </script>
 
 <template>
@@ -13,14 +13,8 @@ import { RouterLink } from 'vue-router'
       FINTASY<sup>S01</sup>
     </div>
     <nav class="hero-nav" aria-label="Primary">
-      <RouterLink to="/dashboard/royale" data-test="nav-match">
-        [Match]
-      </RouterLink>
-      <RouterLink to="/dashboard/help" data-test="nav-help">
-        [How it plays]
-      </RouterLink>
       <a
-        href="https://github.com/Zedfoura/fintasy"
+        :href="SOURCE_URL"
         target="_blank"
         rel="noopener noreferrer"
         data-test="nav-source"
