@@ -610,7 +610,7 @@
       ],
       "stage_receipts": [],
       "retention_guard": {
-        "status": "passed",
+        "status": "planned",
         "owner": "HYPE-4 / client test suite",
         "consumer": "pnpm --filter client test",
         "location": "packages/client/tests/PageRetention.test.ts",
