@@ -9,11 +9,11 @@
     "upstream": "none (unset deliberately)"
   },
   "active_campaign": "2026-10-20_fintasy-hero",
-  "active_mission": "CLOSE-3",
-  "mode": "OUTCOME",
+  "active_mission": null,
+  "mode": "IDLE",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "317eb76c33f921f53a294725b6ff2e717aa8ac9761564c666f71c8c6ab1e1a7e",
-  "ledger_generation": 19,
+  "ledger_hash": "5ce5e199dadb6ca60c80013c93d56ee231822978aae36a64ddb0d7d1e9f2fd93",
+  "ledger_generation": 20,
   "inventory_hash": "sha256:016ee9b5b4c9d17fff53169615be5c82490304c7c76ff05a07a47769bb0cf19e",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
@@ -59,10 +59,10 @@
     ],
     "granted_at": "2026-10-21T16:31:04-05:00"
   },
-  "last_verified_transition": "CLOSE-3 -> activated (bdafc84, 2026-10-21)",
-  "next_transition": "User reviews the finished page on :4173; then CLOSE-3 -> outcome_verified/retained. Push of feature/closing-sections + PR (stacked on PR #4) need a separate go-ahead.",
+  "last_verified_transition": "CLOSE-3 -> retained (user confirmed the finished page, ea7e478, 2026-10-21); Epic 4 complete",
+  "next_transition": "No dependency-ready mission. Tier-B steps need explicit go-ahead: push feature/closing-sections and open its PR (stacked on PR #4); merge PRs to main (main triggers deploy-images.yml). User will move the page into the portfolio repo.",
   "open_decisions": [],
-  "updated_at": "2026-10-21T17:55:48-05:00",
+  "updated_at": "2026-10-21T18:06:45-05:00",
   "rulings": [
     {
       "id": "D4",

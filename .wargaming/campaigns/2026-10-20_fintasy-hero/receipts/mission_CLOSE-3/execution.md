@@ -56,3 +56,10 @@ The server is left running for your review.
 - **Checks:** CloseSections and PageRetention 19/19; eslint clean; build:hero exit 0 (JS 80.62 kB, CSS 15.73 kB); bundle clean.
 - **Screenshots:** at 1280 and 375 the copy wraps inside the box (at 375 the h2 is on two lines and the links stack).
 - **Spec:** `close-direction.md` anatomy item 5 revised to match.
+
+## Outcome (2026-10-21, user)
+- **Reviewed artifact:** standalone build `dist-hero` (`assets/index-E_cUJzYg.js`, `index-BmzFa6hZ.css`) on `vite preview :4173`, at `refs/heads/feature/closing-sections` @ `ea7e478`. This is the full page: hero, Match timeline, FAQ, closing CTA.
+- **Change made during review:** the CTA storm box now wraps its content (`ea7e478`).
+- **User confirmation:** "Reviewed the finished page: looks good. Record the outcome as confirmed, then stop the preview server."
+- **Retention guard in force:** `PageRetention.test.ts` (9 cases; G1–G5 recorded red) plus `CloseSections.test.ts` (10 cases; F1–F5 recorded red).
+- **Cleanup:** preview server stopped; ports 3333 and 4173 confirmed clear.
