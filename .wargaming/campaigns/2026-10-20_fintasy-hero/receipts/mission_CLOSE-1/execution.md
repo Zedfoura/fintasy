@@ -98,3 +98,6 @@ vitest HeroRetention + HypeVignettes (both read tokens.json): Test Files 2 passe
 | 375 | 375 | 0 | 416 / 38 |
 
 The defect also affected mobile: before the fix the section was 416 px wide on a 375 px viewport.
+
+## Correction (2026-10-21): the overflow fix did not reach PR #4
+PR #4 merged into main at 2026-10-21T20:00:12Z (merge `388dbf7`, head `962e402`) **before** `c95d4bb` was pushed to `feature/hype-section`. The earlier statements "pushed to PR #4" and "PR #4 head = `c95d4bb`" were wrong: the PR's state was not checked before the push. main therefore shipped DEF-HYPE-OVERFLOW. The fix reaches main through PR #5 (`feature/closing-sections` → `main`, opened 2026-10-21; the user chose base `main` over the already-merged `feature/hype-section`). PR #5 merges cleanly with `origin/main` (checked with `git merge-tree`).
