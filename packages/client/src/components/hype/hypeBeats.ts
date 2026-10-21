@@ -4,7 +4,7 @@
  * campaign's hype-direction.md copy table, plus the fact rule (FACT_ALLOWLIST / BANNED_PHRASES) the tests apply to it.
  */
 
-export type HypeVignetteId = 'drop' | 'duel' | 'storm' | 'lobby'
+type HypeVignetteId = 'drop' | 'duel' | 'storm' | 'lobby'
 
 export interface HypeBeat {
   id: HypeVignetteId
@@ -76,7 +76,7 @@ export const HYPE_STATS: readonly HypeStat[] = [
 // (ALLOWED / BANNED). Sources: DATA-MODEL-AUTHORITY §1 (30–60 players, 10 Hz / 100 ms, 11 sectors, 30–60 s duels)
 // and the Stock Royale spec rows ROYALE-0/2/4 ($15,000 pot, 5 rounds, 1x–5x leverage). Ordinals 01–04 are
 // section numbering, not claims. Keep both lists in sync with the gate.
-export const FACT_ALLOWLIST: ReadonlySet<string> = new Set([
+const FACT_ALLOWLIST: ReadonlySet<string> = new Set([
   '60',
   '30',
   '30–60',
@@ -102,7 +102,7 @@ export const FACT_ALLOWLIST: ReadonlySet<string> = new Set([
   '04',
 ])
 
-export const BANNED_PHRASES: readonly RegExp[] = [
+const BANNED_PHRASES: readonly RegExp[] = [
   /play now/i,
   /coming soon/i,
   /sign in/i,
@@ -115,7 +115,7 @@ export const BANNED_PHRASES: readonly RegExp[] = [
 ]
 
 // Same number tokenizer as fact-gate.mjs.
-export const FACT_NUMBER_PATTERN = /\$?\d[\d,]*(?:\.\d+)?(?:[–-]\d+)?(?:x(?:[–-]\d+x)?|\+)?/g
+const FACT_NUMBER_PATTERN = /\$?\d[\d,]*(?:\.\d+)?(?:[–-]\d+)?(?:x(?:[–-]\d+x)?|\+)?/g
 
 /** Returns the numbers that are not allowlisted and the banned phrases found in `text`. */
 export function factViolations(text: string): { offenders: string[], banned: string[] } {

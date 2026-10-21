@@ -38,11 +38,11 @@ export const VIGNETTE_COLORS = {
   tiles: ['#121211', '#161615', '#1B1B19'] as readonly string[],
 } as const
 
-export interface Point { x: number, y: number }
+interface Point { x: number, y: number }
 interface Rect { x: number, y: number, w: number, h: number }
 
 /** Seeded mulberry32 (same arithmetic as heroSim / the prototype R()). */
-export function mulberry32(seed: number): () => number {
+function mulberry32(seed: number): () => number {
   let s = seed | 0
   return () => {
     s = s + 0x6D2B79F5 | 0
@@ -57,7 +57,7 @@ function gauss(r: () => number): number {
 }
 
 /** Loop progress in [0, 1) for a vignette at absolute time t (seconds). */
-export function loopProgress(id: VignetteId, t: number): number {
+function loopProgress(id: VignetteId, t: number): number {
   const L = VIGNETTE_LOOP_SECONDS[id]
   return (((t % L) + L) % L) / L
 }
@@ -146,7 +146,7 @@ export function formatClock(seconds: number): string {
 // 03 Storm: the hero storm (stormAt) closing over ROUND 1/5 -> 5/5, with a few seeded traders caught in it.
 // ---------------------------------------------------------------------------------------------------------------
 
-export const STORM_TRADERS = 9
+const STORM_TRADERS = 9
 
 export interface StormFrame {
   tiles: Tile[]
@@ -208,7 +208,7 @@ export function lobbyFrame(seed: number, t: number, order = lobbyOrder(seed)): L
 // ---------------------------------------------------------------------------------------------------------------
 
 /** Stable serialisation of any frame (numbers rounded to 1e-6 so float noise cannot hide in the hash). */
-export function snapshotFrame(frame: unknown): string {
+function snapshotFrame(frame: unknown): string {
   return JSON.stringify(frame, (_k, v) => typeof v === 'number' ? Math.round(v * 1e6) / 1e6 : v)
 }
 
