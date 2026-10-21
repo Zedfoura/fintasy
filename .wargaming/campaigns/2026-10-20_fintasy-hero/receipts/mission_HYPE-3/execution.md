@@ -64,3 +64,6 @@ Screenshots at 375 and 1440 match the hype-direction.md anatomy (mobile stack; 1
 ## Not proven here
 - Mounting the vignettes, the hero canvas pausing when offscreen, per-vignette visibility, and the page-level retention guard are HYPE-4.
 - A live keyboard pass was not run. The section has no focus targets by design, and the unit test asserts it has 0 links.
+
+## Correction (2026-10-21, found during CLOSE-1)
+The "no overflow at 375/768/1440" result above used `scrollWidth == innerWidth`. That signal is blind on this page: `main.fintasy-page` has `overflow-x: clip`, so overflowing content is clipped, not scrolled. A per-element rect check shows **`section.hype` is 1596 px wide at a 1440 px viewport**, because `.hype` is `width: 100%` plus padding without `box-sizing: border-box` (HypeSection.vue). The right gutter is lost. The overflow claim is withdrawn; see `receipts/mission_CLOSE-1/execution.md` § DEF-HYPE-OVERFLOW. The fix is not applied yet (it needs packages/ authority).
