@@ -3,11 +3,13 @@
   "kind": "wargame-flow-claim",
   "mission_id": "HYPE-4",
   "campaign": "2026-10-20_fintasy-hero",
-  "stage": "planned",
+  "stage": "activated",
   "target_stage": "RETENTION",
   "disposition": "active",
   "battle_plan": ".wargaming/campaigns/2026-10-20_fintasy-hero/success/mission_HYPE-4_battleplan.md",
-  "receipts": [],
+  "receipts": [
+    ".wargaming/campaigns/2026-10-20_fintasy-hero/receipts/mission_HYPE-4/execution.md"
+  ],
   "inventory": {
     "id": "fintasy-hero-campaign-flows-v2",
     "file": "../../campaigns/2026-10-20_fintasy-hero/flows/inventory.json",
@@ -36,7 +38,7 @@
     ],
     "required_stage": "RETENTION",
     "achieved_stage": "PLAN",
-    "scope_basis": "Planned: mount the four vignette components into the HypeSection slots, add a page retention test, live scroll verification.",
+    "scope_basis": "HYPE-4: FintasyPage.vue fills the four vignette slots; new tests/PageRetention.test.ts (commit d6bb429).",
     "authority": "Zedfoura/fintasy local canonical checkout",
     "ref": "refs/heads/feature/hype-section",
     "environment": "local Vite dev server http://localhost:3333 (pnpm --filter client dev)",
@@ -44,7 +46,7 @@
     "final_artifact": {
       "status": "planned",
       "id": "planned:hype-4-feature-hype-section",
-      "binding_evidence": "No final artifact bound for this mission."
+      "binding_evidence": "Committed d6bb429 on feature/hype-section. No sha256 artifact bound (campaign precedent); the receipt holds raw output."
     }
   },
   "flows": [
@@ -608,7 +610,7 @@
       ],
       "stage_receipts": [],
       "retention_guard": {
-        "status": "planned",
+        "status": "passed",
         "owner": "HYPE-4 / client test suite",
         "consumer": "pnpm --filter client test",
         "location": "packages/client/tests/PageRetention.test.ts",

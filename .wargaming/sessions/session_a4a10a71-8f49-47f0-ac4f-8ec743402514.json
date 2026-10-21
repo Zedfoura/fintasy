@@ -10,10 +10,10 @@
   },
   "active_campaign": "2026-10-20_fintasy-hero",
   "active_mission": "HYPE-4",
-  "mode": "PLAN",
+  "mode": "OUTCOME",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "29e4d5b66007dd36a5ae616afbc3b523af0ee5838662d6f08b48f334df3e07f4",
-  "ledger_generation": 12,
+  "ledger_hash": "acdc1e34c2f7d3cc12364cb688686270fd6b2f0f88b8842347b39afdfa6b6875",
+  "ledger_generation": 13,
   "inventory_hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
@@ -38,35 +38,29 @@
     ]
   },
   "authority_grant": {
-    "grant_id": "grant-2026-10-21-hype-2-3-exec",
-    "authorizing_message": "Authorized: execute HYPE-2 and HYPE-3 per the battle plans on feature/hype-section (worktrees, sequential local commits; no push/PR/merge).",
+    "grant_id": "grant-2026-10-21-hype-4-exec",
+    "authorizing_message": "Authorized: execute HYPE-4 per the battle plan on feature/hype-section (local commits only; no push/PR/merge).",
     "missions": [
-      "HYPE-2",
-      "HYPE-3"
+      "HYPE-4"
     ],
     "allowed_actions": [
       "implement",
       "test",
       "verify",
-      "git_worktree",
-      "local_commit (sequential, parent only)",
-      "local_merge into feature/hype-section",
-      "run_dev_server",
-      "build",
-      "pnpm_dlx_knip",
-      "write_wargame_artifacts"
+      "local_commit"
     ],
-    "forbidden": [
+    "forbidden_actions": [
       "git_push",
-      "PR",
-      "merge to main",
+      "open_pr",
+      "merge_to_main",
       "deploy"
-    ]
+    ],
+    "granted_at": "2026-10-21T14:00:23-05:00"
   },
-  "last_verified_transition": "HYPE-4 -> planned (battle plan written 2026-10-21)",
-  "next_transition": "EXECUTE HYPE-4 per success/mission_HYPE-4_battleplan.md on feature/hype-section @ 1539a2a. Needs a user grant to edit packages/client (local only). Push/PR/merge to main needs a separate go-ahead.",
+  "last_verified_transition": "HYPE-4 -> activated (2026-10-21, d6bb429, local only)",
+  "next_transition": "User reviews the finished page (hero + Match-timeline section) for Epic 2/3 outcome; then HYPE-4/HERO-6 -> outcome_verified/retained. Push/PR/merge to main needs a separate go-ahead (main triggers deploy-images.yml).",
   "open_decisions": [],
-  "updated_at": "2026-10-21T13:50:44-05:00",
+  "updated_at": "2026-10-21T14:15:28-05:00",
   "rulings": [
     {
       "id": "D4",
@@ -77,5 +71,33 @@
   "links": {
     "case_study": "https://www.tinatseichingaya.com/projects/fintasy",
     "source": "https://github.com/Zedfoura/fintasy"
-  }
+  },
+  "prior_grants": [
+    {
+      "grant_id": "grant-2026-10-21-hype-2-3-exec",
+      "authorizing_message": "Authorized: execute HYPE-2 and HYPE-3 per the battle plans on feature/hype-section (worktrees, sequential local commits; no push/PR/merge).",
+      "missions": [
+        "HYPE-2",
+        "HYPE-3"
+      ],
+      "allowed_actions": [
+        "implement",
+        "test",
+        "verify",
+        "git_worktree",
+        "local_commit (sequential, parent only)",
+        "local_merge into feature/hype-section",
+        "run_dev_server",
+        "build",
+        "pnpm_dlx_knip",
+        "write_wargame_artifacts"
+      ],
+      "forbidden": [
+        "git_push",
+        "PR",
+        "merge to main",
+        "deploy"
+      ]
+    }
+  ]
 }
