@@ -7,15 +7,11 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import type { HeroVisualUpdate } from './HeroVisual.vue'
 import HeroNav from './HeroNav.vue'
 import { CASE_STUDY_URL, SOURCE_URL } from './heroLinks'
 
-export type HeroStorm = 'holding' | 'closing' | 'winner'
-export interface HeroVisualUpdate {
-  round: number
-  storm: HeroStorm
-  alive: number
-}
+type HeroStorm = 'holding' | 'closing' | 'winner'
 
 const props = withDefaults(defineProps<{
   round?: number
@@ -46,7 +42,7 @@ watch(() => props.alive, (v) => {
   alive.value = v
 })
 
-/** Strip handler for <HeroVisual @update="onVisualUpdate"> (HERO-4 wiring). */
+/** Strip handler for HeroVisual's `update` event (wired in pages/index.vue, HERO-4). */
 function onVisualUpdate(e: Partial<HeroVisualUpdate>) {
   if (typeof e.round === 'number')
     round.value = e.round

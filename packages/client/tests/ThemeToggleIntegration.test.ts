@@ -147,28 +147,18 @@ describe('full Monorepo Theme Toggle & Design Consistency Verification (THEME-6)
     expect(title.classes()).toContain('dark:text-white')
   })
 
-  it('assay C: Landing Page Hero features adaptive headline gradient and high-contrast subtitle', () => {
+  it('assay C: landing route renders the dark-only marketing hero (replaced by HERO-4)', () => {
     const wrapper = mount(IndexPage, {
       global: {
         stubs: {
-          LandingFooter: { template: '<div />' },
-          RouterLink: defineComponent({
-            props: ['to'],
-            template: '<a :href="to"><slot /></a>',
-          }),
+          HeroVisual: { template: '<div data-test="hero-visual-stub" />' },
         },
       },
     })
-
-    const headlineSpan = wrapper.find('.landing-hero-headline span')
-    expect(headlineSpan.exists()).toBe(true)
-    expect(headlineSpan.classes()).toContain('from-emerald-700')
-    expect(headlineSpan.classes()).toContain('dark:from-emerald-400')
-
-    const subtitle = wrapper.find('.landing-hero-subtitle')
-    expect(subtitle.exists()).toBe(true)
-    expect(subtitle.classes()).toContain('text-slate-600')
-    expect(subtitle.classes()).toContain('dark:text-gray-300')
+    const hero = wrapper.find('section.hero')
+    expect(hero.exists()).toBe(true)
+    expect(wrapper.get('h1#hero-title').text()).toContain('Last one solvent.')
+    expect(wrapper.find('.landing-hero-headline').exists()).toBe(false)
   })
 
   it('assay F: Footer features dual-theme surfaces and borders', () => {
