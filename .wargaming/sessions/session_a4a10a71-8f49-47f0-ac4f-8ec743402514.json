@@ -10,10 +10,10 @@
   },
   "active_campaign": "2026-10-20_fintasy-hero",
   "active_mission": "CLOSE-3",
-  "mode": "EXECUTE",
+  "mode": "OUTCOME",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "9cd6728408454ac39bb2a06efc8b97e1ed903768b289fa03e8a1a65d941f9187",
-  "ledger_generation": 18,
+  "ledger_hash": "317eb76c33f921f53a294725b6ff2e717aa8ac9761564c666f71c8c6ab1e1a7e",
+  "ledger_generation": 19,
   "inventory_hash": "sha256:016ee9b5b4c9d17fff53169615be5c82490304c7c76ff05a07a47769bb0cf19e",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
@@ -59,10 +59,10 @@
     ],
     "granted_at": "2026-10-21T16:31:04-05:00"
   },
-  "last_verified_transition": "CLOSE-2 -> activated (ef3034b, 2026-10-21, local only)",
-  "next_transition": "PLAN/EXECUTE CLOSE-3 (PageRetention covers FAQ/CTA, final review). Needs a packages/client grant. Push of feature/closing-sections + PR need a separate go-ahead.",
+  "last_verified_transition": "CLOSE-3 -> activated (bdafc84, 2026-10-21)",
+  "next_transition": "User reviews the finished page on :4173; then CLOSE-3 -> outcome_verified/retained. Push of feature/closing-sections + PR (stacked on PR #4) need a separate go-ahead.",
   "open_decisions": [],
-  "updated_at": "2026-10-21T16:23:45-05:00",
+  "updated_at": "2026-10-21T17:55:48-05:00",
   "rulings": [
     {
       "id": "D4",

@@ -175,13 +175,14 @@
   - Point of no return: none locally
   - Battle plan: `success/mission_CLOSE-2_battleplan.md` (2026-10-21). PLAN probes: `HypeSection.test.ts:152` pins the sections to `[hero, hype]` (planned update); `FACT_ALLOWLIST` lacks the 05/06 ordinals, which the whole-page fact test in PageRetention would flag (planned addition); the page link-set assertion is unchanged because the CTA reuses the hero URLs. Live overflow uses the rect check (CLOSE-1 lesson). Flows: new inventory row FLOW-CLOSE-SECTIONS; CLOSE-2/3 claims; all 7 campaign claims VALID at the new hash.
   - **Receipt (2026-10-21):** `receipts/mission_CLOSE-2/execution.md`. Reached activated at `ef3034b`: CloseSections 10/10 with F1–F5 red; suite 183/185 (only the 2 DesignTokens failures); builds exit 0; bundle clean with both controls; knip 0 new in packages/. Live on standalone and dev: order hero, match, faq, cta; rect check 0 overflowing at 1440/768/375 (F6 control 35/37/32); keyboard Tab/Enter/Space work; CLS 0; 0 console errors.
-- [ ] **CLOSE-3. Page Retention Extension & Final Review** — `PageRetention.test.ts` also guards the FAQ and CTA (presence, order hero → hype → FAQ → CTA, outbound-only links across the whole page, the fact rule over the whole page). Each new guard is run red against a seeded regression. The standalone build is rebuilt and you review the finished page. <!-- wargame-state: proposed; wargame-disposition: active -->
+- [ ] **CLOSE-3. Page Retention Extension & Final Review** — `PageRetention.test.ts` also guards the FAQ and CTA (presence, order hero → hype → FAQ → CTA, outbound-only links across the whole page, the fact rule over the whole page). Each new guard is run red against a seeded regression. The standalone build is rebuilt and you review the finished page. <!-- wargame-state: activated; wargame-disposition: active -->
   - Depends on: CLOSE-2@activated
   - Required stage: RETENTION (after your review confirms the outcome)
   - Verifier/consumer: PageRetention plus the full client suite (`N passed of M`, only the 2 known DesignTokens failures accepted); `vite build`, `build:hero` and the bundle check with both controls; knip with no new findings; your review of the standalone page.
   - Preserves: everything listed for CLOSE-2 and HYPE-4.
   - User flows: FLOW-CLOSE-SECTIONS at RETENTION
   - Point of no return: none locally. **Push, PR and merge are Tier B and need their own go-ahead;** merging `main` triggers `deploy-images.yml`.
+  - **Receipt (2026-10-21):** `receipts/mission_CLOSE-3/execution.md`. `bdafc84`: PageRetention 9/9 with G1–G5 red; suite 186/188 (only the 2 DesignTokens failures); build:hero exit 0; bundle clean with controls. Preview running on :4173 for your review; outcome and retention follow your confirmation.
 
 ## Parallel-safe sets
 
