@@ -1,7 +1,8 @@
 <!--
   @author: Tinatsei Chingaya (Zedfoura), Claude
   @description: The single Fintasy marketing page composition (HYPE-3), shared by the `/` route and the standalone
-  build: the hero with its live HeroVisual feeding the caption strip, then the hype section (#match). A direct
+  build: the hero with its live HeroVisual feeding the caption strip, then the hype section (#match) with one live
+  vignette per beat (HYPE-4). A direct
   load of /#match scrolls to the section once on mount. No router, store or API imports (the standalone bundle
   depends on this).
 -->
@@ -12,6 +13,10 @@ import HeroSection from '../hero/HeroSection.vue'
 import HeroVisual from '../hero/HeroVisual.vue'
 import HypeSection from '../hype/HypeSection.vue'
 import { HYPE_ANCHOR } from '../hype/hypeBeats'
+import VignetteDrop from '../hype/vignettes/VignetteDrop.vue'
+import VignetteDuel from '../hype/vignettes/VignetteDuel.vue'
+import VignetteLobby from '../hype/vignettes/VignetteLobby.vue'
+import VignetteStorm from '../hype/vignettes/VignetteStorm.vue'
 
 const hero = ref<InstanceType<typeof HeroSection> | null>(null)
 
@@ -33,7 +38,20 @@ onMounted(() => {
         <HeroVisual @update="hero?.onVisualUpdate($event)" />
       </template>
     </HeroSection>
-    <HypeSection />
+    <HypeSection>
+      <template #vignette-drop>
+        <VignetteDrop />
+      </template>
+      <template #vignette-duel>
+        <VignetteDuel />
+      </template>
+      <template #vignette-storm>
+        <VignetteStorm />
+      </template>
+      <template #vignette-lobby>
+        <VignetteLobby />
+      </template>
+    </HypeSection>
   </main>
 </template>
 
