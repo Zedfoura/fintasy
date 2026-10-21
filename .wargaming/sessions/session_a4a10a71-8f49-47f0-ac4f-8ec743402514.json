@@ -9,11 +9,11 @@
     "upstream": "none (unset deliberately)"
   },
   "active_campaign": "2026-10-20_fintasy-hero",
-  "active_mission": null,
-  "mode": "IDLE",
+  "active_mission": "CLOSE-1",
+  "mode": "PLAN",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "d12508bb094465ec35b0368b66028e7a0661c4ac445c19cad75d77c58267d5c9",
-  "ledger_generation": 14,
+  "ledger_hash": "d96640b0ab55d4dca6eeebd21ed6d490d9fc1eda624453f7e97991471371b41b",
+  "ledger_generation": 15,
   "inventory_hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
@@ -58,9 +58,9 @@
     "granted_at": "2026-10-21T14:00:23-05:00"
   },
   "last_verified_transition": "HYPE-4 -> retained; HERO-6 -> outcome_verified (user confirmed the standalone page, 2026-10-21, 2227c2d)",
-  "next_transition": "No dependency-ready mission. Remaining Tier-B steps need explicit go-ahead: push feature/hype-section, open PR, merge to main (triggers deploy-images.yml). User will move the page into the portfolio repo.",
+  "next_transition": "PLAN CLOSE-1 (FAQ + final CTA direction prototypes, .wargaming only) on feature/closing-sections. Execution of CLOSE-2/3 needs a grant to edit packages/client.",
   "open_decisions": [],
-  "updated_at": "2026-10-21T14:31:19-05:00",
+  "updated_at": "2026-10-21T15:36:45-05:00",
   "rulings": [
     {
       "id": "D4",

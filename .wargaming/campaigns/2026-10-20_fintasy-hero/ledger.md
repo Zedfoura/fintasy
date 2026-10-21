@@ -147,8 +147,39 @@
   - Battle plan: `success/mission_HYPE-4_battleplan.md` (2026-10-21). PLAN probes: FintasyPage fills the four slots, so HypeSection is unchanged. Real vignettes in the three tests that mount `/` are UNVERIFIED in jsdom (preflight step 1). Reduced motion cannot be emulated in the browser pane, so live it stays UNVERIFIED and it is proven by unit tests only. Falsifiers 1–5 for the PageRetention guard; falsifier 6 is a positive control for the live draw probe.
   - **Receipt (2026-10-21):** `receipts/mission_HYPE-4/execution.md`. Reached activated: `d6bb429`; PageRetention 6/6 with falsifiers F1–F5 red; suite 173/175 (only the 2 known DesignTokens failures); builds exit 0; bundle clean with both controls; knip unchanged. Live: vignettes draw only at ≥10% visible and the hero stops off screen (draw probe plus positive control F6), CLS 0, no overflow at 375/768/1440, standalone has 0 console errors. Open: one unattributed dev-only console error; reduced motion and hidden-tab pause proven by unit tests only. Outcome and retention wait on the user's page review.
 
+### Epic 4 — Closing Sections: FAQ & Final CTA <!-- wargame-epic: closing-sections; wargame-epic-priority: 4 -->
+
+> Goal growth (user, 2026-10-21): "Last sections to complete that I would like to add are: Frequently Asked Questions (FAQ), Final Call-to-Action (CTA)." Ruling D7 is in campaign.md.
+> Routing note: listed fourth, but it is the only epic with open work. Epics 1–3 have no dependency-ready mission left.
+> Constraints carried over: D4 (no live game; links outbound only), the fact gate (every number allowlisted), the locked HERO-1 palette and type, and HERO-6's standalone contract.
+> Base for execution (user, 2026-10-21): new branch `feature/closing-sections` cut from `feature/hype-section` @ `962e402`; PR #4 stays as reviewed. CTA targets (user): source + case study only, the same `SOURCE_URL` and `CASE_STUDY_URL` as the hero.
+
+- [ ] **CLOSE-1. Direction Lock: FAQ & Final CTA Prototypes Under the Real Page** — You open 2–3 rendered directions for the FAQ and the closing CTA, each placed below the real hero and hype section with the locked palette. Each has fact-checked copy written for a recruiter: what the game is, that it is a portfolio build and not live, what it was built with, where the source and case study are. You pick one; the pick is written to `close-direction.md` with a `close` block in `tokens.json`. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: HYPE-4@retained ✅
+  - Required stage: OUTCOME (the user picks a direction in chat)
+  - Verifier/consumer: you, choosing in chat. Instruments: the extended fact gate (`wargames/close-directions/fact-gate.mjs`) and `contrast.mjs`, each shown to fail on a seeded bad input (for example "100,000 players", "Play now", a `/login` link, a contrast pair below 4.5:1).
+  - Preserves: no packages/ edits; the HYPE-1 prototypes stay as records.
+  - User flows: FLOW-CLOSE-SECTIONS at PLAN (new inventory row, added at PLAN)
+  - Point of no return: none
+- [ ] **CLOSE-2. FAQ & Final CTA Sections on `/` and the Standalone Build** — Below the hype section, an FAQ (accessible disclosure pattern: each question is a button with `aria-expanded`, or native `<details>`/`<summary>`; it works with the keyboard and without JS for the answers' text) and a final CTA with only outbound links. Both render inside the shared `FintasyPage`, so `/` and the standalone build stay identical. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: CLOSE-1@outcome_verified
+  - Required stage: ACTIVATION (dev server and `vite preview` of dist-hero)
+  - Verifier/consumer: new unit tests (structure, one h2 each, disclosure state and keyboard toggling, fact rule over all copy, zero internal links, CTA hrefs equal to the locked outbound set); live DOM checks at 375/768/1440 (no overflow, CLS 0, 0 console errors on the standalone build).
+  - Counter-inputs: a `/login` link, "Play now", an out-of-allowlist number, or a disclosure without `aria-expanded` must each fail a test.
+  - Preserves: HeroSection, HeroRetention, HypeSection, HypeVignettes, PageRetention and ThemeToggleIntegration stay green; one nav and one h1; the standalone bundle check stays clean.
+  - User flows: FLOW-CLOSE-SECTIONS at ACTIVATION; FLOW-HERO-FIRST-IMPRESSION and FLOW-HYPE-SECTION as regression
+  - Point of no return: none locally
+- [ ] **CLOSE-3. Page Retention Extension & Final Review** — `PageRetention.test.ts` also guards the FAQ and CTA (presence, order hero → hype → FAQ → CTA, outbound-only links across the whole page, the fact rule over the whole page). Each new guard is run red against a seeded regression. The standalone build is rebuilt and you review the finished page. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: CLOSE-2@activated
+  - Required stage: RETENTION (after your review confirms the outcome)
+  - Verifier/consumer: PageRetention plus the full client suite (`N passed of M`, only the 2 known DesignTokens failures accepted); `vite build`, `build:hero` and the bundle check with both controls; knip with no new findings; your review of the standalone page.
+  - Preserves: everything listed for CLOSE-2 and HYPE-4.
+  - User flows: FLOW-CLOSE-SECTIONS at RETENTION
+  - Point of no return: none locally. **Push, PR and merge are Tier B and need their own go-ahead;** merging `main` triggers `deploy-images.yml`.
+
 ## Parallel-safe sets
 
 - Set A (after HERO-1@outcome): **HERO-2 ∥ HERO-3**.
 - Set B (after HYPE-1@outcome_verified): **HYPE-2 ∥ HYPE-3** (disjoint files; the vignette slot contract is fixed in hype-direction.md). HYPE-4 serializes after both. Commits are sequential (lint-staged/shared-stash rule). Disjoint files; the only shared contract is the `visual` slot dimensions in `tokens.json`, which HERO-1 locks.
 - HERO-4 serializes after both, since it is the integration point.
+- Epic 4: CLOSE-1 → CLOSE-2 → CLOSE-3 run in series (two small sections in one file set; no parallel lane is worth the stash risk).
