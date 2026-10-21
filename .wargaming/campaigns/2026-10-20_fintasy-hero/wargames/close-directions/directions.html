@@ -5,7 +5,8 @@
   FAQ copy is shared across directions; layout and CTA treatment differ. Fact sources, per answer:
     Q1 ruling D4 (not live; outbound links only)
     Q2 match_manager.py capital_cents=1500000 ("$15,000.00"); DMA INV-1 integer cents
-    Q3 market_sim.py "Deterministic 10 Hz Market Tick Simulator & Sector Volatility Regimes"; DMA §1.2 SectorGraph (11 sectors)
+    Q3 user ruling D8 (2026-10-21): "Live stock market data from the Alpaca Markets API." Source: services/alpaca/alpaca.py (data.alpaca.markets),
+       routes /quotes and /transactions. Known gap, accepted by the user: in-match prices come from services/royale/market_sim.py, not Alpaca.
     Q4 DMA §1.2 MatchInstance "30-60 participants: human + AI bots"; hype beat 04
     Q5 DMA §1.2 phases and storm; hype beats 02–04
     Q6 packages/server/requirements.txt (fastapi, uvicorn, psycopg2-binary); DMA §1.1 PostgreSQL; client <script setup lang="ts">; DMA §1.2 MatchInstance 10 Hz
@@ -29,7 +30,7 @@
     <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a2" id="c1-q2"><span class="c1-n" aria-hidden="true">02</span><span>Is real money involved?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
       <div class="c1-a" id="c1-a2" role="region" aria-labelledby="c1-q2" hidden><p>No. Every trader starts each match with the same simulated $15,000 balance, held in integer cents. Nothing is bought or sold on a real exchange.</p></div></div>
     <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a3" id="c1-q3"><span class="c1-n" aria-hidden="true">03</span><span>Where do the prices come from?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
-      <div class="c1-a" id="c1-a3" role="region" aria-labelledby="c1-q3" hidden><p>A seeded market simulator. It ticks 10 times a second, and each of the 11 sectors runs its own volatility regime, so a calm Utilities tape and a wild High-beta tape share the same match.</p></div></div>
+      <div class="c1-a" id="c1-a3" role="region" aria-labelledby="c1-q3" hidden><p>Live stock market data from the Alpaca Markets API.</p></div></div>
     <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a4" id="c1-q4"><span class="c1-n" aria-hidden="true">04</span><span>Who am I up against?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
       <div class="c1-a" id="c1-a4" role="region" aria-labelledby="c1-q4" hidden><p>Up to 60 traders per match. AI bots fill every empty seat, so a match never waits on a half-empty lobby.</p></div></div>
     <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a5" id="c1-q5"><span class="c1-n" aria-hidden="true">05</span><span>How does a match end?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
@@ -63,7 +64,7 @@
     <dl class="c2-list">
       <div><dt><span aria-hidden="true">01</span>Can I play Fintasy?</dt><dd>Not right now. Fintasy is a portfolio project, not a live service, so there is no public server to join. The full source is on GitHub, and the case study walks through how it was designed and built.</dd></div>
       <div><dt><span aria-hidden="true">02</span>Is real money involved?</dt><dd>No. Every trader starts each match with the same simulated $15,000 balance, held in integer cents. Nothing is bought or sold on a real exchange.</dd></div>
-      <div><dt><span aria-hidden="true">03</span>Where do the prices come from?</dt><dd>A seeded market simulator. It ticks 10 times a second, and each of the 11 sectors runs its own volatility regime, so a calm Utilities tape and a wild High-beta tape share the same match.</dd></div>
+      <div><dt><span aria-hidden="true">03</span>Where do the prices come from?</dt><dd>Live stock market data from the Alpaca Markets API.</dd></div>
       <div><dt><span aria-hidden="true">04</span>Who am I up against?</dt><dd>Up to 60 traders per match. AI bots fill every empty seat, so a match never waits on a half-empty lobby.</dd></div>
       <div><dt><span aria-hidden="true">05</span>How does a match end?</dt><dd>When one trader is left solvent. Duels move P&amp;L between players, the storm shrinks the map over 5 rounds, and anyone whose balance runs dry is out.</dd></div>
       <div><dt><span aria-hidden="true">06</span>What is it built with?</dt><dd>A Vue and TypeScript client, a Python FastAPI server backed by PostgreSQL, and an authoritative match loop that runs at 10 Hz on the server.</dd></div>
@@ -93,7 +94,7 @@
   <div class="c3-log">
     <details open><summary><span class="c3-q">Q.01</span>Can I play Fintasy?</summary><p>Not right now. Fintasy is a portfolio project, not a live service, so there is no public server to join. The full source is on GitHub, and the case study walks through how it was designed and built.</p></details>
     <details><summary><span class="c3-q">Q.02</span>Is real money involved?</summary><p>No. Every trader starts each match with the same simulated $15,000 balance, held in integer cents. Nothing is bought or sold on a real exchange.</p></details>
-    <details><summary><span class="c3-q">Q.03</span>Where do the prices come from?</summary><p>A seeded market simulator. It ticks 10 times a second, and each of the 11 sectors runs its own volatility regime, so a calm Utilities tape and a wild High-beta tape share the same match.</p></details>
+    <details><summary><span class="c3-q">Q.03</span>Where do the prices come from?</summary><p>Live stock market data from the Alpaca Markets API.</p></details>
     <details><summary><span class="c3-q">Q.04</span>Who am I up against?</summary><p>Up to 60 traders per match. AI bots fill every empty seat, so a match never waits on a half-empty lobby.</p></details>
     <details><summary><span class="c3-q">Q.05</span>How does a match end?</summary><p>When one trader is left solvent. Duels move P&amp;L between players, the storm shrinks the map over 5 rounds, and anyone whose balance runs dry is out.</p></details>
     <details><summary><span class="c3-q">Q.06</span>What is it built with?</summary><p>A Vue and TypeScript client, a Python FastAPI server backed by PostgreSQL, and an authoritative match loop that runs at 10 Hz on the server.</p></details>

@@ -52,3 +52,20 @@ control flagged as failing: true · 0 failing pair(s) across 33 direction pairs 
 - The per-element rect check found that **`section.hype` is 1596 px wide at a 1440 px viewport** (right edge 1596; first frame's right edge 1518). In `packages/client/src/components/hype/HypeSection.vue`, `.hype` has `width: 100%` plus gutter padding, and `border-box` applies only to `.hype *` (line 87). The right gutter is lost and the section's content runs to the viewport edge.
 - `section.hero` is unaffected (1440).
 - The fix is outside CLOSE-1 authority (it edits `packages/`). It is one line: add `box-sizing: border-box` to `.hype`. It would land on `feature/hype-section`, so in PR #4. CLOSE-2/3 verification now uses the rect check instead of `scrollWidth`.
+
+## Run 2 (2026-10-21): prices answer changed by the user (ruling D8)
+- **User:** "The prices are actually supposed to come from AlpacaAPI which pulls live stock market data."
+- **Probe:**
+  - Alpaca is used by `packages/server/src/services/alpaca/alpaca.py` (`https://data.alpaca.markets/v2/stocks/trades`) via `/quotes/{symbol}` and `/transactions`.
+  - `services/royale/` has no Alpaca reference; in-match prices tick from `market_sim.py` `base_price_cents`.
+  - `pages/dashboard/help/faq.md:70` says in-match duels run on the 10 Hz engine and that Alpaca is "reserved for non-royale paper-trading portfolio lookups".
+- **Options shown:** "both, as built" (recommended), "Alpaca only", or "drop the question". **The user chose "Alpaca only".**
+- **Change:** Q3 in c1, c2 and c3 now reads "Live stock market data from the Alpaca Markets API." (3 occurrences; 0 of the old simulator line remain).
+- **Gate:**
+```
+PASS c1: 10 numbers, 2 links checked
+PASS c2: 10 numbers, 2 links checked
+PASS c3: 14 numbers, 2 links checked
+3 of 3 regions pass   (exit 0)
+```
+- **Accepted gap (D8):** the line does not mention that matches use the seeded simulator. Flagged so CLOSE-2 copy reviews don't revert it unasked.
