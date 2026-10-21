@@ -100,6 +100,9 @@ const FACT_ALLOWLIST: ReadonlySet<string> = new Set([
   '02',
   '03',
   '04',
+  // FAQ ordinals (CLOSE-2): zero-padded section numbering, not claims.
+  '05',
+  '06',
 ])
 
 const BANNED_PHRASES: readonly RegExp[] = [
@@ -110,6 +113,8 @@ const BANNED_PHRASES: readonly RegExp[] = [
   /download/i,
   /join the beta/i,
   /pre-?order/i,
+  /create (an )?account/i,
+  /deploy to/i,
   /wishlist/i,
   /launch(ing)? (soon|in)/i,
 ]
