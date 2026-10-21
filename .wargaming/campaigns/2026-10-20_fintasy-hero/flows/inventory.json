@@ -111,7 +111,7 @@
           "id": "ST-hero-initial",
           "category": "initial",
           "requirement": "required",
-          "oracle": "hero renders with one nav, h1, CTAs, strip defaults Round 1 / 5 \u00b7 Storm holding \u00b7 60 / 60",
+          "oracle": "hero renders with one nav, h1, CTAs, strip defaults Round 1 / 5 · Storm holding · 60 / 60",
           "evidence": "HeroSection defaults"
         },
         {
@@ -302,7 +302,7 @@
       "tier": "critical_secondary",
       "user_goal": "Having seen the hero, the visitor scrolls into the hype section and comes away knowing the game's core mechanics and why it is exciting, then can open the source or case study.",
       "terminal_outcome": "Below the hero, one hype section (h2-led, no second nav) presents the game's mechanics as feature beats using only DATA-MODEL-AUTHORITY facts; nothing claims the game is playable or coming soon; outbound links stay GitHub/case-study only.",
-      "discovery_evidence": "Planned (HYPE-1..4): pages/index.vue and hero-standalone/StandaloneHero.vue both compose the page (probed 2026-10-21 at origin/main d46b06a); DATA-MODEL-AUTHORITY.md \u00a71.2 lists the mechanics.",
+      "discovery_evidence": "Planned (HYPE-1..4): pages/index.vue and hero-standalone/StandaloneHero.vue both compose the page (probed 2026-10-21 at origin/main d46b06a); DATA-MODEL-AUTHORITY.md §1.2 lists the mechanics.",
       "actor": {
         "id": "ACT-hype-visitor",
         "identity": "anonymous visitor",
@@ -322,14 +322,12 @@
         {
           "id": "EP-hype-deeplink",
           "kind": "deep_link",
-          "location": "/#features (anchor id fixed at HYPE-1)",
+          "location": "/#match",
           "component": "HypeSection",
           "consumer": "page composition shared by / and the standalone build",
           "activation_oracle": "direct load with the anchor scrolls to the section",
-          "applicability": "conditional",
-          "applicability_evidence": "Only if HYPE-1 locks a section anchor; otherwise recorded not_applicable with that evidence.",
-          "owner_or_clearing_condition": "HYPE-1 direction lock records whether the section has an anchor id.",
-          "condition_or_reason": "Only if HYPE-1 locks a section anchor; otherwise recorded not_applicable with that evidence."
+          "applicability": "required",
+          "applicability_evidence": "hype-direction.md locks anchor #match (HYPE-1). Live 2026-10-21: direct load of /#match lands the section at top=0 on dev :3333 (375, 1440) and on vite preview of dist-hero :4173."
         },
         {
           "id": "EP-hype-reentry",

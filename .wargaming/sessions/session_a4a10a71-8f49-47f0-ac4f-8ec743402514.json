@@ -9,12 +9,12 @@
     "upstream": "none (unset deliberately)"
   },
   "active_campaign": "2026-10-20_fintasy-hero",
-  "active_mission": "HYPE-2 + HYPE-3 (parallel-ready)",
-  "mode": "EXECUTE",
+  "active_mission": "HYPE-4",
+  "mode": "PLAN",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "5af536ce84224616d683174859bdecc22b242b1caba4ab029fff0c891e457287",
-  "ledger_generation": 10,
-  "inventory_hash": "21fa1bf4f61d4fa1a1efee85ae2ba744d12ece0d029f8086147158173feeabd8",
+  "ledger_hash": "df120d14d93d36458f5f14f19ba8fbc78ae4fcf4e107ee8647eb909576c37399",
+  "ledger_generation": 11,
+  "inventory_hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
     "sha256": "1807e0c9a16c3f373c3b1e7b61a698d28a6608efc00401140d2bb1fe8edf3207",
@@ -63,10 +63,10 @@
       "deploy"
     ]
   },
-  "last_verified_transition": "HYPE-2@planned, HYPE-3@planned",
-  "next_transition": "EXECUTE HYPE-2 || HYPE-3 in wt/hype_visuals and wt/hype_layout off feature/hype-section d46b06a, with sequential commits. Requires a grant to edit packages/client (local only; no push/PR/merge).",
+  "last_verified_transition": "HYPE-2 -> canonical; HYPE-3 -> activated (2026-10-21, feature/hype-section @ cb4221c, local only)",
+  "next_transition": "PLAN/EXECUTE HYPE-4 (mount vignettes into HypeSection slots, PageRetention test, live scroll verification). Needs a user grant to edit packages/client. Push/PR/merge to main needs a separate go-ahead (main triggers deploy-images.yml).",
   "open_decisions": [],
-  "updated_at": "2026-10-20T00:00:00Z",
+  "updated_at": "2026-10-21T13:47:25-05:00",
   "rulings": [
     {
       "id": "D4",

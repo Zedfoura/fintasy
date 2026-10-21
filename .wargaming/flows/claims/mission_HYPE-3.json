@@ -3,15 +3,17 @@
   "kind": "wargame-flow-claim",
   "mission_id": "HYPE-3",
   "campaign": "2026-10-20_fintasy-hero",
-  "stage": "planned",
+  "stage": "activated",
   "target_stage": "ACTIVATION",
   "disposition": "active",
   "battle_plan": ".wargaming/campaigns/2026-10-20_fintasy-hero/success/mission_HYPE-3_battleplan.md",
-  "receipts": [],
+  "receipts": [
+    ".wargaming/campaigns/2026-10-20_fintasy-hero/receipts/mission_HYPE-3/execution.md"
+  ],
   "inventory": {
     "id": "fintasy-hero-campaign-flows-v2",
     "file": "../../campaigns/2026-10-20_fintasy-hero/flows/inventory.json",
-    "hash": "sha256:21fa1bf4f61d4fa1a1efee85ae2ba744d12ece0d029f8086147158173feeabd8"
+    "hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c"
   },
   "claim": {
     "id": "claim-hype-3",
@@ -22,8 +24,8 @@
       {
         "flow_id": "FLOW-HYPE-SECTION",
         "disposition": "affected",
-        "evidence": "HERO-3 rewrites / to render only HeroSection on layout none.",
-        "owner": "hero_layout lane (HERO-3)",
+        "evidence": "HYPE-3 builds the Match-timeline section below the hero on / and the standalone build.",
+        "owner": "hype_layout lane (HYPE-3)",
         "clearing_condition": "Reach ACTIVATION via parent live checks."
       },
       {
@@ -36,15 +38,15 @@
     ],
     "required_stage": "ACTIVATION",
     "achieved_stage": "PLAN",
-    "scope_basis": "Lane hero_layout changed pages/index.vue, components/hero/HeroSection.vue, HeroNav.vue, vite.config.ts font list, tests/HeroSection.test.ts.",
+    "scope_basis": "Lane hype_layout: components/page/FintasyPage.vue, components/hype/HypeSection.vue and hypeBeats.ts, pages/index.vue, hero-standalone/StandaloneHero.vue, HeroVisual.vue line 308, tests/HypeSection.test.ts; integration fix to tests/HeroVisual.test.ts line 247.",
     "authority": "Zedfoura/fintasy local canonical checkout",
-    "ref": "refs/heads/feature/stock-royale-full-platform",
+    "ref": "refs/heads/feature/hype-section",
     "environment": "local Vite dev server http://localhost:3333 (pnpm --filter client dev)",
     "consumer": "packages/client Vue SPA route / (pages/index.vue, layout none)",
     "final_artifact": {
       "status": "planned",
-      "id": "planned:hype-3-merged-client",
-      "binding_evidence": "Lane commit exists on hero/hero_layout; parent merge and live activation are pending, so no final artifact is bound."
+      "id": "planned:hype-3-feature-hype-section",
+      "binding_evidence": "Merged on feature/hype-section (merges c25ceae, e2d1ef3; fixes 104546e, cb4221c). No sha256 artifact is bound: per-row claim evidence is not promoted (same as HERO-3); the receipt holds the raw run output."
     }
   },
   "flows": [
@@ -139,9 +141,9 @@
         {
           "id": "SCR-hype-success",
           "case_id": "ST-hype-success",
-          "state": "CTA reaches royale/login redirect",
+          "state": "section renders the four beats and stats strip; no links (D4)",
           "status": "planned",
-          "evidence_or_reason": "Unit test asserts CTA targets; live signed-out click-through planned.",
+          "evidence_or_reason": "HypeSection.test.ts asserts beats, stats and zero links; live DOM showed 4 articles and 0 internal links.",
           "verifier_ids": [
             "hype-section-unit",
             "hype-live-activation"
@@ -236,7 +238,7 @@
         {
           "id": "COV-hype-action",
           "dimension": "action",
-          "state": "CTA and nav link activation",
+          "state": "scroll into #match and direct load of /#match",
           "status": "planned",
           "evidence_or_reason": "Unit hrefs + live click.",
           "verifier_ids": [
@@ -413,8 +415,8 @@
           "kind": "automated",
           "name": "HeroSection composition and index route (vitest/jsdom)",
           "file": "packages/client/tests/HeroSection.test.ts",
-          "command": "cd packages/client && npx vitest run tests/HeroSection.test.ts",
-          "oracle": "one nav, locked h1, CTA targets, Source rel, strip aria-live off and props, fallback/slot, index renders only HeroSection",
+          "command": "cd packages/client && npx vitest run tests/HypeSection.test.ts tests/HypeVignettes.test.ts",
+          "oracle": "section #match labelled by its h2, 4 beats in order, aria-hidden ordinals, stats strip, slot fallback and replacement, zero links, fact allowlist, hash scroll",
           "status": "planned",
           "evidence_stage": "MECHANISM",
           "required": true,
@@ -465,7 +467,7 @@
           "name": "Live dev-server activation of / in the browser pane",
           "file": "browser pane (parent session)",
           "command": "pnpm --filter client dev; browser-pane DOM assertions on http://localhost:3333/",
-          "oracle": "nav count 1, h1 text, no horizontal scroll at 375/768/1440, signed-out CTA lands on /login?redirect=%2Fdashboard%2Froyale",
+          "oracle": "nav count 1, h1 count 1, #match with 4 articles, zero internal links, no horizontal scroll at 375/768/1440, /#match lands at top 0",
           "status": "planned",
           "evidence_stage": "OUTCOME",
           "required": true,
@@ -575,7 +577,7 @@
                 "keyboard_focus"
               ],
               "observation_id": "OBS-hype-keyboard",
-              "probe": "Tab through nav links and CTAs.",
+              "probe": "Tab through the page: the section adds no focus targets; focus moves from the hero links past the section.",
               "observations": [
                 "tab order",
                 "visible focus"
