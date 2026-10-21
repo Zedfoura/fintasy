@@ -12,8 +12,8 @@
   "active_mission": "HYPE-4",
   "mode": "PLAN",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "df120d14d93d36458f5f14f19ba8fbc78ae4fcf4e107ee8647eb909576c37399",
-  "ledger_generation": 11,
+  "ledger_hash": "29e4d5b66007dd36a5ae616afbc3b523af0ee5838662d6f08b48f334df3e07f4",
+  "ledger_generation": 12,
   "inventory_hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
@@ -63,10 +63,10 @@
       "deploy"
     ]
   },
-  "last_verified_transition": "HYPE-2 -> canonical; HYPE-3 -> activated (2026-10-21, feature/hype-section @ cb4221c, local only)",
-  "next_transition": "PLAN/EXECUTE HYPE-4 (mount vignettes into HypeSection slots, PageRetention test, live scroll verification). Needs a user grant to edit packages/client. Push/PR/merge to main needs a separate go-ahead (main triggers deploy-images.yml).",
+  "last_verified_transition": "HYPE-4 -> planned (battle plan written 2026-10-21)",
+  "next_transition": "EXECUTE HYPE-4 per success/mission_HYPE-4_battleplan.md on feature/hype-section @ 1539a2a. Needs a user grant to edit packages/client (local only). Push/PR/merge to main needs a separate go-ahead.",
   "open_decisions": [],
-  "updated_at": "2026-10-21T13:47:25-05:00",
+  "updated_at": "2026-10-21T13:50:44-05:00",
   "rulings": [
     {
       "id": "D4",

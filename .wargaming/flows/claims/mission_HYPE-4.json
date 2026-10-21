@@ -3,10 +3,10 @@
   "kind": "wargame-flow-claim",
   "mission_id": "HYPE-4",
   "campaign": "2026-10-20_fintasy-hero",
-  "stage": "proposed",
+  "stage": "planned",
   "target_stage": "RETENTION",
   "disposition": "active",
-  "battle_plan": null,
+  "battle_plan": ".wargaming/campaigns/2026-10-20_fintasy-hero/success/mission_HYPE-4_battleplan.md",
   "receipts": [],
   "inventory": {
     "id": "fintasy-hero-campaign-flows-v2",
@@ -609,9 +609,9 @@
       "stage_receipts": [],
       "retention_guard": {
         "status": "planned",
-        "owner": "HERO-4 / client test suite",
+        "owner": "HYPE-4 / client test suite",
         "consumer": "pnpm --filter client test",
-        "location": "packages/client/tests/HeroSection.test.ts",
+        "location": "packages/client/tests/PageRetention.test.ts",
         "exercise_verifier_id": "hype-section-unit",
         "target_binding_ids": [
           "TGT-hype-local-dev"
