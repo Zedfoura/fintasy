@@ -7,6 +7,6 @@ export default antfu(
     formatters: true,
   },
   {
-    ignores: ['**/.venv/**', '**/.wargaming/**', '**/dist/**', '**/.pytest_cache/**', '**/wargame-metaharness/**', '**/.agents/**'],
+    ignores: ['**/.venv/**', '**/.wargaming/**', '**/dist/**', '**/dist-hero/**', '**/.pytest_cache/**', '**/wargame-metaharness/**', '**/.agents/**'],
   },
 )
