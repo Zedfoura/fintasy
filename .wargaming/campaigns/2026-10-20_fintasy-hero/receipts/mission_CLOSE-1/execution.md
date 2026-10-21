@@ -69,3 +69,18 @@ PASS c3: 14 numbers, 2 links checked
 3 of 3 regions pass   (exit 0)
 ```
 - **Accepted gap (D8):** the line does not mention that matches use the seeded simulator. Flagged so CLOSE-2 copy reviews don't revert it unasked.
+
+## Run 3 (2026-10-21): direction locked — outcome verified
+- **User:** "Lock C1 (Closing bell) for CLOSE-1 and write close-direction.md + the tokens close block."
+- **Written:**
+  - `close-direction.md`: anatomy, final copy (03 per D8), disclosure contract, accessibility, and CLOSE-2 build notes (section-root `border-box`, rect-based overflow check, links imported from `heroLinks.ts`).
+  - `tokens.json` gains a `close` block. Existing keys are value-identical; the only textual diff is `≥` → `≥` in one hype `$comment`.
+  - `contrast.mjs` reads `close.contrast` (group `CLOSE_L`).
+- **Gates:**
+```
+CLOSE_L PASS 16.04:1 h2 / questions · 9.51:1 answers / CTA body · 5.72:1 kicker / intro
+CLOSE_L PASS 5.95:1 ordinals · 16.04:1 CTA button text · 5.95:1 CTA button focused
+control flagged as failing: true · 0 failing pair(s) across 39 direction pairs (exit 0)
+vitest HeroRetention + HypeVignettes (both read tokens.json): Test Files 2 passed (2) · Tests 33 passed (33)
+```
+- **Stage:** `outcome_verified` (the user's pick is the CLOSE-1 outcome). The next transition is CLOSE-2 PLAN, then EXECUTE with a packages/ grant.
