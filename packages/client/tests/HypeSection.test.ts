@@ -149,7 +149,7 @@ describe('hYPE-3 FintasyPage composition', () => {
     expect(wrapper.findComponent(HeroSection).exists()).toBe(true)
     expect(wrapper.findComponent(HypeSection).exists()).toBe(true)
     const sections = wrapper.findAll('main > section')
-    expect(sections.map(s => s.classes()[0])).toEqual(['hero', 'hype'])
+    expect(sections.map(s => s.classes()[0])).toEqual(['hero', 'hype', 'close-faq', 'close-cta'])
     expect(wrapper.findAll('nav')).toHaveLength(1)
     expect(wrapper.findAll('h1')).toHaveLength(1)
     expect(wrapper.find('.hero-visual [data-test="hero-visual"]').exists()).toBe(true)

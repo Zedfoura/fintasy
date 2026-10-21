@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+  CLOSE-1 directions: FAQ + final CTA, appended under the real page (page/ = snapshot of dist-hero @ 2227c2d).
+  Each direction is a <template>; close.js mounts the one named by ?c=c1|c2|c3 inside main.fintasy-page.
+  FAQ copy is shared across directions; layout and CTA treatment differ. Fact sources, per answer:
+    Q1 ruling D4 (not live; outbound links only)
+    Q2 match_manager.py capital_cents=1500000 ("$15,000.00"); DMA INV-1 integer cents
+    Q3 user ruling D8 (2026-10-21): "Live stock market data from the Alpaca Markets API." Source: services/alpaca/alpaca.py (data.alpaca.markets),
+       routes /quotes and /transactions. Known gap, accepted by the user: in-match prices come from services/royale/market_sim.py, not Alpaca.
+    Q4 DMA §1.2 MatchInstance "30-60 participants: human + AI bots"; hype beat 04
+    Q5 DMA §1.2 phases and storm; hype beats 02–04
+    Q6 packages/server/requirements.txt (fastapi, uvicorn, psycopg2-binary); DMA §1.1 PostgreSQL; client <script setup lang="ts">; DMA §1.2 MatchInstance 10 Hz
+  Links: only SOURCE_URL and CASE_STUDY_URL (heroLinks.ts), per D4 and the 2026-10-21 CTA ruling.
+-->
+<meta charset="utf-8">
+<title>CLOSE-1 directions</title>
+
+<!-- ═════════ C1 · CLOSING BELL (accordion in the hype grid + echo statement) ═════════ -->
+<template id="c1">
+<!-- FACTS:c1 -->
+<section class="cl c1-faq" id="faq" aria-labelledby="c1-faq-title">
+  <div class="cl-head">
+    <div class="cl-kicker"><span class="cl-b">[</span> FAQ <span class="cl-b">]</span></div>
+    <h2 id="c1-faq-title">Questions,<br>answered.</h2>
+    <p class="cl-intro">The short version of what recruiters and players ask first.</p>
+  </div>
+  <div class="c1-list">
+    <div class="c1-item"><h3><button type="button" aria-expanded="true" aria-controls="c1-a1" id="c1-q1"><span class="c1-n" aria-hidden="true">01</span><span>Can I play Fintasy?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
+      <div class="c1-a" id="c1-a1" role="region" aria-labelledby="c1-q1"><p>Not right now. Fintasy is a portfolio project, not a live service, so there is no public server to join. The full source is on GitHub, and the case study walks through how it was designed and built.</p></div></div>
+    <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a2" id="c1-q2"><span class="c1-n" aria-hidden="true">02</span><span>Is real money involved?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
+      <div class="c1-a" id="c1-a2" role="region" aria-labelledby="c1-q2" hidden><p>No. Every trader starts each match with the same simulated $15,000 balance, held in integer cents. Nothing is bought or sold on a real exchange.</p></div></div>
+    <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a3" id="c1-q3"><span class="c1-n" aria-hidden="true">03</span><span>Where do the prices come from?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
+      <div class="c1-a" id="c1-a3" role="region" aria-labelledby="c1-q3" hidden><p>Live stock market data from the Alpaca Markets API.</p></div></div>
+    <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a4" id="c1-q4"><span class="c1-n" aria-hidden="true">04</span><span>Who am I up against?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
+      <div class="c1-a" id="c1-a4" role="region" aria-labelledby="c1-q4" hidden><p>Up to 60 traders per match. AI bots fill every empty seat, so a match never waits on a half-empty lobby.</p></div></div>
+    <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a5" id="c1-q5"><span class="c1-n" aria-hidden="true">05</span><span>How does a match end?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
+      <div class="c1-a" id="c1-a5" role="region" aria-labelledby="c1-q5" hidden><p>When one trader is left solvent. Duels move P&amp;L between players, the storm shrinks the map over 5 rounds, and anyone whose balance runs dry is out.</p></div></div>
+    <div class="c1-item"><h3><button type="button" aria-expanded="false" aria-controls="c1-a6" id="c1-q6"><span class="c1-n" aria-hidden="true">06</span><span>What is it built with?</span><span class="c1-ic" aria-hidden="true"></span></button></h3>
+      <div class="c1-a" id="c1-a6" role="region" aria-labelledby="c1-q6" hidden><p>A Vue and TypeScript client, a Python FastAPI server backed by PostgreSQL, and an authoritative match loop that runs at 10 Hz on the server.</p></div></div>
+  </div>
+</section>
+<section class="cl c1-cta" id="cta" aria-labelledby="c1-cta-title">
+  <div class="c1-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="c1-cta-body">
+    <div class="cl-kicker"><span class="cl-b">[</span> Closing bell <span class="cl-b">]</span></div>
+    <h2 id="c1-cta-title">That's the match.</h2>
+    <p>Fintasy isn't live. The code and the story behind it are.</p>
+    <div class="cl-ctas"><a class="cl-btn" href="https://github.com/Zedfoura/fintasy" target="_blank" rel="noopener noreferrer">View the source <span aria-hidden="true">→</span></a><a class="cl-link" href="https://www.tinatseichingaya.com/projects/fintasy">Read the case study</a></div>
+  </div>
+</section>
+<!-- /FACTS:c1 -->
+</template>
+
+<!-- ═════════ C2 · INDEX (sticky heading, every answer open + split link tiles) ═════════ -->
+<template id="c2">
+<!-- FACTS:c2 -->
+<section class="cl c2-faq" id="faq" aria-labelledby="c2-faq-title">
+  <div class="c2-grid">
+    <div class="c2-side">
+      <div class="cl-kicker"><span class="cl-b">[</span> FAQ <span class="cl-b">]</span></div>
+      <h2 id="c2-faq-title">Before<br>you ask.</h2>
+      <p class="cl-intro">Six answers, all open. Nothing to click.</p>
+    </div>
+    <dl class="c2-list">
+      <div><dt><span aria-hidden="true">01</span>Can I play Fintasy?</dt><dd>Not right now. Fintasy is a portfolio project, not a live service, so there is no public server to join. The full source is on GitHub, and the case study walks through how it was designed and built.</dd></div>
+      <div><dt><span aria-hidden="true">02</span>Is real money involved?</dt><dd>No. Every trader starts each match with the same simulated $15,000 balance, held in integer cents. Nothing is bought or sold on a real exchange.</dd></div>
+      <div><dt><span aria-hidden="true">03</span>Where do the prices come from?</dt><dd>Live stock market data from the Alpaca Markets API.</dd></div>
+      <div><dt><span aria-hidden="true">04</span>Who am I up against?</dt><dd>Up to 60 traders per match. AI bots fill every empty seat, so a match never waits on a half-empty lobby.</dd></div>
+      <div><dt><span aria-hidden="true">05</span>How does a match end?</dt><dd>When one trader is left solvent. Duels move P&amp;L between players, the storm shrinks the map over 5 rounds, and anyone whose balance runs dry is out.</dd></div>
+      <div><dt><span aria-hidden="true">06</span>What is it built with?</dt><dd>A Vue and TypeScript client, a Python FastAPI server backed by PostgreSQL, and an authoritative match loop that runs at 10 Hz on the server.</dd></div>
+    </dl>
+  </div>
+</section>
+<section class="cl c2-cta" id="cta" aria-labelledby="c2-cta-title">
+  <div class="cl-kicker"><span class="cl-b">[</span> Go deeper <span class="cl-b">]</span></div>
+  <h2 id="c2-cta-title">See how it's built.</h2>
+  <div class="c2-tiles">
+    <a class="c2-tile" href="https://github.com/Zedfoura/fintasy" target="_blank" rel="noopener noreferrer"><span class="c2-t-k">Source</span><span class="c2-t-h">Read the code <span aria-hidden="true">↗</span></span><span class="c2-t-p">github.com/Zedfoura/fintasy</span></a>
+    <a class="c2-tile" href="https://www.tinatseichingaya.com/projects/fintasy"><span class="c2-t-k">Case study</span><span class="c2-t-h">Read the story <span aria-hidden="true">→</span></span><span class="c2-t-p">tinatseichingaya.com/projects/fintasy</span></a>
+  </div>
+</section>
+<!-- /FACTS:c2 -->
+</template>
+
+<!-- ═════════ C3 · MATCH REPORT (debrief log with native disclosure + receipt card) ═════════ -->
+<template id="c3">
+<!-- FACTS:c3 -->
+<section class="cl c3-faq" id="faq" aria-labelledby="c3-faq-title">
+  <div class="cl-head">
+    <div class="cl-kicker"><span class="cl-b">[</span> FAQ <span class="cl-b">]</span></div>
+    <h2 id="c3-faq-title">Post-match<br>debrief.</h2>
+    <p class="cl-intro">Open any line. It works with a keyboard, and without JavaScript.</p>
+  </div>
+  <div class="c3-log">
+    <details open><summary><span class="c3-q">Q.01</span>Can I play Fintasy?</summary><p>Not right now. Fintasy is a portfolio project, not a live service, so there is no public server to join. The full source is on GitHub, and the case study walks through how it was designed and built.</p></details>
+    <details><summary><span class="c3-q">Q.02</span>Is real money involved?</summary><p>No. Every trader starts each match with the same simulated $15,000 balance, held in integer cents. Nothing is bought or sold on a real exchange.</p></details>
+    <details><summary><span class="c3-q">Q.03</span>Where do the prices come from?</summary><p>Live stock market data from the Alpaca Markets API.</p></details>
+    <details><summary><span class="c3-q">Q.04</span>Who am I up against?</summary><p>Up to 60 traders per match. AI bots fill every empty seat, so a match never waits on a half-empty lobby.</p></details>
+    <details><summary><span class="c3-q">Q.05</span>How does a match end?</summary><p>When one trader is left solvent. Duels move P&amp;L between players, the storm shrinks the map over 5 rounds, and anyone whose balance runs dry is out.</p></details>
+    <details><summary><span class="c3-q">Q.06</span>What is it built with?</summary><p>A Vue and TypeScript client, a Python FastAPI server backed by PostgreSQL, and an authoritative match loop that runs at 10 Hz on the server.</p></details>
+  </div>
+</section>
+<section class="cl c3-cta" id="cta" aria-labelledby="c3-cta-title">
+  <div class="c3-card">
+    <div class="c3-card-top"><span>Match report</span><span class="c3-dot" aria-hidden="true"></span></div>
+    <h2 id="c3-cta-title">Match over.</h2>
+    <dl class="c3-rows">
+      <div><dt>Traders dropped</dt><dd>60</dd></div>
+      <div><dt>Sectors</dt><dd>11</dd></div>
+      <div><dt>Rounds</dt><dd>5</dd></div>
+      <div><dt>Left solvent</dt><dd>1</dd></div>
+    </dl>
+    <p>The game isn't live. Everything that made it is open.</p>
+    <div class="cl-ctas"><a class="cl-btn" href="https://github.com/Zedfoura/fintasy" target="_blank" rel="noopener noreferrer">View the source <span aria-hidden="true">→</span></a><a class="cl-link" href="https://www.tinatseichingaya.com/projects/fintasy">Read the case study</a></div>
+  </div>
+</section>
+<!-- /FACTS:c3 -->
+</template>
