@@ -1,0 +1,624 @@
+{
+  "version": 2,
+  "kind": "wargame-flow-claim",
+  "mission_id": "HYPE-4",
+  "campaign": "2026-10-20_fintasy-hero",
+  "stage": "retained",
+  "target_stage": "RETENTION",
+  "disposition": "active",
+  "battle_plan": ".wargaming/campaigns/2026-10-20_fintasy-hero/success/mission_HYPE-4_battleplan.md",
+  "receipts": [
+    ".wargaming/campaigns/2026-10-20_fintasy-hero/receipts/mission_HYPE-4/execution.md"
+  ],
+  "inventory": {
+    "id": "fintasy-hero-campaign-flows-v2",
+    "file": "../../campaigns/2026-10-20_fintasy-hero/flows/inventory.json",
+    "hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c"
+  },
+  "claim": {
+    "id": "claim-hype-4",
+    "flow_ids": [
+      "FLOW-HYPE-SECTION"
+    ],
+    "flow_scope": [
+      {
+        "flow_id": "FLOW-HYPE-SECTION",
+        "disposition": "affected",
+        "evidence": "HERO-3 rewrites / to render only HeroSection on layout none.",
+        "owner": "hero_layout lane (HERO-3)",
+        "clearing_condition": "Reach ACTIVATION via parent live checks."
+      },
+      {
+        "flow_id": "FLOW-HERO-FIRST-IMPRESSION",
+        "disposition": "excluded",
+        "evidence": "The hero must stay unchanged; HeroRetention.test.ts guards it.",
+        "owner": "parent session",
+        "clearing_condition": "Re-scope if this mission's diff touches that flow's components."
+      }
+    ],
+    "required_stage": "RETENTION",
+    "achieved_stage": "PLAN",
+    "scope_basis": "HYPE-4: FintasyPage.vue fills the four vignette slots; new tests/PageRetention.test.ts (commit d6bb429).",
+    "authority": "Zedfoura/fintasy local canonical checkout",
+    "ref": "refs/heads/feature/hype-section",
+    "environment": "local Vite dev server http://localhost:3333 (pnpm --filter client dev)",
+    "consumer": "packages/client Vue SPA route / (pages/index.vue, layout none)",
+    "final_artifact": {
+      "status": "planned",
+      "id": "planned:hype-4-feature-hype-section",
+      "binding_evidence": "Committed d6bb429 on feature/hype-section. No sha256 artifact bound (campaign precedent); the receipt holds raw output."
+    }
+  },
+  "flows": [
+    {
+      "flow_id": "FLOW-HYPE-SECTION",
+      "target_binding_ids": [
+        "TGT-hype-local-dev"
+      ],
+      "entry_scope": [
+        {
+          "entry_point_id": "EP-hype-scroll",
+          "disposition": "included",
+          "evidence": "Entry exercised by parent live checks.",
+          "owner": "parent session",
+          "clearing_condition": "Exercise at ACTIVATION."
+        },
+        {
+          "entry_point_id": "EP-hype-deeplink",
+          "disposition": "included",
+          "evidence": "Entry exercised by parent live checks.",
+          "owner": "parent session",
+          "clearing_condition": "Exercise at ACTIVATION."
+        },
+        {
+          "entry_point_id": "EP-hype-reentry",
+          "disposition": "included",
+          "evidence": "Entry exercised by parent live checks.",
+          "owner": "parent session",
+          "clearing_condition": "Exercise at ACTIVATION."
+        }
+      ],
+      "target_scope": [
+        {
+          "target_binding_id": "TGT-hype-local-dev",
+          "disposition": "included",
+          "evidence": "Local dev server is the declared ACTIVATION target.",
+          "owner": "parent session",
+          "clearing_condition": "Exercise at ACTIVATION."
+        }
+      ],
+      "required_stage": "RETENTION",
+      "achieved_stage": "PLAN",
+      "baseline": {
+        "status": "passed",
+        "evidence_or_reason": "Baseline for the hype section: page at origin/main d46b06a has no section below the hero (probed 2026-10-21).",
+        "run_id": "hype-4-baseline-20261021",
+        "timestamp": "2026-10-21T01:10:00-05:00",
+        "authority": "Zedfoura/fintasy local checkout",
+        "ref": "branch cut from origin/main d46b06a at execution time",
+        "environment": "local Vite dev server http://localhost:3333 and vite preview of dist-hero (http://localhost:4173)",
+        "consumer": "packages/client route / and hero-standalone build"
+      },
+      "state_cases": [
+        {
+          "id": "SCR-hype-initial",
+          "case_id": "ST-hype-initial",
+          "state": "defaults rendered",
+          "status": "planned",
+          "evidence_or_reason": "Unit test asserts nav count, h1, strip defaults; live DOM check planned.",
+          "verifier_ids": [
+            "hype-section-unit",
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "SCR-hype-loading",
+          "case_id": "ST-hype-loading",
+          "state": "fallback visual",
+          "status": "planned",
+          "evidence_or_reason": "Unit test asserts aria-hidden fallback and slot replacement.",
+          "verifier_ids": [
+            "hype-section-unit",
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "SCR-hype-empty",
+          "case_id": "ST-hype-empty",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "Inventory marks empty not_applicable: no data-driven content.",
+          "verifier_ids": []
+        },
+        {
+          "id": "SCR-hype-error",
+          "case_id": "ST-hype-error",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "Inventory marks error not_applicable: no service call.",
+          "verifier_ids": []
+        },
+        {
+          "id": "SCR-hype-success",
+          "case_id": "ST-hype-success",
+          "state": "section renders the four beats and stats strip; no links (D4)",
+          "status": "planned",
+          "evidence_or_reason": "HypeSection.test.ts asserts beats, stats and zero links; live DOM check planned.",
+          "verifier_ids": [
+            "hype-section-unit",
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "SCR-hype-reentry",
+          "case_id": "ST-hype-reentry",
+          "state": "refresh re-renders hero",
+          "status": "planned",
+          "evidence_or_reason": "Live refresh check planned.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "SCR-hype-concurrency",
+          "case_id": "ST-hype-concurrency",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "Inventory marks concurrency not_applicable: no writes.",
+          "verifier_ids": []
+        },
+        {
+          "id": "SCR-hype-accessibility",
+          "case_id": "ST-hype-accessibility",
+          "state": "landmarks, keyboard, aria-live off",
+          "status": "planned",
+          "evidence_or_reason": "Unit test asserts aria-live off and single nav; live keyboard pass planned.",
+          "verifier_ids": [
+            "hype-section-unit",
+            "hype-live-activation"
+          ]
+        }
+      ],
+      "prerequisites": [
+        {
+          "id": "PRR-hype-fonts",
+          "prerequisite_id": "PR-hype-fonts",
+          "state": "fonts bundled",
+          "status": "planned",
+          "evidence_or_reason": "vite build downloads both css2 URLs.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        }
+      ],
+      "accessibility_capabilities": [
+        {
+          "id": "ACR-hype-structure",
+          "capability_id": "A11Y-hype-structure",
+          "state": "one nav, one h1",
+          "status": "planned",
+          "evidence_or_reason": "Unit + live DOM.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "ACR-hype-keyboard",
+          "capability_id": "A11Y-hype-keyboard",
+          "state": "keyboard and focus",
+          "status": "planned",
+          "evidence_or_reason": "Live keyboard probe planned.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "ACR-hype-reflow",
+          "capability_id": "A11Y-hype-reflow",
+          "state": "no horizontal scroll",
+          "status": "planned",
+          "evidence_or_reason": "Live overflow check at 375/768/1440 planned.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        }
+      ],
+      "coverage": [
+        {
+          "id": "COV-hype-data",
+          "dimension": "data",
+          "state": "static copy and strip props/onVisualUpdate",
+          "status": "planned",
+          "evidence_or_reason": "Unit tests on props and onVisualUpdate.",
+          "verifier_ids": [
+            "hype-section-unit",
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hype-action",
+          "dimension": "action",
+          "state": "scroll into #match and direct load of /#match",
+          "status": "planned",
+          "evidence_or_reason": "Unit hrefs + live click.",
+          "verifier_ids": [
+            "hype-section-unit",
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hype-identity",
+          "dimension": "identity",
+          "state": "signed-out redirect via guard",
+          "status": "planned",
+          "evidence_or_reason": "Live click-through planned.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hype-lifecycle",
+          "dimension": "lifecycle",
+          "state": "direct load, in-app nav, refresh",
+          "status": "planned",
+          "evidence_or_reason": "Live checks planned.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hype-presentation",
+          "dimension": "presentation",
+          "state": "375, 760 edge, 768, 1440",
+          "status": "planned",
+          "evidence_or_reason": "Live screenshots and overflow planned.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hype-accessibility",
+          "dimension": "accessibility",
+          "state": "landmarks, keyboard, aria-live, reflow",
+          "status": "planned",
+          "evidence_or_reason": "Unit + live.",
+          "verifier_ids": [
+            "hype-section-unit",
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "COV-hype-concurrency",
+          "dimension": "concurrency",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "Read-only route; no writes.",
+          "verifier_ids": []
+        }
+      ],
+      "boundaries": [
+        {
+          "id": "BND-hype-browser",
+          "boundary": "browser",
+          "state": "mounted route in live dev server",
+          "status": "planned",
+          "evidence_or_reason": "Browser-pane DOM checks planned.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        }
+      ],
+      "boundary_matrix": [
+        {
+          "id": "MAT-hype-identity",
+          "matrix_case_id": "MC-hype-identity",
+          "dimension": "identity_role_tenant",
+          "state": "signed-out visitor",
+          "status": "planned",
+          "evidence_or_reason": "Live signed-out click-through.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hype-viewport",
+          "matrix_case_id": "MC-hype-viewport",
+          "dimension": "viewport_breakpoint",
+          "state": "375, 759/760, 768, 1440",
+          "status": "planned",
+          "evidence_or_reason": "Live overflow + screenshots.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hype-browser",
+          "matrix_case_id": "MC-hype-browser",
+          "dimension": "browser_platform",
+          "state": "desktop browser pane (Chromium)",
+          "status": "planned",
+          "evidence_or_reason": "Battle plan browser pane.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hype-input",
+          "matrix_case_id": "MC-hype-input",
+          "dimension": "input_modality",
+          "state": "pointer and keyboard",
+          "status": "planned",
+          "evidence_or_reason": "Live keyboard + click.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hype-network",
+          "matrix_case_id": "MC-hype-network",
+          "dimension": "network_service",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "No service boundary.",
+          "verifier_ids": []
+        },
+        {
+          "id": "MAT-hype-permission",
+          "matrix_case_id": "MC-hype-permission",
+          "dimension": "permission_entitlement",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "No gated content (ruling D4).",
+          "verifier_ids": []
+        },
+        {
+          "id": "MAT-hype-reentry",
+          "matrix_case_id": "MC-hype-reentry",
+          "dimension": "lifecycle_reentry",
+          "state": "direct, in-app nav, refresh",
+          "status": "planned",
+          "evidence_or_reason": "Live checks.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hype-volume",
+          "matrix_case_id": "MC-hype-volume",
+          "dimension": "data_volume_content",
+          "state": "h1 at clamp max and min",
+          "status": "planned",
+          "evidence_or_reason": "Live screenshots at 375 and 1440.",
+          "verifier_ids": [
+            "hype-live-activation"
+          ]
+        },
+        {
+          "id": "MAT-hype-locale",
+          "matrix_case_id": "MC-hype-locale",
+          "dimension": "locale_content",
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "English-only hero copy.",
+          "verifier_ids": []
+        }
+      ],
+      "resilience": {
+        "status": "not_applicable",
+        "reason": "Static client route with no owned service or datastore boundary to fault.",
+        "scenarios": []
+      },
+      "verifiers": [
+        {
+          "id": "hype-section-unit",
+          "class": "U",
+          "kind": "automated",
+          "name": "HeroSection composition and index route (vitest/jsdom)",
+          "file": "packages/client/tests/HeroSection.test.ts",
+          "command": "cd packages/client && npx vitest run tests/HypeSection.test.ts tests/HypeVignettes.test.ts",
+          "oracle": "section #match labelled by its h2, 4 beats in order, aria-hidden ordinals, stats strip, slot fallback and replacement, zero links, fact allowlist, hash scroll",
+          "status": "planned",
+          "evidence_stage": "MECHANISM",
+          "required": true,
+          "semantics": [
+            "double"
+          ],
+          "entry_point_ids": [],
+          "state_case_ids": [
+            "SCR-hype-initial",
+            "SCR-hype-loading",
+            "SCR-hype-success",
+            "SCR-hype-accessibility"
+          ],
+          "prerequisite_ids": [],
+          "target_binding_ids": [],
+          "accessibility_capability_ids": [],
+          "transition_ids": [
+            "scroll-into-hype",
+            "read-beats"
+          ],
+          "coverage_ids": [
+            "COV-hype-data",
+            "COV-hype-action",
+            "COV-hype-accessibility"
+          ],
+          "boundary_row_ids": [],
+          "matrix_row_ids": [],
+          "preserves": [
+            "hero (FLOW-HERO-FIRST-IMPRESSION) unchanged: one nav, one h1, outbound-only links",
+            "standalone bundle stays free of router/auth/API code"
+          ],
+          "resilience_scenario_ids": [],
+          "real_owned_boundaries": [],
+          "doubled_boundaries": [
+            "browser"
+          ],
+          "real_fault_targets": [],
+          "mutable": false,
+          "cleanup": "not applicable: read-only",
+          "target_evidence": [],
+          "accessibility_evidence": [],
+          "fault_evidence": []
+        },
+        {
+          "id": "hype-live-activation",
+          "class": "E",
+          "kind": "guided_manual",
+          "name": "Live dev-server activation of / in the browser pane",
+          "file": "browser pane (parent session)",
+          "command": "pnpm --filter client dev; browser-pane DOM assertions on http://localhost:3333/",
+          "oracle": "nav count 1, h1 count 1, #match with 4 articles, zero internal links, no horizontal scroll at 375/768/1440, /#match lands at top 0",
+          "status": "planned",
+          "evidence_stage": "OUTCOME",
+          "required": true,
+          "semantics": [
+            "real"
+          ],
+          "entry_point_ids": [
+            "EP-hype-scroll",
+            "EP-hype-deeplink",
+            "EP-hype-reentry"
+          ],
+          "state_case_ids": [
+            "SCR-hype-initial",
+            "SCR-hype-loading",
+            "SCR-hype-success",
+            "SCR-hype-reentry",
+            "SCR-hype-accessibility"
+          ],
+          "prerequisite_ids": [
+            "PRR-hype-fonts"
+          ],
+          "target_binding_ids": [
+            "TGT-hype-local-dev"
+          ],
+          "accessibility_capability_ids": [
+            "ACR-hype-structure",
+            "ACR-hype-keyboard",
+            "ACR-hype-reflow"
+          ],
+          "transition_ids": [
+            "scroll-into-hype",
+            "read-beats"
+          ],
+          "coverage_ids": [
+            "COV-hype-data",
+            "COV-hype-action",
+            "COV-hype-identity",
+            "COV-hype-lifecycle",
+            "COV-hype-presentation",
+            "COV-hype-accessibility"
+          ],
+          "boundary_row_ids": [
+            "BND-hype-browser"
+          ],
+          "matrix_row_ids": [
+            "MAT-hype-identity",
+            "MAT-hype-viewport",
+            "MAT-hype-browser",
+            "MAT-hype-input",
+            "MAT-hype-reentry",
+            "MAT-hype-volume"
+          ],
+          "preserves": [
+            "hero (FLOW-HERO-FIRST-IMPRESSION) unchanged: one nav, one h1, outbound-only links",
+            "standalone bundle stays free of router/auth/API code"
+          ],
+          "resilience_scenario_ids": [],
+          "real_owned_boundaries": [
+            "browser"
+          ],
+          "doubled_boundaries": [],
+          "real_fault_targets": [],
+          "mutable": false,
+          "cleanup": "not applicable: read-only",
+          "target_evidence": [
+            {
+              "target_binding_id": "TGT-hype-local-dev",
+              "status": "planned",
+              "environment": "local Vite dev server http://localhost:3333 and vite preview of dist-hero (http://localhost:4173)",
+              "consumer": "packages/client route / and hero-standalone build",
+              "authority": "Zedfoura/fintasy local checkout",
+              "ref": "branch cut from origin/main d46b06a at execution time",
+              "actor_id": "ACT-hype-visitor",
+              "trace_id": "TRACE-hype-section",
+              "entry_point_ids": [
+                "EP-hype-scroll",
+                "EP-hype-deeplink",
+                "EP-hype-reentry"
+              ],
+              "activation_probe": "Load / directly, via the dashboard Logo link, and by refresh; read document.querySelectorAll('nav').length and h1 text.",
+              "activation_oracle": "Every entry mounts HeroSection with exactly one nav and the locked h1."
+            }
+          ],
+          "accessibility_evidence": [
+            {
+              "capability_row_id": "ACR-hype-structure",
+              "status": "planned",
+              "semantics": [
+                "semantics_status",
+                "automated_scan"
+              ],
+              "observation_id": "OBS-hype-structure",
+              "probe": "Read accessibility tree on /.",
+              "observations": [
+                "nav count",
+                "h1 count",
+                "figcaption aria-live"
+              ],
+              "oracle": "One nav, one h1, strip aria-live off.",
+              "oracle_result": "planned",
+              "evidence": "planned DOM read"
+            },
+            {
+              "capability_row_id": "ACR-hype-keyboard",
+              "status": "planned",
+              "semantics": [
+                "keyboard_focus"
+              ],
+              "observation_id": "OBS-hype-keyboard",
+              "probe": "Tab through the page: the section adds no focus targets; focus moves from the hero links past the section.",
+              "observations": [
+                "tab order",
+                "visible focus"
+              ],
+              "oracle": "All links reachable with visible focus.",
+              "oracle_result": "planned",
+              "evidence": "planned keyboard trace"
+            },
+            {
+              "capability_row_id": "ACR-hype-reflow",
+              "status": "planned",
+              "semantics": [
+                "zoom_reflow",
+                "visual_perceptual"
+              ],
+              "observation_id": "OBS-hype-reflow",
+              "probe": "Resize to 375/768/1440, compare scrollWidth to innerWidth, screenshot.",
+              "observations": [
+                "375 width",
+                "768 width",
+                "1440 width"
+              ],
+              "oracle": "scrollWidth <= innerWidth at every width; layout stacks below 760px.",
+              "oracle_result": "planned",
+              "evidence": "planned screenshots"
+            }
+          ],
+          "fault_evidence": []
+        }
+      ],
+      "stage_receipts": [],
+      "retention_guard": {
+        "status": "planned",
+        "owner": "HYPE-4 / client test suite",
+        "consumer": "pnpm --filter client test",
+        "location": "packages/client/tests/PageRetention.test.ts",
+        "exercise_verifier_id": "hype-section-unit",
+        "target_binding_ids": [
+          "TGT-hype-local-dev"
+        ]
+      }
+    }
+  ]
+}

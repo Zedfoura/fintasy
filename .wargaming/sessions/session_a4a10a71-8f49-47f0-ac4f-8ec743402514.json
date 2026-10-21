@@ -4,68 +4,63 @@
   "workspace_root": "/Users/tinatseichingaya/fintasy",
   "repository": {
     "root": "/Users/tinatseichingaya/fintasy",
-    "ref": "feature/stock-royale-full-platform",
-    "commit": "daf06c5"
+    "ref": "refs/heads/feature/hype-section",
+    "commit": "d46b06a",
+    "upstream": "none (unset deliberately)"
   },
   "active_campaign": "2026-10-20_fintasy-hero",
-  "active_mission": "HERO-6",
-  "mode": "REPORT",
+  "active_mission": null,
+  "mode": "IDLE",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "fced2aaa7b72b64ce07fbc310ba908729f25c30981b01dab830f43e98835233a",
-  "ledger_generation": 7,
-  "inventory_hash": "d4d54cb089c2b0b3d507217c7a1294e80e158633be1b28a605ae39d0b7c6b82e",
+  "ledger_hash": "d12508bb094465ec35b0368b66028e7a0661c4ac445c19cad75d77c58267d5c9",
+  "ledger_generation": 14,
+  "inventory_hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
     "sha256": "1807e0c9a16c3f373c3b1e7b61a698d28a6608efc00401140d2bb1fe8edf3207",
     "run_mode": "client-only / no-data-tier"
   },
   "campaign_decision": {
-    "decision": "create_new",
+    "decision": "select_existing",
     "campaign": "2026-10-20_fintasy-hero",
-    "reason": "User explicitly scoped a hero-only rebuild and directed to disregard all previous landing/design work, which is a distinct goal from the Stock Royale platform campaign.",
-    "identity_binding": "rebound",
+    "reason": "The hype section is the next section of the same marketing page: it shares the locked direction-A tokens, the page composition (index.vue and StandaloneHero.vue) and the portfolio transfer, and the user's wording continues that work.",
+    "identity_binding": "match",
     "evidence": [
-      "user_request:/wargame-goal 2026-10-20 'disregard the previous work done, imagine we are starting from scratch'",
-      ".wargaming/campaigns/2026-10-01_fintasy-stock-royale/ledger.md (Epics 8-11 landing work superseded by intent)",
-      "daemon: claims UNCLAIMED, 0 active sessions in scope (DAEMON_BUS_EMPTY)"
+      ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md (Epics 1-2)",
+      ".wargaming/campaigns/2026-10-20_fintasy-hero/campaign.md deferred 'sections below the hero'",
+      "user_request:/wargame-goal 2026-10-21 hype section"
     ],
     "rejected_candidates": [
       {
         "campaign": "2026-10-01_fintasy-stock-royale",
-        "reason": "Goal is the full Stock Royale platform; user explicitly decoupled this work from prior landing epics; prior session bound to a different client (antigravity)."
+        "reason": "Its landing epics were superseded by D1 (from-scratch rebuild)."
       }
     ]
   },
   "authority_grant": {
-    "grant_id": "grant-2026-10-20-hero-5-4-6",
-    "authorizing_message": "And do HERO-6 (answering 'Build HERO-5 now?')",
-    "campaign": "2026-10-20_fintasy-hero",
+    "grant_id": "grant-2026-10-21-hype-4-exec",
+    "authorizing_message": "Authorized: execute HYPE-4 per the battle plan on feature/hype-section (local commits only; no push/PR/merge).",
     "missions": [
-      "HERO-5",
-      "HERO-4 (dependency of HERO-6)",
-      "HERO-6"
+      "HYPE-4"
     ],
     "allowed_actions": [
       "implement",
       "test",
       "verify",
-      "local_commit",
-      "run_dev_server",
-      "local_static_build",
-      "pnpm_dlx_knip",
-      "write_wargame_artifacts"
+      "local_commit"
     ],
-    "forbidden": [
+    "forbidden_actions": [
       "git_push",
-      "deploy",
-      "hosting/publishing the standalone build",
-      "credential_mutation"
-    ]
+      "open_pr",
+      "merge_to_main",
+      "deploy"
+    ],
+    "granted_at": "2026-10-21T14:00:23-05:00"
   },
-  "last_verified_transition": "HERO-4@retained, HERO-5@activated, HERO-6@activated",
-  "next_transition": "HERO-6 activated -> outcome_verified: user opens the standalone build and confirms. Hosting it is Tier B (needs a grant naming where).",
+  "last_verified_transition": "HYPE-4 -> retained; HERO-6 -> outcome_verified (user confirmed the standalone page, 2026-10-21, 2227c2d)",
+  "next_transition": "No dependency-ready mission. Remaining Tier-B steps need explicit go-ahead: push feature/hype-section, open PR, merge to main (triggers deploy-images.yml). User will move the page into the portfolio repo.",
   "open_decisions": [],
-  "updated_at": "2026-10-20T00:00:00Z",
+  "updated_at": "2026-10-21T14:31:19-05:00",
   "rulings": [
     {
       "id": "D4",
@@ -76,5 +71,33 @@
   "links": {
     "case_study": "https://www.tinatseichingaya.com/projects/fintasy",
     "source": "https://github.com/Zedfoura/fintasy"
-  }
+  },
+  "prior_grants": [
+    {
+      "grant_id": "grant-2026-10-21-hype-2-3-exec",
+      "authorizing_message": "Authorized: execute HYPE-2 and HYPE-3 per the battle plans on feature/hype-section (worktrees, sequential local commits; no push/PR/merge).",
+      "missions": [
+        "HYPE-2",
+        "HYPE-3"
+      ],
+      "allowed_actions": [
+        "implement",
+        "test",
+        "verify",
+        "git_worktree",
+        "local_commit (sequential, parent only)",
+        "local_merge into feature/hype-section",
+        "run_dev_server",
+        "build",
+        "pnpm_dlx_knip",
+        "write_wargame_artifacts"
+      ],
+      "forbidden": [
+        "git_push",
+        "PR",
+        "merge to main",
+        "deploy"
+      ]
+    }
+  ]
 }

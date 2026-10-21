@@ -21,7 +21,7 @@
   "inventory": {
     "id": "fintasy-hero-campaign-flows-v2",
     "file": "../../campaigns/2026-10-20_fintasy-hero/flows/inventory.json",
-    "hash": "sha256:b1323e86e4dfb58818ac9ae68b1bcb13023ccc73dfcc1f61e35eee42308bb1a9"
+    "hash": "sha256:bfa298555bc4ac7ced9601b59d9154df45dc97f4ebe9ed91cdaa0e6324a2162c"
   },
   "claim": {
     "id": "mission_HERO-3",
@@ -35,6 +35,13 @@
         "evidence": "HERO-3 rewrites / to render only HeroSection on layout none.",
         "owner": "hero_layout lane (HERO-3)",
         "clearing_condition": "Reach ACTIVATION via parent live checks."
+      },
+      {
+        "flow_id": "FLOW-HYPE-SECTION",
+        "disposition": "excluded",
+        "evidence": "HERO-3 predates the hype section.",
+        "owner": "parent session",
+        "clearing_condition": "Re-scope if this mission's diff touches that flow's components."
       }
     ],
     "required_stage": "ACTIVATION",
@@ -192,11 +199,11 @@
           ]
         },
         {
-          "id": "PRR-hero-auth-guard",
-          "prerequisite_id": "PR-hero-auth-guard",
-          "state": "guard redirects signed-out",
+          "id": "PRR-hero-outbound",
+          "prerequisite_id": "PR-hero-outbound",
+          "state": "outbound URLs reachable",
           "status": "planned",
-          "evidence_or_reason": "Live click-through planned.",
+          "evidence_or_reason": "curl 200 for GitHub and case-study URLs (HERO-5).",
           "verifier_ids": [
             "hero-live-activation"
           ]
@@ -377,12 +384,10 @@
           "id": "MAT-hero-permission",
           "matrix_case_id": "MC-hero-permission",
           "dimension": "permission_entitlement",
-          "state": "guard redirect for primary CTA",
-          "status": "planned",
-          "evidence_or_reason": "Live click-through.",
-          "verifier_ids": [
-            "hero-live-activation"
-          ]
+          "state": "not applicable",
+          "status": "not_applicable",
+          "evidence_or_reason": "No gated content (ruling D4).",
+          "verifier_ids": []
         },
         {
           "id": "MAT-hero-reentry",
@@ -448,7 +453,7 @@
           "accessibility_capability_ids": [],
           "transition_ids": [
             "load-hero",
-            "enter-match"
+            "open-source"
           ],
           "coverage_ids": [
             "COV-hero-data",
@@ -457,7 +462,10 @@
           ],
           "boundary_row_ids": [],
           "matrix_row_ids": [],
-          "preserves": [],
+          "preserves": [
+            "/login and /dashboard/** still work inside the app but are not linked from /",
+            "dashboard keeps the DM font stack outside .hero"
+          ],
           "resilience_scenario_ids": [],
           "real_owned_boundaries": [],
           "doubled_boundaries": [
@@ -498,7 +506,7 @@
           ],
           "prerequisite_ids": [
             "PRR-hero-fonts",
-            "PRR-hero-auth-guard"
+            "PRR-hero-outbound"
           ],
           "target_binding_ids": [
             "TGT-hero-local-dev"
@@ -510,7 +518,7 @@
           ],
           "transition_ids": [
             "load-hero",
-            "enter-match"
+            "open-source"
           ],
           "coverage_ids": [
             "COV-hero-data",
@@ -528,12 +536,11 @@
             "MAT-hero-viewport",
             "MAT-hero-browser",
             "MAT-hero-input",
-            "MAT-hero-permission",
             "MAT-hero-reentry",
             "MAT-hero-volume"
           ],
           "preserves": [
-            "/login and /dashboard/** behave as before",
+            "/login and /dashboard/** still work inside the app but are not linked from /",
             "dashboard keeps the DM font stack outside .hero"
           ],
           "resilience_scenario_ids": [],

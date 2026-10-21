@@ -2,7 +2,7 @@
   "version": 2,
   "kind": "wargame-flow-inventory",
   "inventory_id": "fintasy-hero-campaign-flows-v2",
-  "discovery_evidence": "Inspected pages/index.vue, layouts, App.vue, modules/auth.ts, components/hero/*, Logo.vue and HeroSection.test.ts in wt/hero_layout (base 511b80c).",
+  "discovery_evidence": "Inspected pages/index.vue, layouts, App.vue, modules/auth.ts, components/hero/*, Logo.vue and HeroSection.test.ts in wt/hero_layout (base 511b80c). 2026-10-21: re-probed origin/main d46b06a (index.vue and StandaloneHero.vue compose the page); hero flow corrected for ruling D4; FLOW-HYPE-SECTION added for HYPE-1..4.",
   "golden_flow_status": "present",
   "omissions": [
     {
@@ -15,8 +15,8 @@
     {
       "id": "FLOW-HERO-FIRST-IMPRESSION",
       "tier": "golden",
-      "user_goal": "A signed-out visitor understands what Fintasy is from the hero and can start a match or sign in.",
-      "terminal_outcome": "The visitor sees one nav, the locked headline, the caption strip and visual frame, and 'Enter a match' leads to /dashboard/royale (auth guard redirects signed-out visitors to /login?redirect=/dashboard/royale).",
+      "user_goal": "A visitor (typically a recruiter) understands what Fintasy is from the hero and can open the source or the portfolio case study.",
+      "terminal_outcome": "The visitor sees one nav, the locked headline, the live visual and caption strip; 'View the source' opens https://github.com/Zedfoura/fintasy in a new tab and 'Read the case study' opens https://www.tinatseichingaya.com/projects/fintasy. No link points into the app (ruling D4).",
       "discovery_evidence": "pages/index.vue, layouts/none.vue, App.vue, modules/auth.ts isPublicRoute, components/hero/HeroSection.vue, HeroNav.vue, components/common/Logo.vue (router-link to /), tests/HeroSection.test.ts",
       "actor": {
         "id": "ACT-hero-visitor",
@@ -80,10 +80,10 @@
           "evidence": "vite.config.ts WebfontDownload list; vite build log downloads both css2 URLs"
         },
         {
-          "id": "PR-hero-auth-guard",
-          "description": "existing auth guard redirects signed-out /dashboard/royale to /login",
+          "id": "PR-hero-outbound",
+          "description": "GitHub repo and portfolio case-study URLs reachable",
           "requirement": "required",
-          "evidence": "modules/auth.ts isPublicRoute inspection"
+          "evidence": "curl 200 for both URLs (2026-10-20, HERO-5 receipt)"
         }
       ],
       "trace": {
@@ -91,7 +91,7 @@
         "route": "/",
         "component": "HeroSection (HeroNav, statement band, caption strip, visual slot)",
         "transport": "not applicable: static client-rendered marketing route",
-        "handler": "not applicable: client route; CTA hands off to vue-router + auth guard",
+        "handler": "not applicable: static outbound anchors (heroLinks.ts); no router hand-off",
         "data": "static copy and hero-scoped tokens (tokens.json); strip state from props / onVisualUpdate",
         "consumer": "mounted index route rendered in the browser"
       },
@@ -141,7 +141,7 @@
           "id": "ST-hero-success",
           "category": "success",
           "requirement": "required",
-          "oracle": "Enter a match reaches /dashboard/royale or /login?redirect=%2Fdashboard%2Froyale when signed out",
+          "oracle": "primary CTA href is the GitHub URL (new tab, noopener noreferrer); secondary CTA href is the case-study URL; zero relative links",
           "evidence": "terminal outcome"
         },
         {
@@ -206,7 +206,7 @@
           "id": "MC-hero-identity",
           "dimension": "identity_role_tenant",
           "requirement": "required",
-          "evidence": "Signed-out vs signed-in CTA destination."
+          "evidence": "Signed-in and signed-out visitors see identical outbound-only links (D4)."
         },
         {
           "id": "MC-hero-viewport",
@@ -236,8 +236,9 @@
         {
           "id": "MC-hero-permission",
           "dimension": "permission_entitlement",
-          "requirement": "required",
-          "evidence": "Auth guard redirect of the primary CTA."
+          "requirement": "not_applicable",
+          "evidence": "D4 removed the auth-guarded CTA.",
+          "not_applicable_reason": "The hero links nowhere inside the app, so no permission or entitlement gates any step."
         },
         {
           "id": "MC-hero-reentry",
@@ -270,17 +271,17 @@
           "if_fails": "Inspect route meta layout, mounted components, and nav count in the DOM.",
           "cleanup": "not applicable: read-only navigation",
           "next_transition_ids": [
-            "enter-match"
+            "open-source"
           ]
         },
         {
-          "id": "enter-match",
-          "action": "Activate 'Enter a match'.",
+          "id": "open-source",
+          "action": "Activate 'View the source'.",
           "external_prerequisites": [
-            "PR-hero-auth-guard"
+            "PR-hero-outbound"
           ],
-          "signal": "URL becomes /login?redirect=%2Fdashboard%2Froyale when signed out.",
-          "if_fails": "Inspect RouterLink target and modules/auth.ts guard.",
+          "signal": "A new tab opens https://github.com/Zedfoura/fintasy; the hero tab stays on /.",
+          "if_fails": "Inspect heroLinks.ts SOURCE_URL and the anchor target/rel attributes.",
           "cleanup": "not applicable: no state written",
           "next_transition_ids": []
         }
@@ -289,11 +290,289 @@
         "load-hero"
       ],
       "terminal_transition_ids": [
-        "enter-match"
+        "open-source"
       ],
       "known_good_invariants": [
-        "/login and /dashboard/** behave as before",
+        "/login and /dashboard/** still work inside the app but are not linked from /",
         "dashboard keeps the DM font stack outside .hero"
+      ]
+    },
+    {
+      "id": "FLOW-HYPE-SECTION",
+      "tier": "critical_secondary",
+      "user_goal": "Having seen the hero, the visitor scrolls into the hype section and comes away knowing the game's core mechanics and why it is exciting, then can open the source or case study.",
+      "terminal_outcome": "Below the hero, one hype section (h2-led, no second nav) presents the game's mechanics as feature beats using only DATA-MODEL-AUTHORITY facts; nothing claims the game is playable or coming soon; outbound links stay GitHub/case-study only.",
+      "discovery_evidence": "Planned (HYPE-1..4): pages/index.vue and hero-standalone/StandaloneHero.vue both compose the page (probed 2026-10-21 at origin/main d46b06a); DATA-MODEL-AUTHORITY.md §1.2 lists the mechanics.",
+      "actor": {
+        "id": "ACT-hype-visitor",
+        "identity": "anonymous visitor",
+        "role": "recruiter or portfolio reader",
+        "tenant_or_account": "not applicable: public marketing page"
+      },
+      "entry_points": [
+        {
+          "id": "EP-hype-scroll",
+          "kind": "navigation",
+          "location": "scroll from the hero on /",
+          "component": "HypeSection",
+          "consumer": "page composition shared by / and the standalone build",
+          "activation_oracle": "scrolling past the hero brings the hype section h2 into view; the hero visual pauses offscreen",
+          "applicability": "required"
+        },
+        {
+          "id": "EP-hype-deeplink",
+          "kind": "deep_link",
+          "location": "/#match",
+          "component": "HypeSection",
+          "consumer": "page composition shared by / and the standalone build",
+          "activation_oracle": "direct load with the anchor scrolls to the section",
+          "applicability": "required",
+          "applicability_evidence": "hype-direction.md locks anchor #match (HYPE-1). Live 2026-10-21: direct load of /#match lands the section at top=0 on dev :3333 (375, 1440) and on vite preview of dist-hero :4173."
+        },
+        {
+          "id": "EP-hype-reentry",
+          "kind": "reentry",
+          "location": "refresh while scrolled into the section",
+          "component": "HypeSection",
+          "consumer": "page composition shared by / and the standalone build",
+          "activation_oracle": "refresh restores the page; the section renders identically",
+          "applicability": "required"
+        }
+      ],
+      "reentry_applicability": {
+        "status": "required",
+        "evidence": "Public route; refresh and back-navigation return to /."
+      },
+      "target_bindings": [
+        {
+          "id": "TGT-hype-local-dev",
+          "environment": "local Vite dev server http://localhost:3333 and vite preview of dist-hero (http://localhost:4173)",
+          "consumer": "packages/client route / and hero-standalone build",
+          "authority": "Zedfoura/fintasy local checkout",
+          "ref": "branch cut from origin/main d46b06a at execution time",
+          "entry_point_ids": [
+            "EP-hype-scroll",
+            "EP-hype-deeplink",
+            "EP-hype-reentry"
+          ],
+          "applicability": "required"
+        }
+      ],
+      "external_prerequisites": [
+        {
+          "id": "PR-hype-fonts",
+          "description": "Archivo and JetBrains Mono (shared with the hero)",
+          "requirement": "required",
+          "evidence": "vite.config.ts and vite.hero.config.ts WebfontDownload lists"
+        }
+      ],
+      "trace": {
+        "id": "TRACE-hype-section",
+        "route": "/ (and standalone index.html)",
+        "component": "HypeSection (feature beats, optional vignettes)",
+        "transport": "not applicable: static client-rendered marketing page",
+        "handler": "not applicable: no service call",
+        "data": "static copy from DATA-MODEL-AUTHORITY facts and hero tokens.json",
+        "consumer": "mounted page in the browser"
+      },
+      "owned_boundaries": [
+        "browser"
+      ],
+      "boundary_requirements": [
+        {
+          "id": "BR-hype-browser",
+          "boundary": "browser",
+          "requirement": "required",
+          "evidence": "owned mounted route"
+        }
+      ],
+      "state_cases": [
+        {
+          "id": "ST-hype-initial",
+          "category": "initial",
+          "requirement": "required",
+          "oracle": "section renders below the hero with an h2 and every feature beat",
+          "evidence": "HeroSection defaults"
+        },
+        {
+          "id": "ST-hype-loading",
+          "category": "loading",
+          "requirement": "required",
+          "oracle": "vignettes (if any) show a static frame before animating; no layout shift",
+          "evidence": "slot fallback + font-display swap"
+        },
+        {
+          "id": "ST-hype-empty",
+          "category": "empty",
+          "requirement": "not_applicable",
+          "oracle": "no data-driven list",
+          "evidence": "static copy inspection",
+          "not_applicable_reason": "The hero has no user or service data that can be empty."
+        },
+        {
+          "id": "ST-hype-error",
+          "category": "error",
+          "requirement": "not_applicable",
+          "oracle": "no runtime service call",
+          "evidence": "trace inspection",
+          "not_applicable_reason": "No transport or handler exists on the hero route."
+        },
+        {
+          "id": "ST-hype-success",
+          "category": "success",
+          "requirement": "required",
+          "oracle": "every beat is readable and the outbound links are unchanged",
+          "evidence": "terminal outcome"
+        },
+        {
+          "id": "ST-hype-reentry",
+          "category": "reentry",
+          "requirement": "required",
+          "oracle": "refresh re-renders the section identically",
+          "evidence": "router contract"
+        },
+        {
+          "id": "ST-hype-concurrency",
+          "category": "concurrency",
+          "requirement": "not_applicable",
+          "oracle": "read-only route",
+          "evidence": "no mutable state",
+          "not_applicable_reason": "The hero performs no writes."
+        },
+        {
+          "id": "ST-hype-accessibility",
+          "category": "accessibility",
+          "requirement": "required",
+          "oracle": "h2/h3 hierarchy under the single h1, no second nav, reduced-motion static frames, decorative visuals aria-hidden with text equivalents",
+          "evidence": "hype-direction.md accessibility gate"
+        }
+      ],
+      "accessibility_capabilities": [
+        {
+          "id": "A11Y-hype-structure",
+          "capability": "headings and landmarks",
+          "requirement": "required",
+          "oracle": "h2 section heading, h3 per beat, landmark is a section labelled by its h2",
+          "evidence": "HeroSection markup",
+          "semantics": [
+            "semantics_status",
+            "automated_scan"
+          ]
+        },
+        {
+          "id": "A11Y-hype-keyboard",
+          "capability": "keyboard navigation and focus",
+          "requirement": "required",
+          "oracle": "any interactive element in the section is Tab-reachable with visible focus",
+          "evidence": "focus-visible styles",
+          "semantics": [
+            "keyboard_focus"
+          ]
+        },
+        {
+          "id": "A11Y-hype-reflow",
+          "capability": "zoom and reflow",
+          "requirement": "required",
+          "oracle": "no horizontal scroll at 375, 768, 1440",
+          "evidence": "responsive tokens",
+          "semantics": [
+            "zoom_reflow",
+            "visual_perceptual"
+          ]
+        }
+      ],
+      "matrix_cases": [
+        {
+          "id": "MC-hype-identity",
+          "dimension": "identity_role_tenant",
+          "requirement": "required",
+          "evidence": "Public page; identical for every visitor."
+        },
+        {
+          "id": "MC-hype-viewport",
+          "dimension": "viewport_breakpoint",
+          "requirement": "required",
+          "evidence": "760px stack breakpoint; 375/768/1440 checks."
+        },
+        {
+          "id": "MC-hype-browser",
+          "dimension": "browser_platform",
+          "requirement": "required",
+          "evidence": "Desktop browser pane (Chromium) per battle plan."
+        },
+        {
+          "id": "MC-hype-input",
+          "dimension": "input_modality",
+          "requirement": "required",
+          "evidence": "Pointer and keyboard links."
+        },
+        {
+          "id": "MC-hype-network",
+          "dimension": "network_service",
+          "requirement": "not_applicable",
+          "evidence": "Static route trace.",
+          "not_applicable_reason": "No service boundary on the hero route."
+        },
+        {
+          "id": "MC-hype-permission",
+          "dimension": "permission_entitlement",
+          "requirement": "not_applicable",
+          "evidence": "No gated content (D4).",
+          "not_applicable_reason": "The hero links nowhere inside the app, so no permission or entitlement gates any step."
+        },
+        {
+          "id": "MC-hype-reentry",
+          "dimension": "lifecycle_reentry",
+          "requirement": "required",
+          "evidence": "Refresh/back to /."
+        },
+        {
+          "id": "MC-hype-volume",
+          "dimension": "data_volume_content",
+          "requirement": "required",
+          "evidence": "Longest beat copy and the largest beat count fixed at HYPE-1."
+        },
+        {
+          "id": "MC-hype-locale",
+          "dimension": "locale_content",
+          "requirement": "not_applicable",
+          "evidence": "Hero copy is authored English only (hype-direction.md).",
+          "not_applicable_reason": "Hero copy is not routed through vue-i18n."
+        }
+      ],
+      "transitions": [
+        {
+          "id": "scroll-into-hype",
+          "action": "Load / and scroll past the hero.",
+          "external_prerequisites": [
+            "PR-hype-fonts"
+          ],
+          "signal": "Hype section h2 is in the viewport; hero canvas loop paused (IntersectionObserver).",
+          "if_fails": "Inspect page composition order and the section's mount.",
+          "cleanup": "not applicable: read-only",
+          "next_transition_ids": [
+            "read-beats"
+          ]
+        },
+        {
+          "id": "read-beats",
+          "action": "Scroll through every feature beat.",
+          "external_prerequisites": [],
+          "signal": "Each beat's h3 and copy render; vignettes animate or show static frames under reduced motion.",
+          "if_fails": "Inspect beat data and vignette mounts.",
+          "cleanup": "not applicable: read-only",
+          "next_transition_ids": []
+        }
+      ],
+      "start_transition_ids": [
+        "scroll-into-hype"
+      ],
+      "terminal_transition_ids": [
+        "read-beats"
+      ],
+      "known_good_invariants": [
+        "hero (FLOW-HERO-FIRST-IMPRESSION) unchanged: one nav, one h1, outbound-only links",
+        "standalone bundle stays free of router/auth/API code"
       ]
     }
   ]

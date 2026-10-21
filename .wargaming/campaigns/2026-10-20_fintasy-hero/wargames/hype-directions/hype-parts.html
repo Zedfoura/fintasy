@@ -1,0 +1,267 @@
+<!-- ===================== STYLE ===================== -->
+<style id="hype-style">
+  .hype {
+    --ink: #0D0D0C; --bone: #ECE9E2; --body: #B9B5AC; --mute: #8E8B84; --violet: #8B7CFF; --line: rgba(236,233,226,.12);
+    --tile: #141413; --tile2: #1A1A18;
+    --gutter: clamp(16px, 5.4vw, 108px);
+    display: none; background: var(--ink); color: var(--bone); font-family: 'Archivo', sans-serif;
+    padding: clamp(72px, 12vh, 160px) var(--gutter) clamp(72px, 12vh, 140px); border-top: 1px solid var(--line);
+  }
+  .hype.on { display: block; }
+  .hype h2, .hype h3, .hype p { margin: 0; }
+  .hype .kicker { font: 400 12px/1 'JetBrains Mono', monospace; letter-spacing: .04em; color: var(--mute); }
+  .hype .kicker b { color: var(--violet); font-weight: 400; }
+  .hype h2 { font-weight: 450; font-size: clamp(36px, 4.6vw, 80px); line-height: .98; letter-spacing: -.035em; }
+  .hype p { font: 400 14px/1.65 'JetBrains Mono', monospace; color: var(--body); }
+  .hype .num { font-variation-settings: 'wdth' 125; font-weight: 500; letter-spacing: -.03em; line-height: .9; }
+  .hype canvas { display: block; width: 100%; height: 100%; }
+  .frame { position: relative; border: 1px solid var(--line); background: #10100F; overflow: hidden; }
+  .frame .cap { position: absolute; left: 12px; bottom: 10px; font: 400 11px/1 'JetBrains Mono', monospace; color: var(--mute); letter-spacing: .04em; pointer-events: none; }
+
+  /* ---- H1 · MATCH TIMELINE ---- */
+  .t-head { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); column-gap: 24px; align-items: end; margin-bottom: clamp(48px, 8vh, 96px); }
+  .t-head .kicker { grid-column: 1 / span 12; margin-bottom: 28px; }
+  .t-head h2 { grid-column: 1 / span 8; }
+  .t-head p { grid-column: 9 / span 4; }
+  .beat { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); column-gap: 24px; padding: clamp(28px, 5vh, 48px) 0; border-top: 1px solid var(--line); align-items: start; }
+  .beat:last-of-type { border-bottom: 1px solid var(--line); }
+  .beat .num { grid-column: 1 / span 2; font-size: clamp(44px, 5vw, 88px); color: var(--violet); }
+  .beat .txt { grid-column: 3 / span 4; display: flex; flex-direction: column; gap: 14px; padding-top: 6px; }
+  .beat h3 { font-weight: 500; font-size: clamp(24px, 2.2vw, 36px); letter-spacing: -.02em; line-height: 1.05; }
+  .beat .frame { grid-column: 8 / span 5; aspect-ratio: 16 / 9; }
+  .t-stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 36px; font: 400 12px/1 'JetBrains Mono', monospace; color: var(--mute); }
+  .t-stats b { color: var(--bone); font-weight: 400; }
+
+  /* ---- H2 · LOADOUT GRID ---- */
+  .g-head { display: flex; flex-direction: column; gap: 22px; margin-bottom: clamp(40px, 7vh, 80px); max-width: 980px; }
+  .grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 12px; }
+  .card { position: relative; border: 1px solid var(--line); background: var(--tile); padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; min-height: 260px; overflow: hidden; }
+  .card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; position: relative; z-index: 1; }
+  .card .num { font-size: clamp(56px, 6vw, 112px); }
+  .card .num.v { color: var(--violet); }
+  .card .lab { font: 400 12px/1.3 'JetBrains Mono', monospace; color: var(--mute); text-align: right; }
+  .card h3 { font-weight: 500; font-size: clamp(20px, 1.6vw, 26px); letter-spacing: -.015em; position: relative; z-index: 1; }
+  .card p { position: relative; z-index: 1; max-width: 44ch; }
+  .card .bg { position: absolute; inset: 0; opacity: .45; }
+  .c-duel { grid-column: span 7; min-height: 420px; }
+  .c-storm { grid-column: span 5; min-height: 420px; }
+  .c-lobby, .c-lev, .c-third { grid-column: span 4; }
+  .c-rank { grid-column: span 12; min-height: 0; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .lev { display: flex; gap: 6px; font: 500 13px/1 'JetBrains Mono', monospace; }
+  .lev span { border: 1px solid var(--line); padding: 8px 10px; color: var(--mute); }
+  .lev span:last-child { border-color: var(--violet); color: var(--violet); }
+  .ladder { display: flex; align-items: center; gap: 14px; font: 400 13px/1 'JetBrains Mono', monospace; color: var(--mute); }
+  .ladder .rung { width: 64px; height: 1px; background: linear-gradient(90deg, var(--line), var(--violet)); }
+  .ladder b { color: var(--bone); font-weight: 400; }
+
+  /* ---- H3 · PATCH NOTES ---- */
+  .p-wrap { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); column-gap: 24px; }
+  .p-side { grid-column: 1 / span 4; position: sticky; top: 40px; align-self: start; display: flex; flex-direction: column; gap: 24px; }
+  .p-side .meta { font: 400 12px/1.7 'JetBrains Mono', monospace; color: var(--mute); }
+  .p-main { grid-column: 6 / span 7; display: flex; flex-direction: column; gap: 40px; }
+  .p-spec { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .p-spec div { padding: 22px 0 18px; border-left: 1px solid var(--line); padding-left: 16px; }
+  .p-spec div:first-child { border-left: 0; padding-left: 0; }
+  .p-spec .num { font-size: clamp(36px, 3.6vw, 60px); display: block; }
+  .p-spec small { font: 400 11px/1 'JetBrains Mono', monospace; color: var(--mute); letter-spacing: .04em; }
+  .p-tape { height: 72px; }
+  .notes { list-style: none; margin: 0; padding: 0; }
+  .notes li { display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 20px; padding: 22px 0; border-top: 1px solid var(--line); }
+  .notes li:last-child { border-bottom: 1px solid var(--line); }
+  .tag { font: 500 11px/1 'JetBrains Mono', monospace; color: var(--violet); letter-spacing: .06em; padding-top: 4px; }
+  .notes h3 { font-weight: 500; font-size: 20px; letter-spacing: -.01em; margin-bottom: 8px; }
+
+  /* prototype chrome */
+  .hchrome { position: fixed; z-index: 99; left: 12px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 4px; font: 500 11px/1 'JetBrains Mono', monospace; }
+  .hchrome a { background: rgba(30,30,30,.82); color: #ddd; padding: 8px 9px; border-radius: 4px; text-decoration: none; }
+  .hchrome a.on { background: #8B7CFF; color: #0D0D0C; }
+
+  @media (max-width: 760px) {
+    .t-head, .beat, .p-wrap { grid-template-columns: minmax(0,1fr); row-gap: 18px; }
+    .t-head .kicker, .t-head h2, .t-head p, .beat .num, .beat .txt, .beat .frame, .p-side, .p-main { grid-column: 1 / -1; }
+    .p-side { position: static; }
+    .grid { grid-template-columns: minmax(0,1fr); }
+    .c-duel, .c-storm, .c-lobby, .c-lev, .c-third, .c-rank { grid-column: 1 / -1; min-height: 300px; }
+    .c-rank { min-height: 0; }
+    .p-spec { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .p-spec div:nth-child(3) { border-left: 0; padding-left: 0; }
+    .notes li { grid-template-columns: minmax(0,1fr); gap: 8px; }
+    .hchrome { top: auto; bottom: 10px; transform: none; flex-direction: row; left: 10px; }
+  }
+</style>
+
+<!-- ===================== MARKUP ===================== -->
+<!-- FACTS:h1 -->
+<section class="hype" id="h1" aria-labelledby="h1-title">
+  <div class="t-head">
+    <div class="kicker"><b>[</b> How a match is won <b>]</b></div>
+    <h2 id="h1-title">Drop in. Trade hard.<br>Stay solvent.</h2>
+    <p>Every match runs the same four beats. Survive all of them and you're the last trader standing.</p>
+  </div>
+  <article class="beat">
+    <div class="num" aria-hidden="true">01</div>
+    <div class="txt"><h3>Drop</h3><p>Eleven sectors, three rings. Pick a drop zone. Land uncontested and that sector's ticker loot is yours.</p></div>
+    <div class="frame"><canvas data-vig="drop" aria-hidden="true"></canvas><span class="cap">Sector map</span></div>
+  </article>
+  <article class="beat">
+    <div class="num" aria-hidden="true">02</div>
+    <div class="txt"><h3>Duel</h3><p>Meet a rival and a 30-second trading duel starts. Long or short, 1x–5x leverage. Higher P&amp;L takes the fight, the tickers and the bounty.</p></div>
+    <div class="frame"><canvas data-vig="duel" aria-hidden="true"></canvas><span class="cap">P&amp;L race</span></div>
+  </article>
+  <article class="beat">
+    <div class="num" aria-hidden="true">03</div>
+    <div class="txt"><h3>Storm</h3><p>A liquidity storm collapses the map ring by ring over 5 rounds. Caught outside, your $15,000 bleeds every tick.</p></div>
+    <div class="frame"><canvas data-vig="storm" aria-hidden="true"></canvas><span class="cap">Storm boundary</span></div>
+  </article>
+  <article class="beat">
+    <div class="num" aria-hidden="true">04</div>
+    <div class="txt"><h3>Last one solvent</h3><p>Third parties crash live duels. AI bots fill every empty seat. Up to 60 traders drop in. One walks out.</p></div>
+    <div class="frame"><canvas data-vig="lobby" aria-hidden="true"></canvas><span class="cap">Traders remaining</span></div>
+  </article>
+  <div class="t-stats"><span><b>60</b> traders</span><span><b>11</b> sectors</span><span><b>30 s</b> duels</span><span><b>10 Hz</b> ticks</span><span><b>5</b> rounds</span></div>
+</section>
+<!-- /FACTS:h1 -->
+
+<!-- FACTS:h2 -->
+<section class="hype" id="h2" aria-labelledby="h2-title">
+  <div class="g-head">
+    <div class="kicker"><b>[</b> Loadout <b>]</b></div>
+    <h2 id="h2-title">Everything that happens<br>between the drop and the win.</h2>
+  </div>
+  <div class="grid">
+    <article class="card c-duel"><canvas class="bg" data-vig="duel" aria-hidden="true"></canvas>
+      <div class="top"><span class="num v">30s</span><span class="lab">Duel clock</span></div>
+      <div><h3>Trading duels</h3><p>Contest a sector and the fight is a trade. Long or short against a live price. Higher P&amp;L when the clock hits zero takes everything.</p></div>
+    </article>
+    <article class="card c-storm"><canvas class="bg" data-vig="storm" aria-hidden="true"></canvas>
+      <div class="top"><span class="num">5</span><span class="lab">Rounds of<br>storm</span></div>
+      <div><h3>The liquidity storm</h3><p>The map shrinks from the outer ring inward. Outside the line, your capital drains every tick.</p></div>
+    </article>
+    <article class="card c-lobby"><canvas class="bg" data-vig="lobby" aria-hidden="true"></canvas>
+      <div class="top"><span class="num">60</span><span class="lab">Traders<br>per match</span></div>
+      <div><h3>Full lobbies</h3><p>AI bots fill every empty seat, each with a risk style: Scalper, Swing or Degenerate.</p></div>
+    </article>
+    <article class="card c-lev">
+      <div class="top"><span class="num">5x</span><span class="lab">Max<br>leverage</span></div>
+      <div class="lev" aria-hidden="true"><span>1x</span><span>2x</span><span>3x</span><span>4x</span><span>5x</span></div>
+      <div><h3>Pick your risk</h3><p>Scale every position from 1x–5x. Bigger swings, faster wins, faster liquidations.</p></div>
+    </article>
+    <article class="card c-third">
+      <div class="top"><span class="num v">2+</span><span class="lab">Traders<br>per duel</span></div>
+      <div><h3>Third-party chaos</h3><p>Anyone nearby can crash a live duel. The spoils split by P&amp;L across every trader in the fight.</p></div>
+    </article>
+    <article class="card c-rank">
+      <h3>Ranked, from Copper to Golden Trader</h3>
+      <div class="ladder" aria-hidden="true"><b>Copper</b><span class="rung"></span>Divisions I–III<span class="rung"></span><b>Golden Trader</b></div>
+    </article>
+  </div>
+</section>
+<!-- /FACTS:h2 -->
+
+<!-- FACTS:h3 -->
+<section class="hype" id="h3" aria-labelledby="h3-title">
+  <div class="p-wrap">
+    <div class="p-side">
+      <div class="kicker"><b>[</b> Field manual <b>]</b></div>
+      <h2 id="h3-title">Built like a real-time game.</h2>
+      <p class="meta">Seeded · deterministic · replayable<br>A project by Tinatsei Chingaya</p>
+    </div>
+    <div class="p-main">
+      <div class="p-spec">
+        <div><span class="num">60</span><small>TRADERS</small></div>
+        <div><span class="num">10<span style="font-size:.45em"> Hz</span></span><small>TICK LOOP</small></div>
+        <div><span class="num">30<span style="font-size:.45em"> s</span></span><small>DUELS</small></div>
+        <div><span class="num">11</span><small>SECTORS</small></div>
+      </div>
+      <div class="frame p-tape"><canvas data-vig="tape" aria-hidden="true"></canvas><span class="cap">Price feed · seeded</span></div>
+      <ul class="notes">
+        <li><span class="tag">[MATCH]</span><div><h3>Lobbies that always fill</h3><p>30–60 traders per match. Empty seats go to AI bots playing Scalper, Swing or Degenerate risk styles.</p></div></li>
+        <li><span class="tag">[MAP]</span><div><h3>Eleven sectors, three rings</h3><p>Utilities and real estate on the outside, AI semiconductors and high-beta at the core. The storm closes them over 5 rounds.</p></div></li>
+        <li><span class="tag">[DUEL]</span><div><h3>The fight is a trade</h3><p>Contested sectors trigger 30–60 second trading duels: long or short, 1x–5x leverage. The winner takes the P&amp;L and the loot.</p></div></li>
+        <li><span class="tag">[CHAOS]</span><div><h3>Third parties welcome</h3><p>Anyone nearby can join a live duel. Multi-way P&amp;L decides who walks away with what.</p></div></li>
+        <li><span class="tag">[ENGINE]</span><div><h3>Every match replays exactly</h3><p>Prices tick at 10 Hz from seeded Geometric Brownian Motion with sector correlation and event shocks.</p></div></li>
+        <li><span class="tag">[RANKED]</span><div><h3>Copper to Golden Trader</h3><p>MMR from placement, liquidations and lobby strength, with divisions I–III in every tier.</p></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- /FACTS:h3 -->
+
+<nav class="hchrome" aria-label="Section direction switcher (prototype)"><a href="#" data-h="h1">1</a><a href="#" data-h="h2">2</a><a href="#" data-h="h3">3</a></nav>
+
+<!-- ===================== SCRIPT ===================== -->
+<script id="hype-script">
+(() => {
+  const RED = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const V = { violet: '#8B7CFF', bone: '#ECE9E2', mute: 'rgba(236,233,226,.35)', line: 'rgba(236,233,226,.12)', tile: ['#121211', '#161615', '#1B1B19'] }
+  const vigs = []
+  function size(cv) { const d = Math.min(devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== Math.round(w * d)) { cv.width = Math.round(w * d); cv.height = Math.round(h * d) } const c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); return [c, w, h] }
+  const R = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296 }
+  const G = r => Math.sqrt(-2 * Math.log(r() + 1e-9)) * Math.cos(2 * Math.PI * r())
+
+  const draw = {
+    drop(c, w, h, t) { // 11-sector ring map, a dot lands on the inner ring
+      c.fillStyle = '#10100F'; c.fillRect(0, 0, w, h)
+      const rings = [[.06, .1], [.22, .28], [.38, .44]]
+      rings.forEach(([fx, fy], i) => { const x = w * fx, y = h * fy; c.fillStyle = V.tile[i]; c.fillRect(x, y, w - 2 * x, h - 2 * y); c.strokeStyle = V.line; c.strokeRect(x + .5, y + .5, w - 2 * x - 1, h - 2 * y - 1) })
+      const p = (t % 4) / 4, tx = w * .5, ty = h * .5, sx = w * .15, sy = -10
+      const e = Math.min(1, p * 1.6), x = sx + (tx - sx) * e, y = sy + (ty - sy) * e * e
+      c.fillStyle = V.bone; c.beginPath(); c.arc(x, y, 3.5, 0, 7); c.fill()
+      if (e >= 1) { const r = 6 + (p - .625) * 60; c.strokeStyle = `rgba(139,124,255,${Math.max(0, 1 - (p - .625) * 2.6)})`; c.beginPath(); c.arc(tx, ty, r, 0, 7); c.stroke() }
+    },
+    duel(c, w, h, t, st) { // two P&L lines race for 30 s, winner violet
+      c.fillStyle = 'rgba(0,0,0,0)'; c.clearRect(0, 0, w, h)
+      if (!st.a || t - st.t0 > 6.5) { const r = R(Math.floor(t * 7)); st.a = [0]; st.b = [0]; for (let i = 1; i < 120; i++) { st.a.push(st.a[i - 1] + G(r) * 1.1 + .05); st.b.push(st.b[i - 1] + G(r) * 1.1 - .02) } st.t0 = t }
+      const k = Math.min(119, Math.floor((t - st.t0) / 5 * 119)), all = st.a.concat(st.b), mn = Math.min(...all), mx = Math.max(...all)
+      const Y = v => h * .82 - (v - mn) / (mx - mn || 1) * h * .6, X = i => w * .06 + (w * .88) * i / 119
+      const win = st.a[k] >= st.b[k]
+      ;[[st.a, win], [st.b, !win]].forEach(([s, lead]) => { c.strokeStyle = lead ? V.violet : V.mute; c.lineWidth = lead ? 1.8 : 1.2; c.beginPath(); for (let i = 0; i <= k; i++) i ? c.lineTo(X(i), Y(s[i])) : c.moveTo(X(i), Y(s[i])); c.stroke() })
+      c.fillStyle = V.mute; c.font = '400 11px "JetBrains Mono", monospace'; c.textAlign = 'right'; c.fillText(`0:${String(Math.max(0, 30 - Math.floor((t - st.t0) / 5 * 30))).padStart(2, '0')}`, w - 12, 20); c.textAlign = 'left'
+    },
+    storm(c, w, h, t) { // violet storm closing through 5 rounds
+      c.clearRect(0, 0, w, h); c.fillStyle = '#10100F'; c.fillRect(0, 0, w, h)
+      const q = (t % 10) / 10, k = Math.floor(q * 5), f = q * 5 - k, e = f < .5 ? 0 : (1 - Math.cos(Math.PI * (f - .5) / .5)) / 2, s = (k + e) / 5
+      const ix = w * .42 * s, iy = h * .4 * s
+      c.fillStyle = V.tile[1]; c.fillRect(ix, iy, w - 2 * ix, h - 2 * iy)
+      c.save(); c.beginPath(); c.rect(0, 0, w, h); c.rect(ix, iy, w - 2 * ix, h - 2 * iy); c.clip('evenodd'); c.fillStyle = 'rgba(139,124,255,.24)'; c.fillRect(0, 0, w, h); c.restore()
+      c.strokeStyle = V.violet; c.setLineDash(e > 0 && e < 1 ? [6, 5] : []); c.strokeRect(ix + .5, iy + .5, w - 2 * ix - 1, h - 2 * iy - 1); c.setLineDash([])
+      c.fillStyle = V.mute; c.font = '400 11px "JetBrains Mono", monospace'; c.textAlign = 'right'; c.fillText(`ROUND ${k + 1} / 5`, w - 12, 20); c.textAlign = 'left'
+    },
+    lobby(c, w, h, t) { // 60 dots, eliminated one by one down to 1
+      c.clearRect(0, 0, w, h)
+      const cols = 12, rows = 5, gx = w / (cols + 1), gy = h / (rows + 1.6), p = (t % 9) / 9, alive = Math.max(1, Math.round(60 - p * 1.25 * 59))
+      const order = []; const r = R(60); for (let i = 0; i < 60; i++) order.push(i); for (let i = 59; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [order[i], order[j]] = [order[j], order[i]] }
+      const dead = new Set(order.slice(0, 60 - alive))
+      for (let i = 0; i < 60; i++) { const x = gx * (i % cols + 1), y = gy * (Math.floor(i / cols) + 1); if (dead.has(i)) { c.strokeStyle = V.line; c.beginPath(); c.moveTo(x - 3, y - 3); c.lineTo(x + 3, y + 3); c.moveTo(x + 3, y - 3); c.lineTo(x - 3, y + 3); c.stroke() } else { c.fillStyle = alive === 1 ? V.violet : V.bone; c.beginPath(); c.arc(x, y, alive === 1 ? 5 : 2.6, 0, 7); c.fill() } }
+    },
+    tape(c, w, h, t, st) { // seeded 10 Hz price tape scrolling
+      c.clearRect(0, 0, w, h)
+      if (!st.s) { const r = R(2026); st.r = r; st.s = [100]; for (let i = 1; i < 240; i++) st.s.push(st.s[i - 1] * Math.exp(G(r) * .004)); st.acc = 0 }
+      st.acc += 1 / 60; while (st.acc > .1) { st.acc -= .1; st.s.push(st.s[st.s.length - 1] * Math.exp(G(st.r) * .004)); st.s.shift() }
+      const mn = Math.min(...st.s), mx = Math.max(...st.s)
+      c.strokeStyle = V.violet; c.lineWidth = 1.4; c.beginPath(); st.s.forEach((v, i) => { const x = w * i / 239, y = h * .82 - (v - mn) / (mx - mn || 1) * h * .64; i ? c.lineTo(x, y) : c.moveTo(x, y) }); c.stroke()
+    },
+  }
+
+  document.querySelectorAll('canvas[data-vig]').forEach(cv => vigs.push({ cv, fn: draw[cv.dataset.vig], st: {}, vis: false }))
+  const io = new IntersectionObserver(es => es.forEach(e => { const v = vigs.find(v => v.cv === e.target); if (v) v.vis = e.isIntersecting }), { threshold: .1 })
+  vigs.forEach(v => io.observe(v.cv))
+  function frame(ts) {
+    const t = ts / 1000
+    for (const v of vigs) { if (!v.vis || !v.cv.offsetParent) continue; const [c, w, h] = size(v.cv); v.fn(c, w, h, t, v.st) }
+    if (!RED) requestAnimationFrame(frame)
+  }
+  if (RED) setTimeout(() => { vigs.forEach(v => { if (v.cv.offsetParent) { const [c, w, h] = size(v.cv); v.fn(c, w, h, 3.7, v.st) } }) }, 50)
+  else requestAnimationFrame(frame)
+
+  function showH(id) {
+    document.querySelectorAll('.hype').forEach(s => s.classList.toggle('on', s.id === id))
+    document.querySelectorAll('.hchrome a').forEach(a => a.classList.toggle('on', a.dataset.h === id))
+    if (RED) setTimeout(() => vigs.forEach(v => { if (v.cv.offsetParent) { const [c, w, h] = size(v.cv); v.fn(c, w, h, 3.7, v.st) } }), 30)
+  }
+  window.goH = showH
+  document.querySelectorAll('.hchrome a').forEach(a => a.addEventListener('click', e => { e.preventDefault(); showH(a.dataset.h) }))
+  addEventListener('keydown', e => { if ('123'.includes(e.key)) showH('h' + e.key) })
+  showH(new URLSearchParams(location.search).get('h') || 'h1')
+})()
+</script>

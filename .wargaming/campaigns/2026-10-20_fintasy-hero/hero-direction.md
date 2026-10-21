@@ -7,7 +7,7 @@
 
 ## Concept
 
-The hero is a scene from a live match, not a marketing illustration. A Prødux-style framing splits the page into a quiet **statement band** (headline left, mono paragraph + CTAs right) and a full-bleed **framed visual**: the 12-sector map as concentric rings, a violet storm closing round by round, and 60 traders that duel and drop until one is left. The type direction (big neutral grotesk, mono for meta) comes from the user's portfolio, which keeps it personal. The single accent, violet, appears only on the storm, the alive counter and the CTA hover.
+The hero is a scene from a live match, not a marketing illustration. A Prødux-style framing splits the page into a quiet **statement band** (headline left, mono paragraph + CTAs right) and a full-bleed **framed visual**: the 11-sector map as concentric rings (4 outer, 4 mid, 3 inner), a violet storm closing round by round, and 60 traders that duel and drop until one is left. The type direction (big neutral grotesk, mono for meta) comes from the user's portfolio, which keeps it personal. The single accent, violet, appears only on the storm, the alive counter and the CTA hover.
 
 ## Anatomy (top → bottom)
 
@@ -18,7 +18,7 @@ The hero is a scene from a live match, not a marketing illustration. A Prødux-s
    - The prototype's `[Ranked]` link is **dropped**: no ranked route exists in `packages/client/src/pages` (Anti-Island, DEEP-11).
 2. **Statement band** (12-col): `h1` spans cols 1–7; paragraph + CTAs span cols 9–12, bottom-aligned. Below 760px it stacks into one column.
 3. **Caption strip** (41px, hairline below): `Fig. 01 — Live match, seeded` · `Round n / 5 · Storm holding|closing|Winner standing` · `NN / 60 solvent` (NN in violet). Below 760px the left item is hidden. The strip is HTML with `aria-live="off"`, because a counter updating 30 times a second must not chatter in a screen reader.
-4. **Framed visual** (fills the rest of `100svh`, min 46vh / 52vh mobile): `<HeroVisual>` canvas with `aria-hidden="true"` and a visually hidden text alternative: "Animated simulation: 60 traders across 12 market sectors; a storm closes in over 5 rounds while traders duel until one remains." A bottom-right caption reads `Duels 30 s · Ticks 10 Hz · Starting pot $15,000`.
+4. **Framed visual** (fills the rest of `100svh`, min 46vh / 52vh mobile): `<HeroVisual>` canvas with `aria-hidden="true"` and a visually hidden text alternative: "Animated simulation: 60 traders across 11 market sectors; a storm closes in over 5 rounds while traders duel until one remains." A bottom-right caption reads `Duels 30 s · Ticks 10 Hz · Starting pot $15,000`.
 
 ## Copy (final)
 
@@ -31,7 +31,7 @@ The hero is a scene from a live match, not a marketing illustration. A Prødux-s
 | `<title>` | Fintasy — the stock-market battle royale |
 | meta description | A 60-player battle-royale trading game: drop into a sector, win 30-second duels, outrun the storm. A project by Tinatsei Chingaya. |
 
-Every number is a product fact from DATA-MODEL-AUTHORITY or the Stock Royale ledger: 60 players, 12 sectors, 5 rounds, 30 s duels, 10 Hz, $15,000. No user counts, money totals, or ratings.
+Every number is a product fact from DATA-MODEL-AUTHORITY or the Stock Royale ledger: 60 players, 11 sectors, 5 rounds, 30 s duels, 10 Hz, $15,000. No user counts, money totals, or ratings.
 
 ## D4 note (2026-10-20)
 The game will not go live. Nothing on the page may imply it is playable or coming soon: no in-app links, no sign-in, no "Enter a match". The paragraph stays as product description. The page lives in the portfolio as a design and engineering artifact.
@@ -53,3 +53,5 @@ The game will not go live. Nothing on the page may imply it is playable or comin
 
 - **HERO-2** (`hero_visual` lane): port the A canvas engine into `components/hero/HeroVisual.vue`. It emits `round`, `storm`, `alive` for the strip, and takes `seed` as a prop.
 - **HERO-3** (`hero_layout` lane): top bar, statement band, caption strip, visual slot, `/` route on a nav-free layout (single nav), legacy sections unmounted (D2). It also owns the schema-v2 flow migration debt.
+
+> **2026-10-21 correction (HYPE-1 fact gate):** this file said "12 sectors" in three places. DATA-MODEL-AUTHORITY §1.2 lists 11 (4 outer, 4 mid, 3 inner) and heroSim draws 11, so all three now say 11. The matching fix to `HeroVisual.vue`'s screen-reader text is routed to HYPE-3.

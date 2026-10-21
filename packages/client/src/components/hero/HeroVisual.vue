@@ -305,7 +305,7 @@ onBeforeUnmount(() => {
   <div ref="root" class="hero-visual">
     <canvas ref="canvas" class="hero-visual__canvas" aria-hidden="true" />
     <p class="hero-visual__alt">
-      Animated simulation: 60 traders across 12 market sectors; a storm closes in over 5 rounds while traders duel until one remains.
+      Animated simulation: 60 traders across 11 market sectors; a storm closes in over 5 rounds while traders duel until one remains.
     </p>
   </div>
 </template>
