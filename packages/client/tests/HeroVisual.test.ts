@@ -244,7 +244,7 @@ describe('<HeroVisual>', () => {
   it('canvas is aria-hidden and a text alternative is present', () => {
     const w = mount(HeroVisual)
     expect(w.find('canvas').attributes('aria-hidden')).toBe('true')
-    expect(w.text()).toContain('60 traders across 12 market sectors')
+    expect(w.text()).toContain('60 traders across 11 market sectors')
     w.unmount()
   })
 
