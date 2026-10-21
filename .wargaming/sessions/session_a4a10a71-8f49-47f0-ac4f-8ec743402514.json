@@ -9,11 +9,11 @@
     "upstream": "none (unset deliberately)"
   },
   "active_campaign": "2026-10-20_fintasy-hero",
-  "active_mission": "CLOSE-2",
+  "active_mission": "CLOSE-3",
   "mode": "PLAN",
   "ledger_path": ".wargaming/campaigns/2026-10-20_fintasy-hero/ledger.md",
-  "ledger_hash": "dfd21cab5312238430ec7938a42d6f0394fb354ec4b93ff761b0957d290265b9",
-  "ledger_generation": 17,
+  "ledger_hash": "9cd6728408454ac39bb2a06efc8b97e1ed903768b289fa03e8a1a65d941f9187",
+  "ledger_generation": 18,
   "inventory_hash": "sha256:016ee9b5b4c9d17fff53169615be5c82490304c7c76ff05a07a47769bb0cf19e",
   "data_model_authority": {
     "path": ".wargaming/DATA-MODEL-AUTHORITY.md",
@@ -38,10 +38,10 @@
     ]
   },
   "authority_grant": {
-    "grant_id": "grant-2026-10-21-hype-4-exec",
-    "authorizing_message": "Authorized: execute HYPE-4 per the battle plan on feature/hype-section (local commits only; no push/PR/merge).",
+    "grant_id": "grant-2026-10-21-close-2-exec",
+    "authorizing_message": "Authorized: execute CLOSE-2 per the battle plan on feature/closing-sections (local commits only; no push/PR/merge).",
     "missions": [
-      "HYPE-4"
+      "CLOSE-2"
     ],
     "allowed_actions": [
       "implement",
@@ -55,12 +55,12 @@
       "merge_to_main",
       "deploy"
     ],
-    "granted_at": "2026-10-21T14:00:23-05:00"
+    "granted_at": "2026-10-21T16:08:21-05:00"
   },
-  "last_verified_transition": "DEF-HYPE-OVERFLOW fixed (c95d4bb, pushed to PR #4); CLOSE-2 -> planned (2026-10-21)",
-  "next_transition": "EXECUTE CLOSE-2 per success/mission_CLOSE-2_battleplan.md on feature/closing-sections @ d4acd02 (+ plan commit). Needs a user grant to edit packages/client (local only).",
+  "last_verified_transition": "CLOSE-2 -> activated (ef3034b, 2026-10-21, local only)",
+  "next_transition": "PLAN/EXECUTE CLOSE-3 (PageRetention covers FAQ/CTA, final review). Needs a packages/client grant. Push of feature/closing-sections + PR need a separate go-ahead.",
   "open_decisions": [],
-  "updated_at": "2026-10-21T16:07:07-05:00",
+  "updated_at": "2026-10-21T16:23:45-05:00",
   "rulings": [
     {
       "id": "D4",
@@ -98,6 +98,26 @@
         "merge to main",
         "deploy"
       ]
+    },
+    {
+      "grant_id": "grant-2026-10-21-hype-4-exec",
+      "authorizing_message": "Authorized: execute HYPE-4 per the battle plan on feature/hype-section (local commits only; no push/PR/merge).",
+      "missions": [
+        "HYPE-4"
+      ],
+      "allowed_actions": [
+        "implement",
+        "test",
+        "verify",
+        "local_commit"
+      ],
+      "forbidden_actions": [
+        "git_push",
+        "open_pr",
+        "merge_to_main",
+        "deploy"
+      ],
+      "granted_at": "2026-10-21T14:00:23-05:00"
     }
   ]
 }

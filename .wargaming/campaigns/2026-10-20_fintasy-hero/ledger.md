@@ -165,7 +165,7 @@
   - Preserves: no packages/ edits; the HYPE-1 prototypes stay as records.
   - User flows: FLOW-CLOSE-SECTIONS at PLAN (new inventory row, added at PLAN)
   - Point of no return: none
-- [ ] **CLOSE-2. FAQ & Final CTA Sections on `/` and the Standalone Build** — Below the hype section, an FAQ (accessible disclosure pattern: each question is a button with `aria-expanded`, or native `<details>`/`<summary>`; it works with the keyboard and without JS for the answers' text) and a final CTA with only outbound links. Both render inside the shared `FintasyPage`, so `/` and the standalone build stay identical. <!-- wargame-state: planned; wargame-disposition: active -->
+- [ ] **CLOSE-2. FAQ & Final CTA Sections on `/` and the Standalone Build** — Below the hype section, an FAQ (accessible disclosure pattern: each question is a button with `aria-expanded`, or native `<details>`/`<summary>`; it works with the keyboard and without JS for the answers' text) and a final CTA with only outbound links. Both render inside the shared `FintasyPage`, so `/` and the standalone build stay identical. <!-- wargame-state: activated; wargame-disposition: active -->
   - Depends on: CLOSE-1@outcome_verified
   - Required stage: ACTIVATION (dev server and `vite preview` of dist-hero)
   - Verifier/consumer: new unit tests (structure, one h2 each, disclosure state and keyboard toggling, fact rule over all copy, zero internal links, CTA hrefs equal to the locked outbound set); live DOM checks at 375/768/1440 (no overflow, CLS 0, 0 console errors on the standalone build).
@@ -174,6 +174,7 @@
   - User flows: FLOW-CLOSE-SECTIONS at ACTIVATION; FLOW-HERO-FIRST-IMPRESSION and FLOW-HYPE-SECTION as regression
   - Point of no return: none locally
   - Battle plan: `success/mission_CLOSE-2_battleplan.md` (2026-10-21). PLAN probes: `HypeSection.test.ts:152` pins the sections to `[hero, hype]` (planned update); `FACT_ALLOWLIST` lacks the 05/06 ordinals, which the whole-page fact test in PageRetention would flag (planned addition); the page link-set assertion is unchanged because the CTA reuses the hero URLs. Live overflow uses the rect check (CLOSE-1 lesson). Flows: new inventory row FLOW-CLOSE-SECTIONS; CLOSE-2/3 claims; all 7 campaign claims VALID at the new hash.
+  - **Receipt (2026-10-21):** `receipts/mission_CLOSE-2/execution.md`. Reached activated at `ef3034b`: CloseSections 10/10 with F1–F5 red; suite 183/185 (only the 2 DesignTokens failures); builds exit 0; bundle clean with both controls; knip 0 new in packages/. Live on standalone and dev: order hero, match, faq, cta; rect check 0 overflowing at 1440/768/375 (F6 control 35/37/32); keyboard Tab/Enter/Space work; CLS 0; 0 console errors.
 - [ ] **CLOSE-3. Page Retention Extension & Final Review** — `PageRetention.test.ts` also guards the FAQ and CTA (presence, order hero → hype → FAQ → CTA, outbound-only links across the whole page, the fact rule over the whole page). Each new guard is run red against a seeded regression. The standalone build is rebuilt and you review the finished page. <!-- wargame-state: proposed; wargame-disposition: active -->
   - Depends on: CLOSE-2@activated
   - Required stage: RETENTION (after your review confirms the outcome)
