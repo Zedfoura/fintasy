@@ -82,8 +82,67 @@
   - User flows: FLOW-HERO-FIRST-IMPRESSION (standalone entry point)
   - Point of no return: **publishing or hosting the build is Tier B** (needs an explicit hosting grant: where, which domain). Building locally is Tier A.
   - Status: proposed until the user confirms this epic's priority (goal-growth rule).
+  - **2026-10-21 note:** the user deferred outcome confirmation until the whole page is complete, and they will move it into their portfolio repo themselves. HYPE-3 and HYPE-4 rebuild `dist-hero` with the hype section. This is a note, not a dependency edge, because an Epic 2 → Epic 3 edge would be a tier inversion.
+
+### Epic 3 — Hype Section: Solution & Value Proposition × Key Benefits & Features <!-- wargame-epic: hype-section; wargame-epic-priority: 3 -->
+
+> Goal growth (user, 2026-10-21): "create the Solution & Value Proposition section … more of a hype section … a combination with the Key Benefits & Features section." Ruling D6 is in campaign.md.
+> Routing note: this epic is listed third, but it is the next actionable work. Epic 1 has no dependency-ready mission left (HERO-4 retained; HERO-2/3/5 activated and covered by the HERO-4 retention guard). Epic 2's HERO-6 waits on the user's confirmation, which they deferred until the page is complete (2026-10-20).
+> Base for execution: a new branch cut from `origin/main` `d46b06a` (probed 2026-10-21). The hero is already merged there.
+> Lane rule (learned in the HERO-2/3 incident): lint-staged's pre-commit hook uses the shared git stash. Parallel lanes therefore never commit concurrently; each lane commits only after the parent says so, one at a time.
+
+- [ ] **HYPE-1. Hype Direction Lock: Rendered Section Prototypes Under the Locked Hero** — You open 2–3 rendered directions for the section, each sitting directly below the real direction-A hero at 1440 and 375, and pick one. Candidate directions to prototype: *Match timeline* (Drop → Duel → Storm → Last one solvent as scroll-paced beats with one sticky visual); *Loadout grid* (bento of mechanic cards, each with a live micro-vignette and a stat numeral); *Patch notes / spec sheet* (editorial, numbers-forward mechanic list that also shows off the engineering). The pick is written to `hype-direction.md` (beats, copy, anchor id or none, vignette list) and a `hype` block in `tokens.json`. <!-- wargame-state: outcome_verified; wargame-disposition: active -->
+  - Depends on: HERO-1@outcome_verified (locked palette, type and tokens)
+  - Required stage: OUTCOME (consumer = your explicit selection)
+  - Verifier/consumer: you, choosing in chat. Instruments: (a) the `contrast.mjs` gate extended to every new text/background pair, failing below 4.5:1, with the known-bad control still flagged; (b) a **fact gate**. Every number and mechanic claim in the section copy must map to `.wargaming/DATA-MODEL-AUTHORITY.md` §1–2 or to an earlier locked fact (60 traders, 12 sectors in 3 rings, 10 Hz ticks, 30–60 s duels, 1x–5x leverage, $15,000 pot, 5 rounds, third-party joins, AI bot fill, seeded deterministic replay, Copper → Golden Trader ranks). Counter-input: injecting "100,000 players" or "play now" into the copy must make the gate fail.
+  - Preserves: zero diff under `packages/` (prototypes live in `wargames/hype-directions/`); D4, so no playable, "coming soon" or in-app claims.
+  - User flows: FLOW-HYPE-SECTION (critical_secondary) at PLAN
+  - Point of no return: none
+  - Lane: parent (`hype_direction`). Action-bias cap of two turns, then lock on your pick.
+  - **Locked 2026-10-21:** direction 1 "Match timeline" → `hype-direction.md`, `tokens.json#hype`, anchor `#match`. Receipt: `receipts/mission_HYPE-1/execution.md`.
+
+- [ ] **HYPE-2. Mechanic Vignettes (only those the locked direction calls for)** — Each vignette the direction names (for example a duel P&L race, the storm closing on the ring map, a 60-dot lobby filling, a rank ladder climb) renders seeded and deterministic inside its slot. Each shows a static frame under reduced motion, pauses offscreen, and is decorative (`aria-hidden`) with a text equivalent in the section copy. Where a beat is about the match, it reuses `heroSim.ts` rather than forking it. <!-- wargame-state: executing; wargame-disposition: active -->
+  - Depends on: HYPE-1@outcome_verified ✅. Scope is fixed by the lock: exactly 4 vignettes (`drop`, `duel`, `storm`, `lobby`), as specified in hype-direction.md § Vignettes.
+  - Required stage: CANONICAL (committed, tests green, merged on the execution branch)
+  - Verifier/consumer: `tests/HypeVignettes.test.ts`. Same seed gives the same snapshot and a different seed a different one; reduced motion means 0 rAF calls and at least 1 draw; IO hidden cancels rAF; unmount disconnects observers. Mutation falsifier: break one vignette's reduced-motion branch and the test must fail.
+  - Preserves: `HeroVisual.vue` / `heroSim.ts` public behaviour (HeroVisual.test.ts 11/11 and the parity seed 2026 → 14 alive at 700 steps stay green).
+  - User flows: FLOW-HYPE-SECTION at MECHANISM
+  - Point of no return: none
+  - Battle plan: `success/mission_HYPE-2_battleplan.md`
+  - Lane: `hype_visuals` (worktree `wt/hype_visuals` @ `d46b06a`). Owns `packages/client/src/components/hype/vignettes/**` (vignetteSim.ts, useVignetteLoop.ts, four Vignette*.vue) and `packages/client/tests/HypeVignettes.test.ts`. Also owns re-adding the `export` keyword on `stormAt` (and `ringRects` if needed) in `heroSim.ts`, since the PLAN probe found them made private by HERO-2's knip cleanup; HeroVisual.test 11/11 and parity 14 alive must hold. **Parallel-safe with HYPE-3; commits sequential.**
+
+- [ ] **HYPE-3. Hype Section Composition, Copy & Shared Page on `/` and the Standalone Build** — Scrolling past the hero on `/` and in the standalone build shows the locked hype section: one `<section>` labelled by its h2, an h3 per beat, the locked copy, vignette slots with static fallbacks, and the anchor if locked. Both entry points render the same page from one shared composition component, so `index.vue` and `StandaloneHero.vue` stop duplicating it. <!-- wargame-state: executing; wargame-disposition: active -->
+  - Depends on: HYPE-1@outcome_verified ✅
+  - Required stage: ACTIVATION (live in the dev server and in `vite preview` of dist-hero)
+  - Also owns (from the HYPE-1 lock): (a) change `HeroVisual.vue:308` screen-reader text from "12" to "11 market sectors", with the fact gate run on it as the check (a parent-approved one-line edit in a HERO-2 file); (b) section anchor `#match`, which flips inventory EP-hype-deeplink to `required` and rebinds the HYPE claims to the new inventory hash.
+  - Verifier/consumer:
+    - Dev server `/` returns HTTP 200.
+    - Rendered DOM: still exactly 1 `nav` and 1 `h1`; the section h2 is present; the beat count equals the locked list; `document.querySelectorAll('a[href^="/"]').length === 0`; no "coming soon", "play now" or "sign in" text; no horizontal overflow at 375/768/1440 (signal: innerWidth stays at the emulated width).
+    - `tests/HypeSection.test.ts` plus the fact gate as a unit test.
+    - Counter-inputs: adding a `RouterLink` or a "Play now" string must fail the tests.
+    - `dist-hero` rebuilt and served: the section is present, and the bundle check (no RouterView, auth token, `/api/v1`, pinia or naive-ui) passes, with its falsifier still flagging.
+  - Preserves: FLOW-HERO-FIRST-IMPRESSION (HeroRetention.test.ts 4/4 and HeroSection.test.ts 14/14); D4 outbound-only links; the hero canvas still pauses when scrolled offscreen.
+  - User flows: FLOW-HYPE-SECTION at ACTIVATION; FLOW-HERO-FIRST-IMPRESSION as regression only
+  - Point of no return: none
+  - Battle plan: `success/mission_HYPE-3_battleplan.md`. PLAN probe: the router has no `scrollBehavior`, so FintasyPage handles `#match` in `onMounted`; `main.ts` stays untouched.
+  - Lane: `hype_layout` (worktree `wt/hype_layout` @ `d46b06a`). Owns `packages/client/src/components/hype/HypeSection.vue`, `packages/client/src/components/hype/hypeBeats.ts`, the shared page component (`packages/client/src/components/page/FintasyPage.vue`), `packages/client/src/pages/index.vue`, `packages/client/hero-standalone/StandaloneHero.vue`, `packages/client/tests/HypeSection.test.ts`, campaign `flows/**`, and the HYPE claim files. Excludes `components/hype/vignettes/**`, `components/hero/**` and all hero tests.
+
+- [ ] **HYPE-4. Integration, Page Retention Guard & Live Scroll Verification** — The vignettes are mounted in the section on `/` and in the standalone build. Live, the full scroll from hero into section works at 1440/768/375: the hero canvas pauses when offscreen, each vignette animates only while visible, CLS is 0 and there are no console errors. A page-level retention guard fails if the section, its beats, its facts or the outbound-only rule regress. <!-- wargame-state: proposed; wargame-disposition: active -->
+  - Depends on: HYPE-2@canonical (or HYPE-2 `withdrawn_by_user`), HYPE-3@activated
+  - Required stage: RETENTION
+  - Verifier/consumer:
+    - `tests/PageRetention.test.ts`: the section's h2 and beat count, the fact allowlist, zero internal links, and the hero guard still present.
+    - Counter-inputs, each recorded as a failing run: remove a beat; change a fact to a number not in the allowlist; add "/login".
+    - Full client suite reported as `N passed of M`. The only accepted failures are the 2 pre-existing DesignTokens ones, by name.
+    - `vite build` and `build:hero` both exit 0; knip is diffed against the merged-hero baseline.
+    - Live: the browser pane on dev and on the dist-hero preview.
+  - Preserves: everything listed for HYPE-3, plus HERO-6's standalone contract (relative paths, self-hosted fonts, a clean bundle).
+  - User flows: FLOW-HYPE-SECTION at RETENTION; FLOW-HERO-FIRST-IMPRESSION as regression
+  - Point of no return: none locally. **Push, PR and merge to `main` are Tier B and need their own explicit go-ahead.** Merging `main` also triggers `deploy-images.yml`, which publishes the ghcr images.
+  - Lane: parent (integrator), committing on the execution branch.
 
 ## Parallel-safe sets
 
-- Set A (after HERO-1@outcome): **HERO-2 ∥ HERO-3**. Disjoint files; the only shared contract is the `visual` slot dimensions in `tokens.json`, which HERO-1 locks.
+- Set A (after HERO-1@outcome): **HERO-2 ∥ HERO-3**.
+- Set B (after HYPE-1@outcome_verified): **HYPE-2 ∥ HYPE-3** (disjoint files; the vignette slot contract is fixed in hype-direction.md). HYPE-4 serializes after both. Commits are sequential (lint-staged/shared-stash rule). Disjoint files; the only shared contract is the `visual` slot dimensions in `tokens.json`, which HERO-1 locks.
 - HERO-4 serializes after both, since it is the integration point.

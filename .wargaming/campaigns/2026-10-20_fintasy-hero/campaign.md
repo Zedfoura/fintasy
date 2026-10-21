@@ -1,9 +1,9 @@
 # Campaign: Fintasy Marketing Hero (From-Scratch Rebuild)
 
 - **Slug:** `2026-10-20_fintasy-hero`
-- **Goal:** Build a distinctive, recruiter-facing hero section for the Fintasy marketing page at `/`, designed from scratch: new palette, copy, typography, and composition.
+- **Goal:** Build a distinctive, recruiter-facing marketing page for Fintasy, designed from scratch. It started with the hero (Epic 1); from 2026-10-21 it also has a hype section that fuses Solution & Value Proposition with Key Benefits & Features (Epic 3).
 - **Scope:** Hero section only: the top strip inside the hero, headline and subtitle, the primary visual, and outbound links (GitHub source; case study once its URL is given). Per D4 there are no links into the game.
-- **Deferred / out of scope:** every landing section below the hero (media, benefits, testimonials, FAQ, final CTA, footer); the app shell and dashboard theming; deploy and publish.
+- **Deferred / out of scope:** landing sections beyond the hype section (testimonials, FAQ, final CTA, footer); the app shell and dashboard theming; deploy, publish and hosting (Tier B).
 - **Authority:** Planning artifacts only. Executing a mission needs user authority (`wargame-run` / `wargame-arc <ID> execute`). Tier B (push to canon, deploy) always needs a separate explicit grant.
 - **Disposition:** active
 - **Run Mode:** client-only (Vue 3 + Vite + UnoCSS in `packages/client`). Per `.wargaming/DATA-MODEL-AUTHORITY.md` §2.1, legacy API endpoints are untouched and no persistent or real-time tier is read or written. Mode recorded as `client-only / no-data-tier`.
@@ -26,4 +26,5 @@ Constraints: hero only; it must feel unique to recruiters reviewing a public pro
 | D2 | Fate of legacy sections below the hero during this campaign | **DECIDED by the user, 2026-10-20:** "render only the new hero on / and unmount the legacy sections." Legacy `components/landing/*` files stay on disk, unmounted. Owned by HERO-3 (index.vue) and HERO-4 (legacy test reconciliation). |
 | D4 | Game availability and CTAs | **DECIDED by the user, 2026-10-20:** "this landing page will not link to the game as I will not have the game up … I'll be placing just this page on my portfolio site linked within the case study … This game will not be going live." CTA choice (structured question): **Source + case study**. Remove every link into the app (`/dashboard/*`, `/login`); the primary button becomes "View the source →" (GitHub); "Read the case study" is added once the case-study URL is provided; the nav keeps only `[Source]`. "Coming soon" was rejected because the game is not going live. |
 | D5 | Deliverable form | The page will be shown standalone from the user's portfolio case study. Hosting/publishing is Tier B and needs its own grant; a standalone static build is proposed as HERO-6. |
+| D6 | Hype section (goal growth) | **User, 2026-10-21:** "create the Solution & Value Proposition section … more of a hype section … a combination with the Key Benefits & Features section." Campaign decision `select_existing` (same page, same locked tokens, same portfolio transfer). Added as Epic 3, HYPE-1..4. The section's angle (pure game hype vs. game hype plus engineering flex) is decided by your pick in HYPE-1, not assumed. D4 still applies. |
 | D3 | Visual centerpiece medium (refs 2 and 3 lean on imagery) | Resolved inside HERO-1 by user selection between rendered directions. Bias: generated in code from Fintasy's own domain (sector map, tick field), no stock imagery. |
