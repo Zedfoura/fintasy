@@ -25,11 +25,11 @@ export const HERO_MOTION = {
 /** Fixed-step count used for the reduced-motion still frame (tokens.json motion.reducedMotion). */
 export const REDUCED_MOTION_STEPS = 700
 
-export interface Rect { x: number, y: number, w: number, h: number }
+interface Rect { x: number, y: number, w: number, h: number }
 export interface Tile extends Rect { ring: number, n: string }
 export type StormState = 'holding' | 'closing' | 'winner'
 
-export interface Duel { a: Trader, b: Trader, t: number }
+interface Duel { a: Trader, b: Trader, t: number }
 export interface Trader {
   x: number
   y: number
@@ -58,7 +58,7 @@ export interface SimState {
   h: number
 }
 
-export interface StormInfo { r: Rect, round: number, moving: boolean }
+interface StormInfo { r: Rect, round: number, moving: boolean }
 
 export interface StepResult {
   round: number
@@ -90,7 +90,7 @@ function gauss(st: SimState): number {
 }
 
 /** Ring rectangles: outer (R0), middle (R1), inner (R2), and the final core. */
-export function ringRects(w: number, h: number): [Rect, Rect, Rect, Rect] {
+function ringRects(w: number, h: number): [Rect, Rect, Rect, Rect] {
   const R0 = { x: 0, y: 0, w, h }
   const tx = w * 0.15
   const ty = h * 0.2
@@ -125,7 +125,7 @@ function lerpR(a: Rect, b: Rect, t: number): Rect {
 }
 
 /** Storm geometry at cycle progress t (0..1): rect, round (1..rounds) and whether it is moving. */
-export function stormAt(w: number, h: number, t: number): StormInfo {
+function stormAt(w: number, h: number, t: number): StormInfo {
   const { rounds, roundHoldFraction: hold } = HERO_MOTION
   const k = Math.min(rounds - 1, Math.floor(t * rounds))
   const f = t * rounds - k
@@ -135,10 +135,6 @@ export function stormAt(w: number, h: number, t: number): StormInfo {
   const R = ringRects(w, h)
   const i = Math.min(2, Math.floor(q))
   return { r: lerpR(R[i], R[i + 1], q - i), round: k + 1, moving: e > 0 && e < 1 }
-}
-
-export function stormRect(w: number, h: number, t: number): Rect {
-  return stormAt(w, h, t).r
 }
 
 /** Re-initialise state in place for a new cycle (prototype reset()). */
@@ -162,7 +158,7 @@ export function createSim(opts: { seed?: number, width: number, height: number }
   return st
 }
 
-export function aliveCount(st: SimState): number {
+function aliveCount(st: SimState): number {
   let n = 0
   for (const p of st.P) {
     if (!p.dead)
